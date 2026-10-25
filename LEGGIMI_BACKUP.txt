@@ -11,3 +11,10 @@ Questa è una COPIA DI EMERGENZA, non sostituisce il sito ufficiale.
 7. Solo index.html e index-bulk.html sono stati disaccoppiati da Supabase. Le pagine secondarie incluse (ordine-rapido, sconti, hype, zenboy) sono conservate dall'archivio originale ma NON sono ancora verificate come completamente offline. NON usare test PDF/benessere in questa copia.
 8. Nel progetto ufficiale e nel database Supabase NON E' STATO MODIFICATO NULLA. Nessun deploy eseguito.
 9. Versione iniziale predisposta dal codice sorgente presente nell'archivio king-europe-manager-main25.10.26.zip. Funzionamento nel browser non verificato integralmente: testare prima dell'utilizzo operativo.
+
+AGGIORNAMENTO V2 - CATALOGO RIPRISTINATO
+- La copia index.html ora importa automaticamente i 169 prodotti e le quantita storiche dal catalogo gia incorporato, SOLTANTO se prodotti e magazzino locali sono entrambi vuoti.
+- Se un archivio locale contiene gia prodotti o magazzino, NON viene sostituito.
+- Per recuperare fotografie, link e quantita AGGIORNATE, esporta un backup JSON del gestionale originale e importalo qui: i 169 prodotti sono una fotografia storica e potrebbero essere superati.
+- NON caricare backup JSON con dati aziendali su repository pubblico.
+- Pubblicazione GitHub Pages: sostituire index.html sul solo repository king-europe-backup. NON modificare l'originale.
