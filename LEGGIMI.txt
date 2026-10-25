@@ -7,3 +7,5 @@ Dopo un test: 6 pagine. Dopo due: 12 pagine. Dopo tre: 18 pagine, ordine Benesse
 Collegamenti eBay inseriti solo se già presenti nell'archivio dell'utente. Non pubblicare dati personali, indirizzi, account o JSON originale in repository pubblici. Non si inviano email: è un prototipo da verificare su iPhone prima del deploy originale.
 
 Non modificare l'originale. Verifica le pagine dopo la pubblicazione, stampa PDF, link e salvataggio ricaricando il sito.
+
+VERSIONE MAIN ROOT: index.html e stato rinominato laboratorio-pdf.html per non sovrascrivere il gestionale. Caricare file estratti nella radice (main/root); nessuna cartella marketing necessaria.
