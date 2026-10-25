@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "purpose": "Educational topic matching; not personal supplementation advice",
+  "rules": [
+    {
+      "test": "benessere",
+      "eligible_products": [],
+      "reason": "Subjective psychological wellbeing is not evidence of a nutrient deficiency or hormonal imbalance; no specific supplement recommendation."
+    },
+    {
+      "test": "alimentazione",
+      "eligible_products": [],
+      "reason": "Questionnaire covers vegetables, fruits, fibre, legumes and variety; existing verified eBay products do not directly correspond to these dietary patterns."
+    },
+    {
+      "test": "integratori",
+      "eligible_products": [
+        "OstroVit Omega 3 Easy to Swallow 90 capsule"
+      ],
+      "criteria": "Only show as an optional example for label comparison when answers indicate frequent label, dose and need checks; never a medical recommendation",
+      "thresholds": {
+        "label_reading": 50,
+        "dosage_awareness": 50,
+        "need_review": 50
+      },
+      "reason": "Educational example for comparing supplement labels, especially EPA/DHA amount and warnings; not a diagnosis or dose recommendation."
+    }
+  ],
+  "security": "Never infer hormone levels, deficiencies or supplement doses. All links are user-provided existing catalog references; availability unverified."
+}
