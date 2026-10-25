@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KING EUROPE | Sconti</title>
+<style>
+:root{--bg:#e7edf1;--card:#fff;--text:#283b4a;--muted:#718494;--line:#ccd9e2;--blue:#407da2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:820px;margin:auto;padding:16px 13px 60px}
+header{background:#d6e3eb;padding:22px 16px;border-bottom:1px solid var(--line)}
+h1{font-size:24px;margin:5px 0}h2{font-size:19px;margin:0 0 12px}
+h3{font-size:15px}p,small{color:var(--muted);line-height:1.5;font-size:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:17px;margin-bottom:13px}
+label{display:block;font-weight:700;font-size:12px;color:#648095;margin:12px 0 5px}
+input,select,textarea{font:inherit;width:100%;padding:12px;border:1px solid #c2d1dc;border-radius:10px;background:#f8fbfd;color:var(--text)}
+textarea{min-height:75px}
+button{cursor:pointer;font:inherit}
+.btn{display:inline-block;border:0;border-radius:10px;background:#dbe8ef;color:#246284;padding:11px 14px;font-weight:750;text-decoration:none}
+.primary{background:var(--blue);color:white}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.king-candidate{padding:12px 0;border-top:1px solid #d6e1e9}
+.king-candidate-code{font-size:15px;overflow-wrap:anywhere}
+.king-candidate-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.king-candidate-actions .btn{font-size:13px;padding:9px 11px;border-radius:9px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.row{padding:13px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}
+.chip{display:inline-block;font-size:11px;border-radius:20px;background:#e3edf4;padding:5px 9px;margin-top:8px}
+.note{background:#fff5dc;padding:12px;border-radius:12px;font-size:12px;color:#82692f}
+.result{background:#e8f2f5;padding:14px;border-radius:12px;margin-top:12px}
+a{color:#31779e}
+</style>
+<style id="king-uniform-header">
+.king-header{background:linear-gradient(120deg,#d1dfe7,#eaf1f5);padding:20px 14px 24px;text-align:center;border-bottom:1px solid #ccdae3}
+.king-header-wrap{max-width:850px;margin:auto}
+.king-brand{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:11px 15px;background:#fff;border:1px solid #bdd1dd;border-radius:16px;text-decoration:none;color:#285f81;font-weight:900;letter-spacing:.5px;max-width:100%}
+.king-crown{display:grid;place-items:center;width:35px;height:35px;flex:none;border-radius:10px;background:#4a849f;color:#fff;font-size:23px}
+.king-header-tools{display:flex;justify-content:center;gap:9px;margin:12px auto 0}
+.king-search,.king-star{display:inline-flex;align-items:center;justify-content:center;background:white;border:1px solid #bdd1dd;border-radius:14px;color:#285f81;font-weight:800;text-decoration:none;padding:12px 14px;min-height:46px}
+.king-header h1{font-size:22px;margin:14px 0 3px}
+.king-subtitle{color:#667d90;font-size:11px;margin-top:5px}
+</style>
+</head>
+<body>
+<header class="king-header"><div class="king-header-wrap">
+<a class="king-brand" href="./index.html?page=home" onclick="return kingReturnHome(event)" aria-label="Torna alla Home"><span class="king-crown">♛</span><span>KING EUROPE MANAGER</span></a>
+<div class="king-header-tools"><a class="king-search" href="./ordine-rapido.html?kingSearch=internal" aria-label="Cerca prodotti nel gestionale">🔎 Cerca</a><a class="king-star" href="./ordine-rapido.html?kingSearch=links" aria-label="Cerca online link prodotti" title="Cerca link online">⭐</a></div>
+<h1>🎟️ Sconti e Promozioni</h1><div class="king-subtitle">INTERNATIONAL BUSINESS MANAGER</div>
+</div></header>
+<main><div class="actions" style="margin:0 0 15px">
+<a class="btn" href="./index.html?page=home" onclick="return kingReturnHome(event)">⌂ Torna alla Home</a>
+<a class="btn" href="./ordine-rapido.html">🛒 Ordine rapido</a>
+</div>
+
+<div class="card">
+<h2>Nuovo codice sconto</h2>
+<p>Registra il codice dopo averlo trovato. La verifica
+dello sconto va effettuata sul sito ufficiale.</p>
+<label>Codice promozionale</label>
+<input id="code" placeholder="Scrivi il codice">
+<label>Fornitore</label>
+<select id="supplier">
+<option>OstroVit.com</option>
+<option>OstroVit Italia</option>
+<option>Bulk</option>
+<option>Altro</option>
+</select>
+<div class="grid">
+<div>
+<label>Percentuale (%)</label>
+<input id="percent" type="number" min="0" max="100" step=".01" value="7">
+</div>
+<div>
+<label>Stato</label>
+<select id="status">
+<option>Da testare</option>
+<option>Funzionante</option>
+<option>Non valido</option>
+<option>Scaduto</option>
+</select>
+</div>
+</div>
+<label>Scadenza, se conosciuta</label>
+<input id="expiry" type="date">
+<label>Note e condizioni</label>
+<textarea id="notes" placeholder="Soglia minima, prodotti esclusi, paese, data del test..."></textarea>
+<div class="actions">
+<button class="btn primary" onclick="saveCoupon()">+ Registra codice</button>
+</div>
+</div>
+
+
+<div class="card" id="king-generator">
+<h2>🧪 Generatore codici da verificare</h2>
+<p>Parti da un codice conosciuto, genera fino a 30 varianti e controllale manualmente sul sito ufficiale. Nessuna prova automatica viene inviata al fornitore.</p>
+<label>Codice di partenza</label>
+<input id="genSeed" placeholder="Es. 20260722-11061" value="20260722-11061" autocomplete="off">
+<div class="grid">
+<div><label>Metodo</label><select id="genMode"><option value="suffix">Cambia una cifra dopo il trattino</option><option value="any">Cambia una cifra in tutto il codice</option><option value="near">Numeri vicini alla parte finale</option></select></div>
+<div><label>Numero di proposte</label><input id="genCount" type="number" min="1" max="30" value="30"></div>
+</div>
+<div class="actions"><button class="btn primary" type="button" onclick="kingGenerateCoupons()">✨ Genera proposte</button><button class="btn" type="button" onclick="kingCopyGenerated()">Copia elenco</button></div>
+<div id="genResults" aria-live="polite"></div>
+</div>
+
+<div class="card">
+<h2>I miei codici</h2>
+<div id="stats"></div>
+<div id="list"></div>
+</div>
+
+<div class="card">
+<h2>🧮 Simula lo sconto</h2>
+<p>Calcola la riduzione teorica sul valore dei prodotti,
+senza includere automaticamente la spedizione.</p>
+<label>Totale prodotti (€)</label>
+<input id="subtotal" type="number" min="0" step=".01" value="18">
+<label>Sconto (%)</label>
+<input id="calcPercent" type="number" min="0" max="100" step=".01" value="20">
+<label>Spedizione (€)</label>
+<input id="shipping" type="number" min="0" step=".01" value="5">
+<div class="actions">
+<button class="btn primary" onclick="calculate()">Calcola convenienza</button>
+</div>
+<div id="result" class="result"></div>
+</div>
+
+<div class="note">
+I coupon registrati qui sono salvati temporaneamente nel browser,
+non ancora nel database Supabase. Un codice segnato come
+funzionante rimane comunque soggetto a scadenza, condizioni
+di utilizzo e verifica al momento dell'acquisto.
+</div>
+</main>
+<script>
+"use strict";
+const KEY="king_europe_coupons_v1";
+const $=id=>document.getElementById(id);
+let coupons=[];
+try{
+ const saved=JSON.parse(localStorage.getItem(KEY)||"[]");
+ if(Array.isArray(saved))coupons=saved;
+}catch(e){}
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+const euro=n=>Number(n).toLocaleString("it-IT",{
+style:"currency",currency:"EUR"
+});
+function persist(){
+localStorage.setItem(KEY,JSON.stringify(coupons));
+render();
+}
+function saveCoupon(){
+ const code=$("code").value.trim();
+ const percent=Number($("percent").value);
+ if(!code||!Number.isFinite(percent)||percent<0||percent>100){
+ alert("Inserisci un codice e una percentuale valida.");
+ return;
+ }
+ coupons.unshift({
+ id:Date.now()+"-"+Math.random().toString(36).slice(2),
+ code,
+ supplier:$("supplier").value,
+ percent,
+ status:$("status").value,
+ expiry:$("expiry").value,
+ notes:$("notes").value.trim(),
+ updated:new Date().toLocaleDateString("it-IT")
+ });
+ $("code").value="";
+ $("notes").value="";
+ persist();
+}
+function removeCoupon(id){
+if(!confirm("Eliminare questo codice?"))return;
+coupons=coupons.filter(c=>c.id!==id);
+persist();
+}
+function changeStatus(id,value){
+const c=coupons.find(x=>x.id===id);
+if(c){c.status=value;c.updated=new Date().toLocaleDateString("it-IT");persist();}
+}
+function copyCoupon(id){
+const c=coupons.find(x=>x.id===id);
+if(!c)return;
+if(navigator.clipboard&&window.isSecureContext){
+ navigator.clipboard.writeText(c.code)
+ .then(()=>alert("Codice copiato."))
+ .catch(()=>window.prompt("Copia il codice:",c.code));
+}else window.prompt("Copia il codice:",c.code);
+}
+function useCoupon(id){
+const c=coupons.find(x=>x.id===id);
+if(!c)return;
+$("calcPercent").value=c.percent;
+calculate();
+document.getElementById("subtotal")
+.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function openSupplier(id){
+const c=coupons.find(x=>x.id===id);
+if(!c)return;
+const sites={
+"OstroVit.com":"https://ostrovit.com",
+"OstroVit Italia":"https://ostrovit.it",
+"Bulk":"https://www.bulk.com"
+};
+const url=sites[c.supplier];
+if(!url)return alert("Devi configurare il sito per questo fornitore.");
+window.open(url,"_blank","noopener,noreferrer");
+}
+function render(){
+const working=coupons.filter(c=>c.status==="Funzionante").length;
+$("stats").innerHTML=`<p><strong>${coupons.length}</strong> codici registrati · <strong>${working}</strong> marcati funzionanti</p>`;
+$("list").replaceChildren();
+for(const c of coupons){
+ const box=document.createElement("div");
+ box.className="row";
+ const name=document.createElement("strong");
+ name.textContent=c.code+" · "+c.percent+"%";
+ box.appendChild(name);
+ const details=document.createElement("p");
+ details.textContent=c.supplier+" · "+c.updated+
+ (c.expiry?" · Scadenza "+c.expiry:"");
+ box.appendChild(details);
+ const status=document.createElement("select");
+ ["Da testare","Funzionante","Non valido","Scaduto"].forEach(s=>{
+  const option=document.createElement("option");
+  option.value=s;option.textContent=s;
+  status.appendChild(option);
+ });
+ status.value=c.status;
+ status.addEventListener("change",()=>changeStatus(c.id,status.value));
+ box.appendChild(status);
+ if(c.notes){
+  const note=document.createElement("p");
+  note.textContent=c.notes;
+  box.appendChild(note);
+ }
+ const actions=document.createElement("div");
+ actions.className="actions";
+ for(const [label,fn] of [
+ ["Copia",()=>copyCoupon(c.id)],
+ ["Apri sito",()=>openSupplier(c.id)],
+ ["Calcola",()=>useCoupon(c.id)],
+ ["Elimina",()=>removeCoupon(c.id)]
+ ]){
+  const b=document.createElement("button");
+  b.className="btn";
+  b.textContent=label;
+  b.addEventListener("click",fn);
+  actions.appendChild(b);
+ }
+ box.appendChild(actions);
+ $("list").appendChild(box);
+}
+}
+function calculate(){
+const subtotal=Number($("subtotal").value);
+const percent=Number($("calcPercent").value);
+const shipping=Number($("shipping").value);
+if([subtotal,percent,shipping].some(x=>!Number.isFinite(x)||x<0)||percent>100){
+$("result").textContent="Controlla gli importi inseriti.";
+return;
+}
+const discount=subtotal*percent/100;
+const total=subtotal-discount+shipping;
+$("result").innerHTML=
+"<strong>Risparmio sui prodotti: "+euro(discount)+"</strong>"+
+"<p>Totale prodotti scontati: "+euro(subtotal-discount)+"</p>"+
+"<strong>Totale con spedizione: "+euro(total)+"</strong>"+
+"<p>Simulazione: non conferma la validità del codice.</p>";
+}
+render();
+calculate();
+
+let kingGenerated=[];
+function kingGenerateCoupons(){
+ const seed=$("genSeed").value.trim();
+ const count=Math.max(1,Math.min(30,Math.floor(Number($("genCount").value)||30)));
+ const mode=$("genMode").value;
+ const dash=seed.lastIndexOf("-");
+ if(!seed||!/[0-9]/.test(seed)){alert("Inserisci un codice contenente cifre.");return;}
+ let candidates=[];
+ if(mode==="near"){
+  const part=dash>=0?seed.slice(dash+1):seed;
+  if(!/^\d+$/.test(part)){alert("Per i numeri vicini, la parte finale deve contenere soltanto cifre.");return;}
+  const original=Number(part),prefix=dash>=0?seed.slice(0,dash+1):"";
+  for(let delta=1;delta<=count+20;delta++)for(const sign of [1,-1]){
+   const v=original+sign*delta;
+   if(v>=0&&v<10**part.length)candidates.push(prefix+String(v).padStart(part.length,"0"));
+  }
+ }else{
+  const start=mode==="suffix"&&dash>=0?dash+1:0;
+  for(let pos=start;pos<seed.length;pos++){
+   if(!/\d/.test(seed[pos]))continue;
+   for(let n=0;n<10;n++)if(String(n)!==seed[pos])candidates.push(seed.slice(0,pos)+n+seed.slice(pos+1));
+  }
+ }
+ const saved=new Set(coupons.map(c=>String(c.code).toUpperCase()));
+ kingGenerated=[...new Set(candidates)].filter(c=>c!==seed&&!saved.has(c.toUpperCase())).slice(0,count);
+ const output=$("genResults");
+ output.innerHTML=kingGenerated.length?'<p><strong>'+kingGenerated.length+' proposte da verificare</strong> · non sono codici confermati.</p>'+kingGenerated.map((c,i)=>'<div class="king-candidate"><strong class="king-candidate-code">'+esc(c)+'</strong><div class="king-candidate-actions"><button class="btn" type="button" onclick="kingCopyCandidate('+i+')">Copia</button><button class="btn" type="button" onclick="kingOpenCandidate(\'com\')">Apri .com ↗</button><button class="btn" type="button" onclick="kingOpenCandidate(\'it\')">Apri .it ↗</button><button class="btn" type="button" onclick="kingUseCandidate('+i+')">Registra</button></div></div>').join(''):'<p>Nessuna nuova combinazione disponibile.</p>';
+}
+function kingCopyText(t){
+ if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).catch(()=>kingCopyFallback(t));
+ else kingCopyFallback(t);
+}
+function kingCopyFallback(t){const el=document.createElement('textarea');el.value=t;document.body.appendChild(el);el.select();document.execCommand('copy');el.remove();}
+function kingOpenCandidate(site){
+ const url=site==='it'?'https://ostrovit.it':'https://ostrovit.com';
+ window.open(url,'_blank','noopener,noreferrer');
+}
+function kingCopyCandidate(i){if(kingGenerated[i])kingCopyText(kingGenerated[i]);}
+function kingCopyGenerated(){if(!kingGenerated.length){alert('Genera prima le proposte.');return;}kingCopyText(kingGenerated.join('\n'));}
+function kingUseCandidate(i){
+ const code=kingGenerated[i];if(!code)return;
+ $("code").value=code;$("status").value="Da testare";
+ $("code").scrollIntoView({behavior:'smooth',block:'center'});
+ $("code").focus();
+}
+</script>
+<script id="king-return-home-fix">
+// Torna alla pagina principale già aperta quando la cronologia lo consente.
+// Se la pagina è stata aperta direttamente, usa il normale collegamento protetto.
+function kingReturnHome(event){
+ if(event){event.preventDefault();}
+ try {
+  const previous=document.referrer ? new URL(document.referrer) : null;
+  const sameIndex=previous && previous.origin===location.origin && /(?:\/|\/index\.html)$/.test(previous.pathname);
+  if(sameIndex && history.length>1){ history.back(); return false; }
+ }catch(e){}
+ location.assign('./index.html?page=home');
+ return false;
+}
+</script>
+</body>
+</html>

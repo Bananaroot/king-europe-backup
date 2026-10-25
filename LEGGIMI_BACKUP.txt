@@ -1,0 +1,13 @@
+KING EUROPE MANAGER · BACKUP LOCALE · 25/10/2026
+
+Questa è una COPIA DI EMERGENZA, non sostituisce il sito ufficiale.
+
+1. Apri index.html su un browser desktop (preferibile) oppure pubblica questa cartella su un hosting statico come Cloudflare Pages.
+2. Il gestionale è identico nella UI di base e salva in localStorage con una CHIAVE SEPARATA dall'originale.
+3. Per avere i TUOI dati aggiornati (scorte, foto caricate, punti, ordini), apri il GESTIONALE ORIGINALE, vai nella sezione backup e premi 'Esporta JSON'. Poi nella copia di emergenza premi 'Importa JSON'. L'archivio ZIP di codice NON contiene necessariamente lo stato aggiornato del database Supabase.
+4. La copia NON sincronizza fra dispositivi. Usa lo stesso browser e non cancellare i suoi dati. Esporta il JSON dopo ogni sessione. Non usare modalita privata/incognito.
+5. NON caricare il backup JSON su un repository pubblico: puo contenere dati aziendali, contatti, appunti e link riservati.
+6. Le immagini gia incorporate in HTML (incluse le miniatura WebP data URI) restano; immagini indicate da URL remoti richiedono rete e un URL valido. Foto salvate soltanto in Supabase vanno esportate con i dati e potrebbero comunque dipendere da un URL esterno.
+7. Solo index.html e index-bulk.html sono stati disaccoppiati da Supabase. Le pagine secondarie incluse (ordine-rapido, sconti, hype, zenboy) sono conservate dall'archivio originale ma NON sono ancora verificate come completamente offline. NON usare test PDF/benessere in questa copia.
+8. Nel progetto ufficiale e nel database Supabase NON E' STATO MODIFICATO NULLA. Nessun deploy eseguito.
+9. Versione iniziale predisposta dal codice sorgente presente nell'archivio king-europe-manager-main25.10.26.zip. Funzionamento nel browser non verificato integralmente: testare prima dell'utilizzo operativo.
