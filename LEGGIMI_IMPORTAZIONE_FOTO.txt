@@ -1,0 +1,1 @@
+KING EUROPE BACKUP: Apri https://bananaroot.github.io/king-europe-backup/ripristina-magazzino.html e importa il file JSON originale direttamente dal dispositivo. NON caricare il JSON nel repository pubblico. I dati sono locali e NON si sincronizzano tra dispositivi.
