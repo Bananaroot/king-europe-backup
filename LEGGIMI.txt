@@ -1,11 +1,27 @@
-KING EUROPE — VERSIONE SPERIMENTALE, SENZA SUPABASE
+KING EUROPE · PATCH MIRATA SERGHEI
+===================================
+CARICA SOLO QUESTI DUE FILE nella radice del repository GitHub:
+1) KING_catalogo_ebay.js (sostituisce il file gia' esistente)
+2) statistiche-test-ebay.html (nuovo file)
 
-Carica nella sottocartella marketing/ del solo repository DI BACKUP i tre test HTML, catalogo-link-prodotti.js e king-progressive-report.js. I test originali mantengono il questionario e la grafica; il salvataggio dei risultati è nel localStorage di questo browser e sito.
+NON sostituire test-benessere.html, index, report, lingue, Magazzino o Ordine Rapido.
+Questo patch richiede che il test esistente gia' carichi KING_catalogo_ebay.js
+(come nel pacchetto KING_DOPPIO_CATALOGO_3_FILE.zip).
 
-Dopo un test: 6 pagine. Dopo due: 12 pagine. Dopo tre: 18 pagine, ordine Benessere/Alimentazione/Integratori. Le pagine HTML/CSS si stampano in PDF tramite Stampa > Salva come PDF. L’opzione IT/EN/RU determina la lingua del PDF, NON traduce interamente i questionari originali Alimentazione e Integratori.
+CATALOGO: conserva le 8 inserzioni precedenti e aggiunge 2 inserzioni eBay
+individuali verificate del venditore serda6262. In totale 10 schede; NON 50.
+Per i nuovi 2 prodotti non ho inventato immagini o assoc. ormonali.
 
-Collegamenti eBay inseriti solo se già presenti nell'archivio dell'utente. Non pubblicare dati personali, indirizzi, account o JSON originale in repository pubblici. Non si inviano email: è un prototipo da verificare su iPhone prima del deploy originale.
+CLICK: quando si tocca una scheda prodotto dal rapporto, registra prodotto,
+area e ora sul dispositivo del visitatore. Il cliente va comunque su eBay.
+La pagina statistiche-test-ebay.html mostra SOLO i click dal browser in uso.
+Per raccogliere click da tutti i visitatori occorre configurare un endpoint
+ricevente HTTPS in KING_EBAY_CLICK_ENDPOINT; non e' attivo per impostazione
+predefinita. Non e' possibile sapere da questo dato se una vendita e' avvenuta.
 
-Non modificare l'originale. Verifica le pagine dopo la pubblicazione, stampa PDF, link e salvataggio ricaricando il sito.
+PRIVACY: gli eventi di click NON includono nome, email o risposte dettagliate.
+Se abiliti raccolta remota, aggiorna informativa privacy e verifica la gestione
+consenso, durata conservazione e controlli contro abusi prima di pubblicare.
 
-VERSIONE MAIN ROOT: index.html e stato rinominato laboratorio-pdf.html per non sovrascrivere il gestionale. Caricare file estratti nella radice (main/root); nessuna cartella marketing necessaria.
+VERIFICA: apri test, scorri fino a un prodotto, tocca, verifica eBay,
+poi apri statistiche-test-ebay.html nello STESSO browser/dispositivo.

@@ -87,3 +87,42 @@ window.KING_EBAY_PRODUCTS = [
     "ingredient_ids": []
   }
 ];
+
+
+/* KING · Inserzioni Serghei aggiuntive, verificate sul profilo eBay serda6262.
+   I soli link qui sotto sono indipendenti dal magazzino e non contengono dati clienti. */
+(function(){
+  const extra = [
+    {name:'Integratore Alimentare Taurina Arginina Maca Ginseng Made in Italy',url:'https://www.ebay.it/itm/800493187022',image:'',shop:'Serghei · serda6262',ingredient_ids:[],ingredients_verified:false},
+    {name:'Creatina Monoidrato 100% Pura 200 Mesh Polvere 60 g',url:'https://www.ebay.it/itm/800493191844',image:'',shop:'Serghei · serda6262',ingredient_ids:[],ingredients_verified:false}
+  ];
+  const seen=new Set((window.KING_EBAY_PRODUCTS||[]).map(p=>(p.url||'').split('?')[0]));
+  extra.forEach(p=>{if(!seen.has(p.url)){window.KING_EBAY_PRODUCTS.push(p);seen.add(p.url)}});
+  // Non associare creatina, maca o altri prodotti agli ormoni senza prove adeguate.
+})();
+
+/* KING · Misurazione dei click SUL TEST: nessuna modifica a HTML, lingue o punteggi.
+   Salva solo eventi anonimi. Per contarli tra dispositivi occorre configurare
+   window.KING_EBAY_CLICK_ENDPOINT con un endpoint di raccolta funzionante. */
+(function(){
+  const KEY='king-ebay-test-clicks-v1';
+  const endpoint=()=>window.KING_EBAY_CLICK_ENDPOINT||'';
+  const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return []}};
+  const validUrl=u=>{try{const x=new URL(u,location.href);return /(^|\.)ebay\.(it|com|de|fr|es|co\.uk)$/.test(x.hostname)||x.hostname==='ebay.io'}catch(e){return false}};
+  function onClick(e){
+    const a=e.target.closest('a.km-product');
+    if(!a || !a.closest('#km-report') || !validUrl(a.href))return;
+    const raw=a.href.split('?')[0];
+    const p=[...(window.KING_EBAY_PRODUCTS||[]),...(window.KING_PUBLIC_PRODUCTS||[])].find(x=>(x.url||'').split('?')[0]===raw);
+    const item=raw.match(/\/itm\/(\d+)/);
+    const data={date:new Date().toISOString(),product_id:item?item[1]:raw,product_name:(p&&p.name)||a.querySelector('b')?.textContent||'Prodotto',shop:(p&&p.shop)||'non specificato',source:'test-benessere',area:a.closest('article.km-card')?.querySelector('h2')?.textContent||'Risultato'};
+    try{let current=read();current.push(data);if(current.length>300)current=current.slice(-300);localStorage.setItem(KEY,JSON.stringify(current))}catch(e){}
+    // Non bloccare la navigazione: l'evento remoto e' best-effort.
+    const ep=endpoint();
+    if(ep.startsWith("https://")){
+      try{const blob=new Blob([JSON.stringify(data)],{type:'application/json'});if(navigator.sendBeacon)navigator.sendBeacon(ep,blob);else fetch(ep,{method:'POST',mode:'cors',headers:{'content-type':'application/json'},body:JSON.stringify(data),keepalive:true}).catch(()=>{})}catch(e){}
+    }
+  }
+  document.addEventListener('click',onClick,true);
+  window.KING_EBAY_CLICK_STATS={all:read,clear:()=>localStorage.removeItem(KEY)};
+})();
