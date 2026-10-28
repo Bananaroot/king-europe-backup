@@ -1,0 +1,31 @@
+/* KING EUROPE · rapporto pubblico mobile. Calcoli e salvataggio sul dispositivo. */
+(function(){
+const areas=[
+ {chem:'Dopamina',formula:'C₈H₁₁NO₂',name:'Motivazione',about:'La dopamina partecipa ai processi di motivazione e apprendimento. Il punteggio descrive il tuo vissuto, non la sua concentrazione.',tip:'Prova a dedicare dieci minuti a una piccola attività che ti piace.',tags:['tirosina','l-tirosina']},
+ {chem:'Serotonina',formula:'C₁₀H₁₂N₂O',name:'Serenità',about:'La serotonina è un neurotrasmettitore coinvolto in numerosi processi. Le risposte non indicano una carenza.',tip:'Cerca di mantenere regolarità nel sonno e un po’ di luce naturale.',tags:[]},
+ {chem:'Ossitocina',formula:'C₄₃H₆₆N₁₂O₁₂S₂',name:'Relazioni',about:'L’ossitocina è coinvolta in diversi processi fisiologici e sociali. Questo questionario non ne misura i livelli.',tip:'Dedica del tempo a una persona con cui ti senti a tuo agio.',tags:[]},
+ {chem:'Cortisolo',formula:'C₂₁H₃₀O₅',name:'Gestione dello stress',about:'Il cortisolo è coinvolto nella risposta allo stress. Un punteggio basso non significa avere cortisolo alto o basso.',tip:'Alterna gli impegni a pause brevi e sostenibili.',tags:[]},
+ {chem:'Testosterone',formula:'C₁₉H₂₈O₂',name:'Energia',about:'Il testosterone svolge ruoli importanti nell’organismo. La percezione di energia non permette di valutarne i livelli.',tip:'Considera sonno, alimentazione varia e movimento adeguato.',tags:[]}
+];
+const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const label=v=>v<=33?'Area da approfondire':v<=66?'Equilibrio variabile':'Risorsa percepita';
+const color=v=>v<=33?'#ed7775':v<=66?'#efbe6d':'#6bd2a6';
+const links=()=>Array.isArray(window.KING_PUBLIC_PRODUCTS)?window.KING_PUBLIC_PRODUCTS:[];
+function productsFor(i){const p=areas[i],catalog=links();return catalog.filter(x=>p.tags.some(t=>x.name.toLowerCase().includes(t))).slice(0,2)}
+window.kingNewResult=function(values,compare){
+ const sorted=areas.map((a,i)=>({...a,i,v:values[i]})).sort((a,b)=>a.v-b.v);
+ const cards=sorted.map(a=>{const matches=productsFor(a.i);return `<article class="km-card"><div class="km-heading"><span class="km-index">${String(a.i+1).padStart(2,'0')}</span><div><div class="km-over">${safe(a.chem)} · ${safe(a.formula)}</div><h2>${safe(a.name)}</h2></div><span class="km-number" style="color:${color(a.v)}">${a.v}/100</span></div><div class="km-meter"><i style="width:${a.v}%;background:${color(a.v)}"></i></div><div class="km-status" style="color:${color(a.v)}">${label(a.v)}</div><p>${safe(a.about)}</p><div class="km-tip"><b>Un piccolo passo</b><p>${safe(a.tip)}</p></div>${matches.length?`<div class="km-products"><div class="km-over">Prodotti da conoscere · inserzioni eBay</div>${matches.map(x=>`<a class="km-product" href="${safe(x.url)}" target="_blank" rel="noopener noreferrer" aria-label="Apri su eBay: ${safe(x.name)}">${x.image?`<img src="${safe(x.image)}" alt="${safe(x.name)}" loading="lazy">`:'<span class="km-placeholder">✦</span>'}<span><b>${safe(x.name)}</b><small>Approfondisci ingredienti, etichetta e avvertenze.</small><strong>Scopri su eBay ↗</strong></span></a>`).join('')}</div>`:''}</article>`}).join('');
+ const nameField=`<div class="km-person"><label>Come vuoi chiamare il tuo rapporto? <span>(facoltativo)</span><input id="km-name" maxlength="60" placeholder="Il tuo nome" autocomplete="given-name"></label><button type="button" id="km-name-save">Personalizza</button></div>`;
+ const html=`<div id="km-report"><div class="km-hero"><div class="km-over">✦ KING EUROPE · WELLBEING</div><h1>Il tuo profilo di benessere</h1><p>Un percorso personale costruito sulle tue risposte.</p><div class="km-date">${new Date().toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'})} · Test gratuito</div></div>${nameField}<div class="km-intro"><b>Da dove cominciare</b><p>Le aree sono ordinate da quelle che nelle tue risposte richiedono più attenzione alle tue risorse percepite.</p><div class="km-mini">${sorted.map(a=>`<div><span>${safe(a.name)}</span><span style="color:${color(a.v)}">${a.v}/100</span></div>`).join('')}</div></div>${cards}<div class="km-final"><h2>Il tuo prossimo passo</h2><p>Puoi approfondire anche gli altri test gratuiti. Non è necessario acquistare integratori per completare questo percorso.</p><a href="./test-integratori.html">Test Integratori ↗</a><a href="./test-alimentazione.html">Test Alimentazione ↗</a></div><div class="km-disclaimer">Questo questionario non è un esame medico: non misura ormoni o neurotrasmettitori, non diagnostica carenze e non prescrive cure. Le eventuali schede prodotto sono contenuti commerciali di KING EUROPE, da valutare secondo etichetta e con un professionista quando necessario. Nessun acquisto è obbligatorio.</div><div class="km-actions"><button type="button" id="km-print">📄 Salva PDF / Stampa</button><button type="button" id="km-export">↓ Esporta il tuo risultato</button><button type="button" id="km-restart">↻ Rifai il test</button></div><p class="km-privacy">Il rapporto rimane in questo browser. Non viene inviato automaticamente al negozio.</p></div>`;
+ queueMicrotask(()=>{const el=document.getElementById('km-report');if(!el)return;
+  const stored=(()=>{try{return JSON.parse(localStorage.getItem('king-wellbeing-public-last')||'null')}catch{return null}})();
+  const input=document.getElementById('km-name');if(stored?.name)input.value=stored.name;
+  const save=()=>{const obj={name:input.value.trim(),date:new Date().toISOString(),values:values.slice(),areas:areas.map(a=>a.name)};try{localStorage.setItem('king-wellbeing-public-last',JSON.stringify(obj))}catch{}return obj};
+  save();document.getElementById('km-name-save').onclick=()=>{save();document.getElementById('km-name-save').textContent='✓ Salvato'};
+  document.getElementById('km-print').onclick=()=>{save();window.print()};
+  document.getElementById('km-export').onclick=()=>{const obj=save();const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='KING-EUROPE-il-mio-test.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000)};
+  document.getElementById('km-restart').onclick=()=>{location.reload()};
+ });
+ return html;
+};
+})();
