@@ -27,7 +27,7 @@ function chemDrawing(i){
 // Un prodotto compare una sola volta nel rapporto, con ragione specifica per area.
 const AREA_TEXT={
   0:'La tirosina è un precursore usato dall’organismo per sintetizzare catecolamine, tra cui la dopamina. Questo non significa che l’integratore aumenti motivazione o dopamina.',
-  1:'Il magnesio contribuisce alla normale funzione psicologica, se presente in quantità adeguata. Non è una terapia per l’umore e non misura la serotonina.',
+  1:'Il magnesio contribuisce alla normale funzione psicologica. Non misura né regola direttamente la serotonina.',
   3:'Magnesio e vitamina B6 contribuiscono alla normale funzione psicologica e del sistema nervoso. Sono funzioni nutrizionali, non una riduzione dimostrata del cortisolo.',
   4:'Magnesio e vitamine B6/B12 contribuiscono al normale metabolismo energetico e alla riduzione di stanchezza e affaticamento, con apporti adeguati. Non correggono il testosterone.'
 };
@@ -42,6 +42,7 @@ function productsFor(i,used){
  return chosen.map(x=>{used.add(x.url.split('?')[0].toLowerCase());return {...x,reason:(x.area_reasons||{})[String(i)]||'Approfondisci composizione e precauzioni sulla scheda prodotto.'}});
 }
 
+window.KING_REPORT_BUILD="KING-2310-4FOTO";
 window.kingNewResult=function(values,compare){
  const sorted=areas.map((a,i)=>({...a,i,v:values[i]})).sort((a,b)=>a.v-b.v);
  const usedProducts=new Set(); const cards=sorted.map(a=>{const matches=productsFor(a.i,usedProducts);return `<article class="km-card"><div class="km-heading"><span class="km-index">${String(a.i+1).padStart(2,'0')}</span><div><div class="km-over">${safe(a.chem)} · ${safe(a.formula)}</div><h2>${safe(a.name)}</h2></div><span class="km-number" style="color:${color(a.v)}">${a.v}/100</span></div>${chemDrawing(a.i)}<div class="km-meter"><i style="width:${a.v}%;background:${color(a.v)}"></i></div><div class="km-status" style="color:${color(a.v)}">${label(a.v)}</div><p>${safe(a.about)}</p><div class="km-tip"><b>Un piccolo passo</b><p>${safe(a.tip)}</p></div>${matches.length?`<div class="km-products"><div class="km-over">Approfondimento · un prodotto pertinente</div>${matches.map(x=>`<a class="km-product" href="${safe(x.url)}" target="_blank" rel="noopener noreferrer" aria-label="Apri su eBay: ${safe(x.name)}">${x.image?`<img src="${safe(x.image)}" alt="${safe(x.name)}" loading="lazy" onerror="this.style.display='none'">`:'<span class="km-placeholder">✦</span>'}<span><b>${safe(x.name)}</b><small>${safe(x.reason||"Approfondisci ingredienti, etichetta e avvertenze.")}</small><strong>Guarda il prodotto su eBay ↗</strong></span></a>`).join('')}</div>`:''}</article>`}).join('');

@@ -1,16 +1,14 @@
-KING EUROPE – FOTO STABILI (PATCH DI PROVA)
-Sostituisci SOLO i 3 file nella root del repository:
-- test-benessere.html (stessa grafica / domande / lingue, aggiorna i riferimenti cache)
-- KING_report_mobile.js (motore di selezione stabile: max 1 prodotto per area, mai ripetuto)
-- KING_catalogo_ebay.js (fotografie incorporate nel JS e link provenienti dal catalogo precedente)
+KING EUROPE — aggiornamento piccolo, SOLO TRE FILE
 
-Cosa è realmente verificato:
-- Tre inserzioni del negozio Serghei con URL eBay e foto locali nei dati: L-Tirosina (URL breve storico da verificare manualmente), Magnez Max, Multivitamin DailySet.
-- Un prodotto Magnesio + Potassio del negozio Giancarla con immagine locale di confezione simile, ma l'inserzione potrebbe differire nella quantita di compresse: verificare prima della pubblicazione. 
-- NESSUN nuovo link eBay inventato; non sono 15 prodotti.
-- Relazioni non riceve integratori perché non esistono qui prove specifiche per correggere ossitocina.
-- Le foto NON dipendono dal caricamento di immagini eBay: sono incluse come data URI nello script, testate come immagini JPEG/PNG valide.
+1) Estrai lo ZIP nell’app File (fuori dalla ricerca).
+2) Apri KING_PATCH_2310/ e carica nella ROOT del repository GitHub SOLO i 3 file:
+   test-benessere.html, KING_catalogo_ebay.js, KING_report_mobile.js
+3) Sostituisci gli omonimi, non toccare index, Magazzino, Ordine Rapido.
+4) Il sito atteso mostra quattro prodotti illustrati (L-tirosina, Magnesio + Potassio, Magnez Max, DailySet), non 15.
+5) I dati immagine sono incorporati nel catalogo; le immagini NON dipendono da eBay.
 
-Per cambiare gradualmente i prodotti aggiorna solo KING_catalogo_ebay.js, con URL prodotto verificato, immagine esatta, campo recommended_areas [0..4] e area_reasons.
-
-Prima di pubblicizzare: prova aprendo il report e toccando ogni immagine/link. Attenzione: i punteggi non sono misurazioni ormonali. Il salvataggio globale di dati personali non è attivo senza backend e informativa privacy.
+IMPORTANTE: il link breve L-tirosina e la corrispondenza prodotto/foto vanno verificati manualmente.
+Questo non raccoglie automaticamente risultati clienti su un server.
+Il negozio eBay fornito è un collegamento alla pagina profilo e non fornisce in modo affidabile
+un elenco esportabile delle singole inserzioni. Per aggiungere berberina, boro, kelp,
+spirulina ecc. serve la URL individuale eBay di ciascun prodotto.
