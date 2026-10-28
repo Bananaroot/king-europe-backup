@@ -1,19 +1,14 @@
-KING BENESSERE — CORREZIONE PUBBLICA
+KING BENESSERE · VERSIONI 1 E 2
 
-CARICA SU GITHUB SOLO:
-1. test-integratori.html (sostituisce il precedente)
-2. test-alimentazione.html (sostituisce il precedente)
-3. KING_test_sync.js (nuovo)
+SITO: per la VERSIONE 1 sostituisci SOLTANTO KING_report_mobile.js nella cartella principale del repository BACKUP.
+NON toccare test-benessere.html, index.html, cataloghi, altri script o la VERSIONE 2.
+Questa correzione stampa sotto il prodotto anche il link eBay completo e rende più evidente il percorso Test Integratori → Test Alimentazione.
 
-Nessuna modifica a index.html, Magazzino, Ordine Rapido, test-benessere.html o test-benessere-v2.html.
-Eliminato il pulsante «Gestionale» sia nel Test Integratori sia nel Test Alimentazione.
-La navigazione Benessere ora punta alla V2.
+MARKETING: le due locandine sono file PNG, NON vanno necessariamente caricati nel repository.
+KING_BENESSERE_VERSIONE_1_TIKTOK.png → https://bananaroot.github.io/king-europe-backup/test-benessere.html
+KING_BENESSERE_VERSIONE_2_TIKTOK.png → https://bananaroot.github.io/king-europe-backup/test-benessere-v2.html
+I QR sono generati digitalmente e andrebbero scansionati con la fotocamera prima della diffusione.
 
-DATABASE CLIENTI — NON ANCORA ATTIVO:
-Il file server king-submit-test-altri.ts è un MODELLO di funzione Supabase per integratori/alimentazione.
-Per funzionare: usare la tabella king_test_clienti dello SQL fornito precedentemente, pubblicare la funzione,
-configurare l'URL HTTPS in KING_test_sync.js, poi eseguire una prova reale di invio e lettura.
-ATTENZIONE: configurare anti-spam/rate limiting e informativa privacy prima del lancio pubblico.
-Non inserire password, service-role key né credenziali private nel codice pubblico.
-Il salvataggio sul browser non equivale al salvataggio sul server.
-La V2 Benessere mantiene la sua integrazione separata e NON è collegata automaticamente da questo aggiornamento.
+IMPORTANTE SULLA PRIVACY: quando il sistema non ha un endpoint di raccolta configurato, il rapporto viene salvato SOLO sul telefono. Nessun codice può salvare i dati nel gestionale senza aver prima configurato il servizio di ricezione. La V1 non dichiara falsamente di aver inviato dati.
+
+La V2 non viene sostituita né modificata da questo pacchetto.
