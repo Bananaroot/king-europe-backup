@@ -1,0 +1,20 @@
+KING EUROPE - CORREZIONE PDF E ARCHIVIO CLIENTI
+
+GITHUB: sostituire SOLO KING_report_mobile.js; caricare KING_report_config.js se assente.
+Il link eBay viene stampato in chiaro sotto la scheda del prodotto, così si copia dal PDF.
+
+DATABASE: eseguire KING_CLIENTI_SUPABASE.sql su Supabase. NON basta caricare il file SQL su GitHub.
+Serve una Edge Function di ricezione HTTPS protetta. Solo dopo averla attivata, inserire il suo URL in KING_report_config.js e caricare quel file su GitHub.
+Finché l'endpoint è vuoto, i dati restano sul dispositivo e il sito lo comunica chiaramente.
+Il pulsante Salva invia con consenso; anche Salva PDF prova a inviare SOLO se l'utente ha selezionato il consenso.
+L'informativa privacy per la raccolta di dati personali/benessere deve essere pubblicata prima del lancio.
+Non pubblicare chiavi segrete o service-role nel repository.
+
+ATTIVAZIONE EDGE FUNCTION
+1. Supabase > SQL Editor: esegui KING_CLIENTI_SUPABASE.sql.
+2. Supabase > Edge Functions: crea king-submit-test e inserisci il codice king-submit-test.ts.
+3. Verifica che SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY siano segreti disponibili alla funzione, MAI al sito.
+4. La funzione deve consentire richieste POST pubbliche (configurazione verify_jwt=false nella funzione); aggiungi protezione anti-bot/rate-limit prima della distribuzione pubblica.
+5. Copia l'URL HTTPS della funzione in KING_report_config.js.
+6. La raccolta è attiva SOLO dopo questi passaggi. Controlla una riga di prova su king_test_clienti.
+7. Pubblica informativa privacy appropriata; dati di benessere richiedono cautela particolare.
