@@ -480,7 +480,7 @@ body.cloud-ready #cloudGate{display:none}
 <style id="king-bestseller-tile-style">.king-bestseller-tile{display:flex;align-items:center;gap:14px;padding:18px 16px;margin:16px 0;border-radius:18px;border:1px solid #e3c67b;background:linear-gradient(125deg,#fff9e9,#fff,#f2f5f8);box-shadow:0 5px 18px rgba(88,70,20,.09);text-decoration:none!important;color:#29333b!important}.king-bestseller-trophy{font-size:37px;flex-shrink:0}.king-bestseller-copy{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}.king-bestseller-copy strong{font-size:15px;letter-spacing:.25px}.king-bestseller-copy small{font-size:12px;line-height:1.4;color:#65717b}.king-bestseller-arrow{color:#b18a32;font-size:20px}.king-bestseller-tile:focus-visible{outline:3px solid #b18a32}</style>
 </head>
 <body>
-<div style="background:#fff3ce;color:#6a5100;border-bottom:2px solid #d49b30;padding:11px 15px;text-align:center;font-weight:750" role="status">♛ KING EURO BACKUP</div>
+
 <div id="cloudGate" role="dialog" aria-modal="true" aria-label="Accesso KING EUROPE MANAGER">
  <div class="card">
   <div class="brand"><span class="crown">♛</span> KING EUROPE MANAGER</div>
@@ -1068,6 +1068,16 @@ onclick="cancelStockEdit()">Annulla modifica</button>
 </div>
 </section>
 
+<div class="card" id="kingSyncOrdersCard">
+<h3>🔄 Sincronizzazione KING · Vendite</h3>
+<p>Importa le vendite nuove da un JSON del gestionale principale, anche domani o nei prossimi giorni. Gli ordini già presenti non vengono duplicati. Le scorte restano invariate finché non è verificata la data della fotografia di magazzino. Nessun collegamento automatico a Supabase.</p>
+<div class="actions">
+<button class="btn" type="button" onclick="document.getElementById('kingSyncOrdersFile').click()">🔄 Sincronizza vendite da JSON</button>
+<input id="kingSyncOrdersFile" type="file" accept=".json,application/json" class="hidden">
+</div>
+<p id="kingSyncOrdersResult" role="status" aria-live="polite"></p>
+</div>
+
 <div class="card" id="backupCard">
 <h3>💾 Backup locale</h3>
 <p>
@@ -1085,7 +1095,7 @@ onclick="document.getElementById('backupFile').click()">
 </div>
 </div>
 
-<footer>♛ KING EUROPE MANAGER · GitHub · Cloudflare Pages</footer>
+<footer>♛ KING EURO BACKUP · GitHub · Cloudflare Pages</footer>
 </main>
 
 <script>
@@ -1313,7 +1323,7 @@ function cloudShowLogin(show){}
 async function cloudLogin(){}
 async function cloudOpen(user){}
 async function cloudLogout(){alert("Questa versione è locale e non richiede accesso. Per proteggere i dati, esporta periodicamente il backup JSON.");}
-async function cloudBoot(){cloudReady=true;cloudRole="owner";document.body.classList.add("cloud-ready");$("cloudUserLabel").textContent="🛡️ BACKUP LOCALE · Questo dispositivo";const e=$("cloudIdentity");if(e){const b=e.querySelector('button');if(b){b.textContent="Esporta JSON";b.onclick=backup;}}cloudStatus("✅ Archivio locale · Supabase disattivato");kingOpenRequestedTarget();}
+async function cloudBoot(){cloudReady=true;cloudRole="owner";document.body.classList.add("cloud-ready");$("cloudUserLabel").textContent="🛡️ KING EURO BACKUP · Questo dispositivo";const e=$("cloudIdentity");if(e){const b=e.querySelector('button');if(b){b.textContent="Esporta JSON";b.onclick=backup;}}cloudStatus("✅ Archivio locale · Supabase disattivato");kingOpenRequestedTarget();}
 
 function kingOpenRequestedTarget(){
  const qs=new URLSearchParams(location.search);
@@ -3138,6 +3148,116 @@ a.click();
 setTimeout(()=>URL.revokeObjectURL(url),2000);
 }
 
+
+/* KING SYNC: importazione incrementale e non distruttiva. */
+const KING_SYNC_LEDGER_KEY = "king_backup_imported_order_ids_v2";
+function kingOrderKey(o){
+ const id=o?.id==null?'':String(o.id).trim();
+ if(id)return 'id:'+id;
+ const ref=String(o?.ref||o?.reference||'').trim().toLowerCase();
+ const channel=String(o?.platform||o?.channel||'').trim().toLowerCase();
+ return ref&&channel?'ref:'+channel+':'+ref:null;
+}
+function kingSyncSignature(x){
+ if(Array.isArray(x))return x.map(kingSyncSignature);
+ if(x&&typeof x==='object')return Object.fromEntries(Object.keys(x).sort().map(k=>[k,kingSyncSignature(x[k])]));
+ return x;
+}
+// KING BACKUP: sincronizzazione incrementale; data di riferimento 25/10/2026.
+// L'identità dell'ordine e il registro degli scarichi persistono nell'archivio locale.
+function kingSyncDate(o){
+ const raw=o.orderDate||o.date||o.createdAt||o.created_at||o.dataOrdine||o.data||'';
+ if(typeof raw!=='string')return null;
+ const it=raw.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})(?:\s|$)/);
+ if(it){const d=`${it[3]}-${it[2].padStart(2,'0')}-${it[1].padStart(2,'0')}`;return Number.isFinite(Date.parse(d+'T12:00:00'))?d:null;}
+ const iso=raw.match(/^(\d{4}-\d{2}-\d{2})/);
+ return iso&&Number.isFinite(Date.parse(iso[1]+'T12:00:00'))?iso[1]:null;
+}
+function kingSyncOrderIdentity(o){
+ const id=kingOrderKey(o);if(id)return id;
+ const ref=String(o.ref||o.reference||o.orderNumber||'').trim().toLowerCase();
+ const platform=String(o.platform||o.channel||'').trim().toLowerCase();
+ return ref&&platform?'ref:'+platform+':'+ref:null;
+}
+function kingSyncSaleItems(o){
+ if(Array.isArray(o.items)&&o.items.length)return o.items;
+ return [o];
+}
+function kingSyncFindStock(item){
+ const sku=String(item.sku||item.catalogSku||item.productSku||'').trim().toLowerCase();
+ const productId=String(item.catalogProductId||item.productId||item.product||'');
+ const product=db.products.find(p=>String(p.id)===productId);
+ const code=sku||String(product?.sku||product?.catalogSku||'').trim().toLowerCase();
+ const stockId=String(item.stockId||item.stockItemId||'');
+ if(stockId){const byId=db.stock.filter(x=>String(x.id)===stockId);if(byId.length===1)return byId[0];}
+ if(code){const bySku=db.stock.filter(x=>String(x.sku||x.catalogSku||'').trim().toLowerCase()===code);if(bySku.length===1)return bySku[0];}
+ const name=String(item.productName||item.name||product?.name||'').trim().toLowerCase();
+ if(name){const byName=db.stock.filter(x=>String(x.name||'').trim().toLowerCase()===name);if(byName.length===1)return byName[0];}
+ return null;
+}
+document.getElementById('kingSyncOrdersFile').addEventListener('change',async function(event){
+ const file=event.target.files?.[0],out=document.getElementById('kingSyncOrdersResult');
+ if(!file)return;
+ try{
+  if(file.size>30*1024*1024)throw Error('JSON troppo grande (massimo 30 MB).');
+  const parsed=JSON.parse(await file.text());
+  const incoming=Array.isArray(parsed)?parsed:parsed?.orders;
+  if(!Array.isArray(incoming))throw Error('JSON senza elenco orders. Esporta il JSON completo del principale.');
+  if(!Array.isArray(db.orders)||!Array.isArray(db.stock))throw Error('Archivio locale non valido.');
+  const ids=new Set(db.orders.map(kingSyncOrderIdentity).filter(Boolean));
+  const sigs=new Set(db.orders.map(o=>JSON.stringify(kingSyncSignature(o))));
+  const newOrders=[];let duplicates=0,invalid=0;
+  for(const o of incoming){
+   if(!o||typeof o!=='object'||Array.isArray(o)){invalid++;continue;}
+   const id=kingSyncOrderIdentity(o),sig=JSON.stringify(kingSyncSignature(o));
+   if((id&&ids.has(id))||sigs.has(sig)){duplicates++;continue;}
+   newOrders.push({...o,kingSyncImportedAt:new Date().toISOString()});
+   if(id)ids.add(id);sigs.add(sig);
+  }
+  if(!newOrders.length){out.textContent=`✓ Nessun nuovo ordine. ${duplicates} già presenti; magazzino invariato.`;return;}
+  // Prima di sottrarre, calcolare e mostrare un'anteprima di ogni singolo scarico.
+  const plans=[];let historical=0,uncertain=0,post=0;
+  const ledger=new Set(Array.isArray(db.kingSyncStockLedger)?db.kingSyncStockLedger:[]);
+  for(const o of newOrders){
+   const date=kingSyncDate(o),id=kingSyncOrderIdentity(o);
+   if(date&&date<='2026-10-25'){o.kingSyncStockStatus='storico';historical++;continue;}
+   if(!date||!id){o.kingSyncStockStatus='da_verificare';uncertain++;continue;}
+   post++;
+   const items=kingSyncSaleItems(o);
+   const entries=[];let ok=true;
+   for(let j=0;j<items.length;j++){
+    const item=items[j],key=id+':'+j;
+    const q=Number(item.qty??item.quantity??o.qty??o.quantity);
+    const stock=kingSyncFindStock(item);
+    if(!stock||!Number.isInteger(q)||q<=0||ledger.has(key)){ok=false;break;}
+    entries.push({stock,key,q});
+   }
+   if(!ok||!entries.length){o.kingSyncStockStatus='da_verificare';uncertain++;continue;}
+   o.kingSyncStockStatus='pronto';plans.push({order:o,entries});
+  }
+  const amounts=new Map();
+  for(const p of plans)for(const e of p.entries)amounts.set(e.stock.id,(amounts.get(e.stock.id)||0)+e.q);
+  const insuff=[...amounts].filter(([id,q])=>Number(db.stock.find(x=>x.id===id)?.qty)<q);
+  if(insuff.length){
+   for(const p of plans){p.order.kingSyncStockStatus='da_verificare';}
+   plans.length=0;uncertain+=post;
+  }
+  const total=plans.reduce((n,p)=>n+p.entries.reduce((m,e)=>m+e.q,0),0);
+  const msg=`${newOrders.length} ordini nuovi; ${duplicates} duplicati. ${historical} storici senza scarico. ${plans.length} ordini successivi al 25/10 da scaricare (${total} pezzi). ${uncertain} ordini richiedono verifica e NON saranno scalati.`;
+  if(!confirm(msg+'\n\nConfermi importazione e scarichi indicati? Prima verrà creata una copia di sicurezza.')){out.textContent='Sincronizzazione annullata.';return;}
+  const previous=JSON.stringify(db);
+  try{localStorage.setItem('king_sync_orders_rollback_'+Date.now(),previous);}catch(e){throw Error('Memoria insufficiente per la copia di sicurezza. Esporta prima il JSON locale.');}
+  try{
+   for(const p of plans){for(const e of p.entries){e.stock.qty=Number(e.stock.qty)-e.q;ledger.add(e.key);}p.order.kingSyncStockStatus='scalato';}
+   db.kingSyncStockLedger=[...ledger];db.orders.push(...newOrders);
+   localStorage.setItem(KEY,JSON.stringify(db));
+   if(JSON.parse(localStorage.getItem(KEY)||'{}').orders?.length!==db.orders.length)throw Error('Verifica del salvataggio fallita');
+  }catch(e){db=JSON.parse(previous);localStorage.setItem(KEY,previous);throw Error('Operazione annullata: '+e.message);}
+  render();out.textContent='✓ '+msg+' Importazione completata.';
+ }catch(e){out.textContent='⚠ '+(e.message||String(e));}
+ finally{event.target.value='';}
+});
+
 $("backupFile").addEventListener("change",async e=>{
 try{
 const file=e.target.files[0];
@@ -3876,5 +3996,4 @@ void cloudBoot();
 </script>
 </body>
 </html>
-
 
