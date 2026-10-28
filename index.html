@@ -477,6 +477,7 @@ body.cloud-ready #cloudGate{display:none}
 </style>
 <style id="king-qty-compact-fix">.king-inline-qty{gap:3px!important}.king-inline-qty .btn{min-width:30px!important;min-height:30px!important;padding:3px 7px!important;border-radius:9px!important}.king-inline-qty .king-qty-number{width:49px!important;min-width:0!important;max-width:49px!important;height:32px!important;min-height:0!important;padding:3px!important;margin:0!important;text-align:center!important;font-size:15px!important;font-weight:700!important;border-radius:9px!important;appearance:textfield;-moz-appearance:textfield}.king-inline-qty .king-qty-number::-webkit-inner-spin-button,.king-inline-qty .king-qty-number::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}</style>
 <style id="king-sales-dashboard-style">.king-sales-dashboard .actions{align-items:end}.king-sales-dashboard select{width:auto;max-width:100%;font-size:13px;padding:8px}.king-sales-dashboard .stat{min-width:0}.king-sale-price summary::-webkit-details-marker{display:none}</style>
+<style id="king-bestseller-tile-style">.king-bestseller-tile{display:flex;align-items:center;gap:14px;padding:18px 16px;margin:16px 0;border-radius:18px;border:1px solid #e3c67b;background:linear-gradient(125deg,#fff9e9,#fff,#f2f5f8);box-shadow:0 5px 18px rgba(88,70,20,.09);text-decoration:none!important;color:#29333b!important}.king-bestseller-trophy{font-size:37px;flex-shrink:0}.king-bestseller-copy{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}.king-bestseller-copy strong{font-size:15px;letter-spacing:.25px}.king-bestseller-copy small{font-size:12px;line-height:1.4;color:#65717b}.king-bestseller-arrow{color:#b18a32;font-size:20px}.king-bestseller-tile:focus-visible{outline:3px solid #b18a32}</style>
 </head>
 <body>
 <div style="background:#fff3ce;color:#6a5100;border-bottom:2px solid #d49b30;padding:11px 15px;text-align:center;font-weight:750" role="status">🛡️ COPIA DI EMERGENZA · Catalogo storico importato automaticamente al primo avvio, se vuoto. I dati sono salvati SOLO in questo browser. Nessun accesso a Supabase dalle pagine Magazzino OstroVit/BULK. Esporta regolarmente il JSON.</div>
@@ -544,6 +545,7 @@ body.cloud-ready #cloudGate{display:none}
 <a href="?page=magazzino" data-nav="magazzino"><span class="symbol">📦</span>Magazzino</a>
 <a href="?page=centro" data-nav="centro"><span class="symbol">✈️</span>Centro ordini</a>
 <a href="?page=strategiche" data-nav="strategiche"><span class="symbol">🛡️</span>Scorte Strategiche</a>
+<a href="?page=bestseller" data-nav="bestseller"><span class="symbol">🏆</span>Bestseller</a>
 <a href="?page=ordini" data-nav="ordini"><span class="symbol">🛒</span>Ordini</a>
 <a href="?page=prodotti" data-nav="prodotti"><span class="symbol">🔗</span>Prodotti</a>
 <a href="?page=paesi" data-nav="paesi"><span class="symbol">🌍</span>Paesi</a>
@@ -611,13 +613,7 @@ aria-live="polite"></div>
 </div>
 </div>
 
-<div class="card king-sales-dashboard">
-<div class="eyebrow">KING SALES INTELLIGENCE</div><h3>🏆 Bestseller · Vendite e margini</h3>
-<p>Classifica dai tuoi ordini eBay / Etsy. I margini sono stime basate sui prezzi registrati, senza commissioni, spedizione o imposte.</p>
-<div class="actions"><label for="kingSalesPeriod" style="margin:0">Periodo <select id="kingSalesPeriod" onchange="kingRenderSalesDashboard()"><option value="all">Tutto lo storico</option><option value="30">Ultimi 30 giorni</option><option value="7">Ultimi 7 giorni</option></select></label><label for="kingSalesSort" style="margin:0">Classifica <select id="kingSalesSort" onchange="kingRenderSalesDashboard()"><option value="qty">Pezzi venduti</option><option value="profit">Margine stimato</option></select></label></div>
-<div class="stats" id="kingSalesSummary"></div><div id="kingSalesLeaderboard"></div>
-<small>Gli ordini precedenti senza data compaiono solo in «Tutto lo storico». Un margine viene calcolato solo quando sono disponibili prezzo di vendita e costo d'acquisto.</small>
-</div>
+<a class="king-bestseller-tile" href="?page=bestseller" aria-label="Apri statistiche Bestseller e margini"><span class="king-bestseller-trophy">🏆</span><span class="king-bestseller-copy"><strong>BESTSELLER · VENDITE E MARGINI</strong><small>Classifica prodotti, guadagni stimati e vendite eBay / Etsy</small></span><span class="king-bestseller-arrow">❯</span></a>
 <div class="card note">
 <h3>📝 Il mio blocco note</h3>
 <p>Scrivi velocemente un appunto. Viene salvato automaticamente.</p>
@@ -650,6 +646,16 @@ aria-live="polite"></div>
 </div>
 </section>
 
+<section id="bestseller" class="page">
+<div class="card"><div class="eyebrow">ANALISI AUTOMATICA</div><h2>🏆 Statistiche dei tuoi prodotti</h2><p>La classifica viene calcolata dagli ordini registrati nel gestionale.</p></div>
+<div class="card king-sales-dashboard">
+<div class="eyebrow">KING SALES INTELLIGENCE</div><h3>🏆 Bestseller · Vendite e margini</h3>
+<p>Classifica dai tuoi ordini eBay / Etsy. I margini sono stime basate sui prezzi registrati, senza commissioni, spedizione o imposte.</p>
+<div class="actions"><label for="kingSalesPeriod" style="margin:0">Periodo <select id="kingSalesPeriod" onchange="kingRenderSalesDashboard()"><option value="all">Tutto lo storico</option><option value="30">Ultimi 30 giorni</option><option value="7">Ultimi 7 giorni</option></select></label><label for="kingSalesSort" style="margin:0">Classifica <select id="kingSalesSort" onchange="kingRenderSalesDashboard()"><option value="qty">Pezzi venduti</option><option value="profit">Margine stimato</option></select></label></div>
+<div class="stats" id="kingSalesSummary"></div><div id="kingSalesLeaderboard"></div>
+<small>Gli ordini precedenti senza data compaiono solo in «Tutto lo storico». Un margine viene calcolato solo quando sono disponibili prezzo di vendita e costo d'acquisto.</small>
+</div>
+</section>
 <section id="paesi" class="page">
 
 <div class="card">
@@ -1334,6 +1340,7 @@ function kingOpenRequestedTarget(){
 
 const pageNames={
 home:"La tua centrale operativa",
+bestseller:"🏆 Bestseller · Vendite e margini",
 paesi:"🌍 Paesi e mercati",
 account:"🔐 Account fornitori",
 punti:"⭐ Punti e fatturato",
