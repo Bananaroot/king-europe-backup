@@ -1,20 +1,8 @@
-KING BENESSERE 2.0 — VERSIONE PARALLELA (PROVA)
+KING BENESSERE V2 - aggiornamento pubblico
 
-CARICARE SOLO QUESTI 2 FILE nella root del repository BACKUP:
-- index.html  (aggiunge il tasto 01B nel menu Marketing; V1 invariata)
-- test-benessere-v2.html (nuova pagina test separata)
-
-La V2 usa gli stessi script di supporto gia presenti nella root (catalogo, rapporto, formule).
-Non cancellare test-benessere.html. Non caricare nuovi file JS.
-La V2 parte dallo schema DNA/molecole del test esistente, NON esegue analisi genetiche.
-Dati prova sul dispositivo: chiave localStorage distinta nel file HTML. L'invio centrale
-al database clienti NON e ancora configurato; non indicarlo come attivo.
-Per dati clienti realmente separati serve una tabella dedicata, con policy di privacy,
-consenso e configurazione endpoint. Questa versione e per test funzionale interno.
-
-ATTENZIONE: index.html e tratto dalla copia locale KIN009, NON dal GitHub attualmente
-pubblicato. Se hai modificato index dopo quella versione, non caricare questo index:
-aggiungi solo il pulsante al menu Marketing del tuo index attuale. La riga da aggiungere
-e mostrata sotto:
-
-  <a class="btn" href="./test-benessere-v2.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🧬</span><strong>01B · Benessere V2 DNA</strong><small>Versione sperimentale · separata</small></a>
+Carica solo test-benessere-v2.html e KING_report_mobile_v2.js nella ROOT del repository king-europe-backup.
+NON toccare index.html, la V1 o gli altri file.
+La pagina V2 collega a test-integratori.html e poi test-alimentazione.html.
+QR: https://bananaroot.github.io/king-europe-backup/test-benessere-v2.html
+L'invio dei dati al proprietario non e' ancora attivo finche' l'endpoint Supabase non viene configurato.
+I controlli IT/RU/EN rimangono disponibili. La localizzazione di alcune descrizioni commerciali dei prodotti potrebbe essere ancora italiana.
