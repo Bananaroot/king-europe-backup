@@ -1,20 +1,19 @@
-KING EUROPE - CORREZIONE PDF E ARCHIVIO CLIENTI
+KING BENESSERE — CORREZIONE PUBBLICA
 
-GITHUB: sostituire SOLO KING_report_mobile.js; caricare KING_report_config.js se assente.
-Il link eBay viene stampato in chiaro sotto la scheda del prodotto, così si copia dal PDF.
+CARICA SU GITHUB SOLO:
+1. test-integratori.html (sostituisce il precedente)
+2. test-alimentazione.html (sostituisce il precedente)
+3. KING_test_sync.js (nuovo)
 
-DATABASE: eseguire KING_CLIENTI_SUPABASE.sql su Supabase. NON basta caricare il file SQL su GitHub.
-Serve una Edge Function di ricezione HTTPS protetta. Solo dopo averla attivata, inserire il suo URL in KING_report_config.js e caricare quel file su GitHub.
-Finché l'endpoint è vuoto, i dati restano sul dispositivo e il sito lo comunica chiaramente.
-Il pulsante Salva invia con consenso; anche Salva PDF prova a inviare SOLO se l'utente ha selezionato il consenso.
-L'informativa privacy per la raccolta di dati personali/benessere deve essere pubblicata prima del lancio.
-Non pubblicare chiavi segrete o service-role nel repository.
+Nessuna modifica a index.html, Magazzino, Ordine Rapido, test-benessere.html o test-benessere-v2.html.
+Eliminato il pulsante «Gestionale» sia nel Test Integratori sia nel Test Alimentazione.
+La navigazione Benessere ora punta alla V2.
 
-ATTIVAZIONE EDGE FUNCTION
-1. Supabase > SQL Editor: esegui KING_CLIENTI_SUPABASE.sql.
-2. Supabase > Edge Functions: crea king-submit-test e inserisci il codice king-submit-test.ts.
-3. Verifica che SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY siano segreti disponibili alla funzione, MAI al sito.
-4. La funzione deve consentire richieste POST pubbliche (configurazione verify_jwt=false nella funzione); aggiungi protezione anti-bot/rate-limit prima della distribuzione pubblica.
-5. Copia l'URL HTTPS della funzione in KING_report_config.js.
-6. La raccolta è attiva SOLO dopo questi passaggi. Controlla una riga di prova su king_test_clienti.
-7. Pubblica informativa privacy appropriata; dati di benessere richiedono cautela particolare.
+DATABASE CLIENTI — NON ANCORA ATTIVO:
+Il file server king-submit-test-altri.ts è un MODELLO di funzione Supabase per integratori/alimentazione.
+Per funzionare: usare la tabella king_test_clienti dello SQL fornito precedentemente, pubblicare la funzione,
+configurare l'URL HTTPS in KING_test_sync.js, poi eseguire una prova reale di invio e lettura.
+ATTENZIONE: configurare anti-spam/rate limiting e informativa privacy prima del lancio pubblico.
+Non inserire password, service-role key né credenziali private nel codice pubblico.
+Il salvataggio sul browser non equivale al salvataggio sul server.
+La V2 Benessere mantiene la sua integrazione separata e NON è collegata automaticamente da questo aggiornamento.
