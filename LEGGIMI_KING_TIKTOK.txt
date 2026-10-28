@@ -1,0 +1,11 @@
+KING EUROPE · PACCHETTO BACKUP + TEST TIKTOK
+
+1. Questo ZIP contiene la cartella king-europe-backup-main completa. Su GitHub carica il CONTENUTO di quella cartella nella root del repository king-europe-backup, sovrascrivendo i file omonimi. Non caricare la cartella esterna come sottocartella.
+2. index.html include il nuovo pulsante Marketing > Database scientifico e catalogo.
+3. database-scientifico.html legge king-database-scientifico.json e KING_catalogo_pubblico.js.
+4. test-benessere.html usa KING_report_mobile.js, KING_report_mobile.css e KING_catalogo_pubblico.js.
+5. L'editor del database salva bozze soltanto nel browser locale. Per rendere pubbliche nuove inserzioni esporta KING_catalogo_pubblico.js e sostituiscilo su GitHub. Non è un'area privata o autenticata.
+6. Attualmente il catalogo contiene solo 3 link eBay individuali già presenti nei dati forniti, non 40. Le immagini provengono dalle foto del catalogo disponibile.
+7. Le schede scientifiche non certificano che gli integratori correggano serotonina, dopamina o livelli ormonali.
+8. Testare su iPhone, specialmente risultati, apertura link e stampa, prima della campagna TikTok.
+9. Per tornare indietro, conservare una copia del repository e del magazzino JSON prima del caricamento.

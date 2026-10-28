@@ -1,0 +1,22 @@
+KING EUROPE — PACCHETTO UNICO DEFINITIVO DI PROVA
+
+Questo ZIP CONTIENE UNA CARTELLA: king-europe-backup-main
+La cartella contiene index.html, test-benessere.html, database-scientifico.html, KING_scienza_logica.js, king-database-scientifico.json e gli altri file del backup.
+
+INSTALLAZIONE SU GITHUB (IMPORTANTE):
+1. Salva una copia del repository attuale.
+2. ESTRAI LO ZIP sul telefono o computer. Github Pages NON apre automaticamente un archivio ZIP caricato nel repository.
+3. Apri la cartella estratta king-europe-backup-main e carica IL SUO CONTENUTO nella directory principale del repository king-europe-backup, NON la cartella esterna e NON il file zip.
+4. Sostituisci i file omonimi; lascia invariati i file extra esistenti su GitHub.
+5. Verifica https://bananaroot.github.io/king-europe-backup/test-benessere.html e /database-scientifico.html
+
+ARCHIVIO DI RAGIONAMENTO:
+- king-database-scientifico.json = record leggibili e aggiornabili
+- KING_scienza_logica.js = identico archivio precalcolato, usato da Test Benessere senza connessione a DB
+- KING_catalogo_pubblico.js = le 3 inserzioni individuali già disponibili; non ci sono ancora 40 inserzioni controllate.
+- Gli abbinamenti richiedono ingredient_ids espliciti; i titoli da soli non generano consigli.
+- Solo tirosina è ora associata a Motivazione, come approfondimento biochimico senza alcuna promessa.
+- Il database clienti sul server NON è automatico: Supabase richiede una configurazione separata, con privacy e consenso.
+- Le aggiunte da pagina Database scientifico sono locali nel browser fino all'esportazione e caricamento su GitHub.
+
+NON TRATTARE i punteggi come carenze ormonali o suggerire trattamenti.

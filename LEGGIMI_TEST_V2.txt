@@ -1,0 +1,11 @@
+KING EUROPE · TEST BENESSERE V2
+
+1. Carica i file contenuti in king-europe-backup-main nella radice del repository BACKUP, non la cartella esterna.
+2. Apri test-benessere.html, completa il questionario e compila Nome/Cognome/Email.
+3. Il pulsante Personalizza e salva memorizza nel browser. L'esportazione è facoltativa.
+4. IMPORTANTISSIMO: il salvataggio nel database remoto NON è attivo finché non configuri Supabase. GitHub Pages non può ricevere dati. Non promettere la raccolta delle email prima di attivarla.
+5. Per abilitare Supabase: esegui supabase_king_reports.sql; pubblica supabase-edge-king-receive-report.ts come Edge Function king-receive-report, impostando CORS e protezione anti-spam/rate limiting prima della diffusione pubblica; copia URL HTTPS della funzione in KING_report_config.js (submissionEndpoint). Le chiavi di servizio rimangono SOLO lato server. Verifica end-to-end la ricezione con consenso, accesso e cancellazione dati.
+6. PRIVACY/GDPR: prima della pubblicazione raccogli solo dati necessari; pubblica informativa privacy con identità titolare, finalità, basi giuridiche, conservazione, diritti e contatto. Nessun consenso di marketing è implicito.
+7. database-scientifico.html: aggiungi altri link, foto e associazione con AREA. Esporta KING_catalogo_pubblico.js e ricaricalo su GitHub. I nuovi link salvati solo nel browser editor NON arrivano ai visitatori finché non esporti e pubblichi.
+8. Gli schemi chimici sono illustrativi e riusano quelli già presenti nel quiz; non certificano la misurazione di ormoni.
+9. Tutte le pagine gestionali e gli ordini sono conservati dal pacchetto di partenza, senza alterazioni.
