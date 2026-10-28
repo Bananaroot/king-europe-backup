@@ -1,27 +1,15 @@
-KING EUROPE · PATCH MIRATA SERGHEI
-===================================
-CARICA SOLO QUESTI DUE FILE nella radice del repository GitHub:
-1) KING_catalogo_ebay.js (sostituisce il file gia' esistente)
-2) statistiche-test-ebay.html (nuovo file)
+KING EUROPE - TEST BENESSERE: AGGIORNAMENTO MINIMO
 
-NON sostituire test-benessere.html, index, report, lingue, Magazzino o Ordine Rapido.
-Questo patch richiede che il test esistente gia' carichi KING_catalogo_ebay.js
-(come nel pacchetto KING_DOPPIO_CATALOGO_3_FILE.zip).
+Carica soltanto KING_catalogo_ebay.js nella directory principale di king-europe-backup su GitHub.
+Non sostituire index.html, test-benessere.html o KING_report_mobile.js.
 
-CATALOGO: conserva le 8 inserzioni precedenti e aggiunge 2 inserzioni eBay
-individuali verificate del venditore serda6262. In totale 10 schede; NON 50.
-Per i nuovi 2 prodotti non ho inventato immagini o assoc. ormonali.
+IL DATABASE NON CONTIENE ANCORA 15 INSERZIONI VERIFIED: contiene 10 link noti,
+di cui 7 provenienti da pagine eBay individuali, 3 link brevi storici
+non confermati come inserzioni del negozio. Solo 5 schede con ingredienti
+verificati entrano nelle proposte: evita indicazioni inventate.
 
-CLICK: quando si tocca una scheda prodotto dal rapporto, registra prodotto,
-area e ora sul dispositivo del visitatore. Il cliente va comunque su eBay.
-La pagina statistiche-test-ebay.html mostra SOLO i click dal browser in uso.
-Per raccogliere click da tutti i visitatori occorre configurare un endpoint
-ricevente HTTPS in KING_EBAY_CLICK_ENDPOINT; non e' attivo per impostazione
-predefinita. Non e' possibile sapere da questo dato se una vendita e' avvenuta.
+CATALOGO_CONTROLLI.json è un riepilogo di revisione, NON è necessario caricarlo.
+N.B. Nessun test di Safari/GitHub Pages è stato eseguito qui.
+Il catalogo supplementa il database esistente; non può inventare benefici sugli ormoni.
 
-PRIVACY: gli eventi di click NON includono nome, email o risposte dettagliate.
-Se abiliti raccolta remota, aggiorna informativa privacy e verifica la gestione
-consenso, durata conservazione e controlli contro abusi prima di pubblicare.
-
-VERIFICA: apri test, scorri fino a un prodotto, tocca, verifica eBay,
-poi apri statistiche-test-ebay.html nello STESSO browser/dispositivo.
+Verifica che il tuo test HTML carichi già KING_catalogo_ebay.js.
