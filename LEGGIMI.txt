@@ -1,6 +1,11 @@
-KING EUROPE - PATCH RISULTATI PERSONALI
-Carica soltanto KING_report_mobile.js e KING_catalogo_ebay.js nella directory principale di GitHub Pages.
-NON modificare test-benessere.html, index.html, domande, lingue, CSS o gestionale.
-Differenzia le motivazioni, limita a una proposta per area, evita che un prodotto sia ripetuto in piu aree.
-Rimuove una foto non corrispondente al nome dal catalogo (appare segnaposto finche non c’e foto reale).
-Non aggiunge 15 link non verificati. Le proposte riguardano normali funzioni nutrizionali, NON ormoni misurati.
+CORREZIONE MINIMA KING EUROPE - 28/10/2026
+
+Caricare SOLTANTO questi 2 file nella directory principale GitHub Pages:
+1) test-benessere.html  - cambia solo la versione richiesta per gli script (evita cache Safari)
+2) KING_report_mobile.js - un solo prodotto per area, nessuna ripetizione, mostra solo prodotti con immagine presente e motivazioni differenziate.
+
+Non modificare index.html, domande, lingue IT/RU/EN, disegni chimici, gestionale, magazzino o altri file.
+
+ATTENZIONE: lo ZIP NON contiene 15 nuovi link. Se il catalogo ha immagini mancanti, alcuni risultati non mostreranno proposte: meglio che mettere immagini false. La pagina non misura livelli ormonali.
+
+Dopo caricamento aprire test-benessere.html in Safari scheda privata, completare e verificare immagine e link.

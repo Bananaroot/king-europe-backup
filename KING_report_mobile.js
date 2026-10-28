@@ -32,32 +32,46 @@ const AREA_TEXT={
   4:'Magnesio e vitamine B6/B12 contribuiscono al normale metabolismo energetico e alla riduzione di stanchezza e affaticamento, con apporti adeguati. Non correggono il testosterone.'
 };
 function productsFor(i,used){
- const db=window.KING_SCIENCE_DB||{}; const rules=db.logic?.ingredient_rules||{};
+ const db=window.KING_SCIENCE_DB||{};
+ const rules=db.logic?.ingredient_rules||{};
  const candidates=[];
  for(const x of links()){
   if(!/^https:\/\/(?:[^/]+\.)?ebay\.[^/]+\/|^https:\/\/ebay\.io\//i.test(x.url||''))continue;
+  // Le immagini non confermate non devono diventare riquadri bianchi nel risultato.
+  if(!x.image || !/^(data:image\/|https:\/\/)/i.test(x.image))continue;
   const ingredients=Array.isArray(x.ingredient_ids)?x.ingredient_ids:[];
-  const qualified=ingredients.filter(k=>{
-    const r=rules[k];
-    return !!r && (r.areas||[]).includes(i);
-  });
-  // Serenità: soltanto nutrienti con un claim sulla normale funzione psicologica.
+  const qualified=ingredients.filter(k=>rules[k] && (rules[k].areas||[]).includes(i));
   if(i===1 && ingredients.includes('magnesium'))qualified.push('magnesium');
   if(!qualified.length || i===2)continue;
   const key=(x.url||'').split('?')[0].toLowerCase();
   if(used.has(key))continue;
-  const variety=ingredients.includes('vitamin_b12')&&i===4?3:ingredients.includes('vitamin_b6')?2:1;
-  candidates.push({x,key,rank:variety+(x.image?1:0),ingredients});
+  const hasB12=ingredients.includes('vitamin_b12');
+  const hasB6=ingredients.includes('vitamin_b6');
+  // Favorisce il prodotto piu coerente con l'area, senza affermare di trattare ormoni.
+  let rank=1;
+  if(i===0 && ingredients.includes('tyrosine'))rank+=10;
+  if(i===1 && ingredients.includes('magnesium') && !hasB12)rank+=5;
+  if(i===3 && hasB6)rank+=6;
+  if(i===4 && hasB12)rank+=8;
+  candidates.push({x,key,rank,ingredients});
  }
  candidates.sort((a,b)=>b.rank-a.rank);
  const chosen=candidates.slice(0,1);
  for(const c of chosen)used.add(c.key);
- return chosen.map(c=>({...c.x,reason:AREA_TEXT[i]||'Approfondisci ingredienti e avvertenze dell’inserzione.'}));
+ return chosen.map(c=>{
+  const ing=c.ingredients;
+  const reason=i===0 ? 'La tirosina e un precursore delle catecolamine: il suo ruolo biologico non dimostra un aumento della motivazione.'
+   : i===1 ? 'Il magnesio contribuisce alla normale funzione psicologica. Non e un indicatore dei livelli di serotonina.'
+   : i===3 ? 'Magnesio e vitamina B6 partecipano alla normale funzione nervosa. Non sono un trattamento per abbassare il cortisolo.'
+   : i===4 ? (ing.includes('vitamin_b12')?'La vitamina B12 contribuisce al metabolismo energetico e alla riduzione della stanchezza, con apporto adeguato. Non misura il testosterone.':'Il magnesio contribuisce al normale metabolismo energetico. Non misura il testosterone.')
+   : 'Leggi sempre ingredienti e precauzioni del prodotto.';
+  return {...c.x,reason};
+ });
 }
 
 window.kingNewResult=function(values,compare){
  const sorted=areas.map((a,i)=>({...a,i,v:values[i]})).sort((a,b)=>a.v-b.v);
- const usedProducts=new Set(); const cards=sorted.map(a=>{const matches=productsFor(a.i,usedProducts);return `<article class="km-card"><div class="km-heading"><span class="km-index">${String(a.i+1).padStart(2,'0')}</span><div><div class="km-over">${safe(a.chem)} · ${safe(a.formula)}</div><h2>${safe(a.name)}</h2></div><span class="km-number" style="color:${color(a.v)}">${a.v}/100</span></div>${chemDrawing(a.i)}<div class="km-meter"><i style="width:${a.v}%;background:${color(a.v)}"></i></div><div class="km-status" style="color:${color(a.v)}">${label(a.v)}</div><p>${safe(a.about)}</p><div class="km-tip"><b>Un piccolo passo</b><p>${safe(a.tip)}</p></div>${matches.length?`<div class="km-products"><div class="km-over">Approfondimento · un prodotto pertinente</div>${matches.map(x=>`<a class="km-product" href="${safe(x.url)}" target="_blank" rel="noopener noreferrer" aria-label="Apri su eBay: ${safe(x.name)}">${x.image?`<img src="${safe(x.image)}" alt="${safe(x.name)}" loading="lazy">`:'<span class="km-placeholder">✦</span>'}<span><b>${safe(x.name)}</b><small>${safe(x.reason||"Approfondisci ingredienti, etichetta e avvertenze.")}</small><strong>Guarda il prodotto su eBay ↗</strong></span></a>`).join('')}</div>`:''}</article>`}).join('');
+ const usedProducts=new Set(); const cards=sorted.map(a=>{const matches=productsFor(a.i,usedProducts);return `<article class="km-card"><div class="km-heading"><span class="km-index">${String(a.i+1).padStart(2,'0')}</span><div><div class="km-over">${safe(a.chem)} · ${safe(a.formula)}</div><h2>${safe(a.name)}</h2></div><span class="km-number" style="color:${color(a.v)}">${a.v}/100</span></div>${chemDrawing(a.i)}<div class="km-meter"><i style="width:${a.v}%;background:${color(a.v)}"></i></div><div class="km-status" style="color:${color(a.v)}">${label(a.v)}</div><p>${safe(a.about)}</p><div class="km-tip"><b>Un piccolo passo</b><p>${safe(a.tip)}</p></div>${matches.length?`<div class="km-products"><div class="km-over">Approfondimento · un prodotto pertinente</div>${matches.map(x=>`<a class="km-product" href="${safe(x.url)}" target="_blank" rel="noopener noreferrer" aria-label="Apri su eBay: ${safe(x.name)}">${x.image?`<img src="${safe(x.image)}" alt="${safe(x.name)}" loading="lazy" onerror="this.closest('a').style.display='none'">`:'<span class="km-placeholder">✦</span>'}<span><b>${safe(x.name)}</b><small>${safe(x.reason||"Approfondisci ingredienti, etichetta e avvertenze.")}</small><strong>Guarda il prodotto su eBay ↗</strong></span></a>`).join('')}</div>`:''}</article>`}).join('');
  const nameField=`<section class="km-person"><h2>Personalizza il tuo rapporto</h2><p>Inserisci i dati che desideri associare al tuo test. Email facoltativa: serve per identificare la tua richiesta, non per pubblicità automatica.</p><div class="km-fields"><label>Nome<input id="km-name" maxlength="60" placeholder="Nome" autocomplete="given-name"></label><label>Cognome<input id="km-surname" maxlength="70" placeholder="Cognome" autocomplete="family-name"></label><label>Email<input id="km-email" type="email" maxlength="160" placeholder="nome@email.it" autocomplete="email" inputmode="email"></label></div><label class="km-consent"><input id="km-consent" type="checkbox"> <span>Acconsento all'invio del mio nome, cognome, email e delle risposte al gestore del test per conservare il mio risultato. Posso svolgere il test anche senza inviarli.</span></label><button type="button" id="km-name-save">Personalizza e salva</button><p id="km-save-status" class="km-save-status" role="status" aria-live="polite"></p></section>`;
  const html=`<div id="km-report"><div class="km-hero"><div class="km-over">✦ KING EUROPE · WELLBEING</div><h1>Il tuo profilo di benessere</h1><p>Un percorso personale costruito sulle tue risposte.</p><div class="km-date">${new Date().toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'})} · Test gratuito</div></div>${nameField}<div class="km-intro"><b>Da dove cominciare</b><p>Le aree sono ordinate da quelle che nelle tue risposte richiedono più attenzione alle tue risorse percepite.</p><div class="km-mini">${sorted.map(a=>`<div><span>${safe(a.name)}</span><span style="color:${color(a.v)}">${a.v}/100</span></div>`).join('')}</div></div>${cards}<div class="km-final"><h2>Il tuo prossimo passo</h2><p>Puoi approfondire anche gli altri test gratuiti. Non è necessario acquistare integratori per completare questo percorso.</p><a href="./test-integratori.html">Test Integratori ↗</a><a href="./test-alimentazione.html">Test Alimentazione ↗</a></div><div class="km-disclaimer">Questo questionario non è un esame medico: non misura ormoni o neurotrasmettitori, non diagnostica carenze e non prescrive cure. Le schede prodotto sono contenuti commerciali di KING EUROPE, da valutare secondo etichetta e con un professionista quando necessario.</div><div class="km-actions"><button type="button" id="km-print">📄 Salva PDF / Stampa</button><button type="button" id="km-export">↓ Esporta il tuo risultato</button><button type="button" id="km-restart">↻ Rifai il test</button></div><p class="km-privacy">Il risultato viene salvato in questo browser. L'invio al gestore avviene soltanto con consenso esplicito, se il server di raccolta è stato configurato.</p></div>`;
  queueMicrotask(()=>{const el=document.getElementById('km-report');if(!el)return;
