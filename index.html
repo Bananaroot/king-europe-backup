@@ -3199,7 +3199,7 @@ document.getElementById('kingSyncOrdersFile').addEventListener('change',async fu
  const file=event.target.files?.[0],out=document.getElementById('kingSyncOrdersResult');
  if(!file)return;
  try{
-  if(file.size>30*1024*1024)throw Error('JSON troppo grande (massimo 30 MB).');
+  if(file.size>100*1024*1024)throw Error('JSON troppo grande (massimo 100 MB).');
   const parsed=JSON.parse(await file.text());
   const incoming=Array.isArray(parsed)?parsed:parsed?.orders;
   if(!Array.isArray(incoming))throw Error('JSON senza elenco orders. Esporta il JSON completo del principale.');
@@ -3239,21 +3239,29 @@ document.getElementById('kingSyncOrdersFile').addEventListener('change',async fu
   for(const p of plans)for(const e of p.entries)amounts.set(e.stock.id,(amounts.get(e.stock.id)||0)+e.q);
   const insuff=[...amounts].filter(([id,q])=>Number(db.stock.find(x=>x.id===id)?.qty)<q);
   if(insuff.length){
-   for(const p of plans){p.order.kingSyncStockStatus='da_verificare';}
-   plans.length=0;uncertain+=post;
+   const blocked=new Set(insuff.map(([id])=>String(id)));
+   for(let i=plans.length-1;i>=0;i--){
+    const p=plans[i];if(p.entries.some(e=>blocked.has(String(e.stock.id)))){
+     p.order.kingSyncStockStatus='da_verificare';plans.splice(i,1);uncertain++;
+    }
+   }
   }
   const total=plans.reduce((n,p)=>n+p.entries.reduce((m,e)=>m+e.q,0),0);
   const msg=`${newOrders.length} ordini nuovi; ${duplicates} duplicati. ${historical} storici senza scarico. ${plans.length} ordini successivi al 25/10 da scaricare (${total} pezzi). ${uncertain} ordini richiedono verifica e NON saranno scalati.`;
   if(!confirm(msg+'\n\nConfermi importazione e scarichi indicati? Prima verrà creata una copia di sicurezza.')){out.textContent='Sincronizzazione annullata.';return;}
   const previous=JSON.stringify(db);
-  try{localStorage.setItem('king_sync_orders_rollback_'+Date.now(),previous);}catch(e){throw Error('Memoria insufficiente per la copia di sicurezza. Esporta prima il JSON locale.');}
+  // Copia di sicurezza scaricabile: non raddoppia l'uso della memoria Safari.
+  const safeBlob=new Blob([previous],{type:'application/json'});
+  const safeUrl=URL.createObjectURL(safeBlob),safeLink=document.createElement('a');
+  safeLink.href=safeUrl;safeLink.download='king-backup-prima-sincronizzazione-'+new Date().toISOString().slice(0,10)+'.json';safeLink.click();
+  setTimeout(()=>URL.revokeObjectURL(safeUrl),10000);
   try{
    for(const p of plans){for(const e of p.entries){e.stock.qty=Number(e.stock.qty)-e.q;ledger.add(e.key);}p.order.kingSyncStockStatus='scalato';}
    db.kingSyncStockLedger=[...ledger];db.orders.push(...newOrders);
    localStorage.setItem(KEY,JSON.stringify(db));
    if(JSON.parse(localStorage.getItem(KEY)||'{}').orders?.length!==db.orders.length)throw Error('Verifica del salvataggio fallita');
   }catch(e){db=JSON.parse(previous);localStorage.setItem(KEY,previous);throw Error('Operazione annullata: '+e.message);}
-  render();out.textContent='✓ '+msg+' Importazione completata.';
+  render();out.textContent='✓ '+msg+' Importazione completata. Riapri Ordine Rapido per vedere lo storico.';
  }catch(e){out.textContent='⚠ '+(e.message||String(e));}
  finally{event.target.value='';}
 });
