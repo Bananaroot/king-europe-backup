@@ -1,14 +1,5 @@
-KING EUROPE — aggiornamento piccolo, SOLO TRE FILE
+AGGIORNAMENTO CATALOG0: sostituire SOLO test-benessere.html e KING_catalogo_ebay.js nella root GitHub. Le altre 2 note NON vanno caricate. Non sovrascrive il motore report, le lingue, le domande, le formule, il magazzino.
 
-1) Estrai lo ZIP nell’app File (fuori dalla ricerca).
-2) Apri KING_PATCH_2310/ e carica nella ROOT del repository GitHub SOLO i 3 file:
-   test-benessere.html, KING_catalogo_ebay.js, KING_report_mobile.js
-3) Sostituisci gli omonimi, non toccare index, Magazzino, Ordine Rapido.
-4) Il sito atteso mostra quattro prodotti illustrati (L-tirosina, Magnesio + Potassio, Magnez Max, DailySet), non 15.
-5) I dati immagine sono incorporati nel catalogo; le immagini NON dipendono da eBay.
+Le immagini incorporate sono 5. I link verificati eBay sono 7 tra singoli prodotti e una voce di altro negozio; gli altri link vecchi brevi NON sono stati confermati. I prodotti senza fotografia restano disattivati.
 
-IMPORTANTE: il link breve L-tirosina e la corrispondenza prodotto/foto vanno verificati manualmente.
-Questo non raccoglie automaticamente risultati clienti su un server.
-Il negozio eBay fornito è un collegamento alla pagina profilo e non fornisce in modo affidabile
-un elenco esportabile delle singole inserzioni. Per aggiungere berberina, boro, kelp,
-spirulina ecc. serve la URL individuale eBay di ciascun prodotto.
+Le immagini di foto ritagliata da screenshot non sono ad alta risoluzione, ma corrispondono all'inserzione.
