@@ -10,7 +10,14 @@ const areas=[
 const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const label=v=>v<=33?'Area da approfondire':v<=66?'Equilibrio variabile':'Risorsa percepita';
 const color=v=>v<=33?'#ed7775':v<=66?'#efbe6d':'#6bd2a6';
-const links=()=>Array.isArray(window.KING_PUBLIC_PRODUCTS)?window.KING_PUBLIC_PRODUCTS:[];
+const links=()=>{
+ const mode=window.KING_CATALOG_MODE||'both';
+ const manager=Array.isArray(window.KING_PUBLIC_PRODUCTS)?window.KING_PUBLIC_PRODUCTS:[];
+ const ebay=Array.isArray(window.KING_EBAY_PRODUCTS)?window.KING_EBAY_PRODUCTS:[];
+ const selected=mode==='ebay'?ebay:mode==='manager'?manager:[...ebay,...manager];
+ const seen=new Set();
+ return selected.filter(x=>{const key=(x.url||'').split('?')[0].toLowerCase();if(!key||seen.has(key))return false;seen.add(key);return true;});
+};
 const cfg=()=>window.KING_REPORT_CONFIG||{};
 function chemDrawing(i){
  // Le illustrazioni vettoriali provengono dagli stessi schemi già usati nel test.
