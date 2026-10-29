@@ -1,3 +1,2 @@
-/* Inserire SOLO il link HTTPS della Edge Function dopo averla pubblicata.
-   NON inserire password, token amministratore o service-role key qui. */
+/* Inserisci qui SOLO un endpoint pubblico di una Edge Function protetta. NON inserire chiavi Supabase o password. */
 window.KING_REPORT_CONFIG={submissionEndpoint:""};

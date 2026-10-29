@@ -1,0 +1,12 @@
+KING BACKUP · Ripristino completo da KIN009(1).zip + V2 e V3
+
+BASE ORIGINALE: KIN009(1).zip, senza login Supabase, con sincronizzazione ordini locale e tutte le funzioni del backup.
+File originali conservati. Solo index.html: aggiunti due pulsanti per le pagine V2 e V3 nella sezione test.
+AGGIUNTI: test-benessere-v2.html, KING_report_mobile_v2.js, test-benessere-v3.html, KING_report_mobile_v3.js, KING_catalogo_ebay.js.
+
+ISTRUZIONI: 1. Sul repository king-europe-backup fai prima un download di sicurezza. 2. Estrai questo ZIP sul dispositivo. 3. Carica i file estratti nella RADICE del repository (non la cartella, non il file ZIP). 4. Conferma la sovrascrittura dei file esistenti. 5. Apri index.html?ripristino=KIN009-V3 e prova Ordine Rapido/Magazzino.
+
+ATTENZIONE: I risultati dei test NON si sincronizzano con un server finche non e configurato un endpoint dedicato. Questo pacchetto preserva la sincronizzazione locale degli ordini del BACKUP ma non inventa un collegamento Supabase.
+V3: 7 domande, senza obbligo di nome/email, stampa/PDF del browser. V1 e V2 mantengono le loro logiche.
+
+Indirizzi: /index.html ; /test-benessere.html ; /test-benessere-v2.html ; /test-benessere-v3.html

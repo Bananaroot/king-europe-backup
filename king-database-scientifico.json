@@ -242,21 +242,19 @@
     "ingredient_rules": {
       "magnesium": {
         "areas": [
-          1,
           3,
           4
         ],
         "level": "physiological",
-        "description": "Magnesio: supporto alla normale funzione psicologica e riduzione della stanchezza, se il prodotto apporta la quantità prevista. Il collegamento a serenità riguarda la normale funzione psicologica, NON i livelli di serotonina."
+        "description": "Magnesio: supporto alla normale funzione psicologica e riduzione della stanchezza, se il prodotto apporta la quantità prevista."
       },
       "vitamin_b6": {
         "areas": [
-          1,
           3,
           4
         ],
         "level": "physiological",
-        "description": "Vitamina B6: normale funzione psicologica e riduzione di stanchezza e affaticamento, nel rispetto dei requisiti del claim. Il collegamento a serenità riguarda la normale funzione psicologica, NON i livelli di serotonina."
+        "description": "Vitamina B6: normale funzione psicologica e riduzione di stanchezza e affaticamento, nel rispetto dei requisiti del claim."
       },
       "vitamin_b12": {
         "areas": [

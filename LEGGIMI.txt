@@ -1,5 +1,11 @@
-KING BENESSERE V3 · 7 DOMANDE · SENZA DATI PERSONALI
+KING EUROPE — VERSIONE SPERIMENTALE, SENZA SUPABASE
 
-Carica SOLO test-benessere-v3.html e KING_report_mobile_v3.js nella cartella principale del BACKUP.
-V1 e V2 e index.html non si toccano.
-Il risultato appare subito; PDF con Salva PDF / Stampa; esportazione risultato JSON opzionale. Nessun invio a database server.
+Carica nella sottocartella marketing/ del solo repository DI BACKUP i tre test HTML, catalogo-link-prodotti.js e king-progressive-report.js. I test originali mantengono il questionario e la grafica; il salvataggio dei risultati è nel localStorage di questo browser e sito.
+
+Dopo un test: 6 pagine. Dopo due: 12 pagine. Dopo tre: 18 pagine, ordine Benessere/Alimentazione/Integratori. Le pagine HTML/CSS si stampano in PDF tramite Stampa > Salva come PDF. L’opzione IT/EN/RU determina la lingua del PDF, NON traduce interamente i questionari originali Alimentazione e Integratori.
+
+Collegamenti eBay inseriti solo se già presenti nell'archivio dell'utente. Non pubblicare dati personali, indirizzi, account o JSON originale in repository pubblici. Non si inviano email: è un prototipo da verificare su iPhone prima del deploy originale.
+
+Non modificare l'originale. Verifica le pagine dopo la pubblicazione, stampa PDF, link e salvataggio ricaricando il sito.
+
+VERSIONE MAIN ROOT: index.html e stato rinominato laboratorio-pdf.html per non sovrascrivere il gestionale. Caricare file estratti nella radice (main/root); nessuna cartella marketing necessaria.
