@@ -1,0 +1,22 @@
+KING BENESSERE · V3 · 7 DOMANDE — AGGIORNAMENTO MINIMO
+
+FILE DA CARICARE NELLA ROOT DEL REPOSITORY king-europe-backup:
+  1. test-benessere-v3.html      NUOVO, non sostituisce V1/V2
+  2. KING_report_mobile_v3.js  NUOVO, rapporto PDF e link eBay copiabili
+  3. index.html                AGGIORNATO, aggiunge tasti V2 (15 domande) e V3 (7 domande)
+
+AVVISO INDEX: index.html si basa sull'ultima copia locale disponibile. Se hai apportato altre modifiche al sito dopo aver scaricato quella copia, confronta prima l'index e carica soltanto i due nuovi file: evita di sovrascrivere funzioni successive. In alternativa inserisci manualmente solo i due collegamenti V2 e V3 nel riquadro «Test gratuiti e archivio» del tuo index attuale.
+
+FILE MARKETING (non necessari al codice):
+  QR_V3_7_DOMANDE.png
+  TIKTOK_V3_7_DOMANDE_HD.png
+
+URL: https://bananaroot.github.io/king-europe-backup/test-benessere-v3.html
+
+Dipendenze: il test usa gli stessi script di catalogo e report già esistenti sul sito BACKUP. Non eliminare gli altri file già pubblicati.
+V1 e V2 rimangono invariati. V3 ha 7 domande, cinque aree, calcolo normalizzato con 1 o 2 domande per area, foto/prodotti del catalogo esistente, salvataggio browser e PDF con URL eBay visibili.
+
+IMPORTANTISSIMO: il salvataggio REMOTO dei profili non è attivo senza l'endpoint Supabase configurato. Non confonderlo con il salvataggio locale. Per attivarlo bisogna verificare la funzione server e le autorizzazioni, non basta questo ZIP.
+I valori stimano percezioni personali, non livelli di ormoni o carenze.
+
+TEST: installa i tre file, apri V3 in finestra privata, rispondi a tutte e 7 le domande, verifica 5 punteggi/5 aree, clic eBay, stampa PDF. QR va verificato anche dalla storia TikTok dopo compressione.
