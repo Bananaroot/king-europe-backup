@@ -70,3 +70,5 @@ window.kingNewResult=function(values,compare){
  return html;
 };
 })();
+
+/* V3 · 7 domande · stesso sistema di schede eBay e stampa della V2; nessuna registrazione obbligatoria. */
