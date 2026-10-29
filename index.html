@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#e7edf1">
 <title>KING EUROPE MANAGER</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 :root{
 --bg:#e7edf1;--card:#fff;--silver:#d8e1e7;
@@ -449,6 +450,39 @@ body.cloud-ready #cloudGate{display:none}
 .king-brand-choice.is-active{border-color:#4d91b8;box-shadow:0 0 0 2px #d6ebf7}
 .king-brand-choice .king-brand-letter{display:grid;place-items:center;width:100%;height:100%;font:inherit;color:inherit;background:transparent;border-radius:inherit}
 .king-brand-choice:last-child .king-brand-letter{background:transparent}
+
+/* KING 25-10: schede compatte SOLO per Cerca/Gestisci prodotti; nessuna modifica ai dati. */
+#productList .king-compact-product{display:block;padding:12px 13px;margin:9px 0;border:1px solid #d6e2ea;border-radius:16px;background:#fff;min-width:0}
+#productList .king-compact-header{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:10px;align-items:start;min-width:0}
+#productList .king-compact-header .king-stock-thumb{width:58px;height:68px;object-fit:contain;max-width:100%;margin:0}
+#productList .king-compact-identity{min-width:0;overflow-wrap:anywhere;line-height:1.3}
+#productList .king-compact-identity strong{display:block;font-size:15px;line-height:1.32}
+#productList .king-compact-identity small{display:block;margin:5px 0;font-size:12px;color:#647b8d}
+#productList .king-compact-edit{display:flex;gap:4px;align-items:flex-start;flex-wrap:wrap;justify-content:flex-end;max-width:96px}
+#productList .king-compact-edit .mini-edit{font-size:12px;padding:6px}
+#productList .king-compact-prices{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-top:10px;align-items:start}
+#productList .king-compact-prices>details{min-width:0;max-width:100%!important;margin:0!important;text-align:left!important}
+#productList .king-compact-prices>details>summary{display:block!important;width:100%;padding:9px 7px!important;font-size:12px!important;line-height:1.3;white-space:normal;overflow-wrap:anywhere;text-align:center;box-sizing:border-box}
+#productList .king-compact-prices>details[open]{grid-column:span 1}
+#productList .king-compact-prices>details>div{overflow-wrap:anywhere}
+#productList .king-compact-controls{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:10px}
+#productList .king-compact-controls .king-catalog-qty{display:flex;flex-direction:column;gap:5px;margin:0;min-width:0}
+#productList .king-compact-controls .king-catalog-qty>small{font-size:12px}
+#productList .king-compact-controls .king-inline-qty{max-width:100%}
+#productList .king-compact-controls .king-inline-qty .btn{padding:7px 10px}
+#productList .king-compact-controls .king-qty-number{width:46px;max-width:46px}
+#productList .king-all-links{margin:0;min-width:120px;max-width:100%;align-self:flex-end}
+#productList .king-all-links>summary{cursor:pointer;list-style:none;background:#dcebf4;border:1px solid #a8c9dc;color:#225d7e;border-radius:11px;padding:9px 11px;font-size:13px;font-weight:800;white-space:nowrap;text-align:center}
+#productList .king-all-links>summary::-webkit-details-marker{display:none}
+#productList .king-all-links[open]{flex:1 1 100%;width:100%}
+#productList .king-link-panel{background:#f4f9fc;border:1px solid #c9dce8;border-radius:12px;padding:10px;margin-top:7px}
+#productList .king-link-group+ .king-link-group{border-top:1px solid #d5e4ed;margin-top:10px;padding-top:10px}
+#productList .king-link-group>small{display:block;font-weight:800;font-size:11px;color:#627c8c;margin-bottom:7px}
+#productList .king-link-items{display:flex;flex-wrap:wrap;gap:7px}
+#productList .king-link-items .king-linked-pill{margin:0}
+#productList .king-product-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+#productList .king-product-actions .btn{font-size:12px;padding:9px 10px}
+@media(max-width:390px){#productList .king-compact-header{grid-template-columns:48px minmax(0,1fr) auto;gap:7px}#productList .king-compact-header .king-stock-thumb{width:48px;height:58px}#productList .king-compact-identity strong{font-size:13px}#productList .king-compact-edit{max-width:77px}#productList .king-compact-edit .mini-edit{font-size:10px;padding:4px}#productList .king-compact-product{padding:10px}}
 </style>
 <style id="king-inline-qty-style">
 .king-inline-qty{display:inline-flex;align-items:center;gap:9px;vertical-align:middle;white-space:nowrap}
@@ -480,7 +514,6 @@ body.cloud-ready #cloudGate{display:none}
 <style id="king-bestseller-tile-style">.king-bestseller-tile{display:flex;align-items:center;gap:14px;padding:18px 16px;margin:16px 0;border-radius:18px;border:1px solid #e3c67b;background:linear-gradient(125deg,#fff9e9,#fff,#f2f5f8);box-shadow:0 5px 18px rgba(88,70,20,.09);text-decoration:none!important;color:#29333b!important}.king-bestseller-trophy{font-size:37px;flex-shrink:0}.king-bestseller-copy{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}.king-bestseller-copy strong{font-size:15px;letter-spacing:.25px}.king-bestseller-copy small{font-size:12px;line-height:1.4;color:#65717b}.king-bestseller-arrow{color:#b18a32;font-size:20px}.king-bestseller-tile:focus-visible{outline:3px solid #b18a32}</style>
 </head>
 <body>
-
 <div id="cloudGate" role="dialog" aria-modal="true" aria-label="Accesso KING EUROPE MANAGER">
  <div class="card">
   <div class="brand"><span class="crown">♛</span> KING EUROPE MANAGER</div>
@@ -570,8 +603,7 @@ body.cloud-ready #cloudGate{display:none}
 </div>
 
 <section id="home" class="page">
-<div class="card"><strong>📸 Backup foto e magazzino</strong><p>Ripristina schede prodotto, quantità e fotografie dal tuo JSON originale senza Supabase.</p><a class="king-bulk-switch" href="./ripristina-magazzino.html">Apri ripristino prodotti e fotografie ↗</a></div>
-<div class="card"><strong>📦 Gestione cataloghi</strong><p>Questa è la copia locale di emergenza. Nessuna modifica viene inviata al team.</p><a class="king-bulk-switch" href="./index-bulk.html">Apri magazzino BULK (DEMO) ↗</a></div>
+<div class="card"><strong>📦 Gestione cataloghi</strong><p>OstroVit rimane il gestionale ufficiale. BULK è un ambiente demo separato.</p><a class="king-bulk-switch" href="./index-bulk.html">Apri magazzino BULK (DEMO) ↗</a></div>
 <div class="card hero">
 <div class="eyebrow">CONTROL CENTER</div>
 <h2 style="margin-top:10px">La tua centrale operativa</h2>
@@ -1019,14 +1051,13 @@ onclick="cancelStockEdit()">Annulla modifica</button>
  <p>I test si aprono come pagine indipendenti, accessibili anche tramite link o QR code. Solo il pannello Database test resta riservato all'amministrazione.</p>
  <div class="king-lab-grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
   <a class="btn" href="./test-benessere.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🧬</span><strong>01 · Test Ormonale</strong><small>Gratuito · pubblico</small></a>
-  <a class="btn" href="./test-benessere-v2.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🧬</span><strong>01B · Benessere V2 DNA</strong><small>Versione sperimentale · separata</small></a>
-  <a class="btn" href="./test-benessere-v3.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">⚡</span><strong>01C · Benessere V3</strong><small>Rapido · 7 domande</small></a>
+  <a class="btn" href="./test-benessere-v2.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🌿</span><strong>01B · Benessere V2</strong><small>15 domande · versione completa</small></a>
+  <a class="btn" href="./test-benessere-v3.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">⚡</span><strong>01C · Benessere V3</strong><small>7 domande · test rapido</small></a>
   <a class="btn" href="./test-integratori.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">💊</span><strong>02 · Test Integratori</strong><small>Gratuito · pubblico</small></a>
   <a class="btn" href="./test-alimentazione.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🥦</span><strong>03 · Test Alimentazione</strong><small>Gratuito · pubblico</small></a>
-  <a class="btn" href="./database-scientifico.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🗃️</span><strong>Database scientifico</strong><small>Archivio pubblico</small></a>
+  <a class="btn" href="./database-test.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🗃️</span><strong>Database test</strong><small>Solo amministrazione</small></a>
  </div>
 </div>
-<div class="card" id="kingSciencePanel"><div class="eyebrow">KING WELLBEING · ARCHIVIO SCIENTIFICO</div><h3>🔬 Database ingredienti e catalogo eBay</h3><p>Consulta le fonti, verifica gli abbinamenti e prepara nuovi gruppi di prodotti. Gli aggiornamenti all'archivio pubblico avvengono caricando i file su GitHub.</p><a class="btn" href="./database-scientifico.html" target="_blank" rel="noopener noreferrer">🔬 Apri database scientifico e catalogo</a></div>
 <div class="card" id="marketingEditor"><h3 id="marketingFormTitle">＋ Nuovo account marketing</h3>
 <label>Piattaforma</label><select id="mPlatform"><option>eBay</option><option>Etsy</option><option>OstroVit</option><option>Bulk</option><option>Altro</option></select>
 <label>Nome account / negozio</label><input id="mName" placeholder="Es. Il mio negozio Etsy">
@@ -1071,16 +1102,6 @@ onclick="cancelStockEdit()">Annulla modifica</button>
 </div>
 </section>
 
-<div class="card" id="kingSyncOrdersCard">
-<h3>🔄 Sincronizzazione KING · Vendite</h3>
-<p>Importa le vendite nuove da un JSON del gestionale principale, anche domani o nei prossimi giorni. Gli ordini già presenti non vengono duplicati. Le scorte restano invariate finché non è verificata la data della fotografia di magazzino. Nessun collegamento automatico a Supabase.</p>
-<div class="actions">
-<button class="btn" type="button" onclick="document.getElementById('kingSyncOrdersFile').click()">🔄 Sincronizza vendite da JSON</button>
-<input id="kingSyncOrdersFile" type="file" accept=".json,application/json" class="hidden">
-</div>
-<p id="kingSyncOrdersResult" role="status" aria-live="polite"></p>
-</div>
-
 <div class="card" id="backupCard">
 <h3>💾 Backup locale</h3>
 <p>
@@ -1098,13 +1119,13 @@ onclick="document.getElementById('backupFile').click()">
 </div>
 </div>
 
-<footer>♛ KING EURO BACKUP · GitHub · Cloudflare Pages</footer>
+<footer>♛ KING EUROPE MANAGER · GitHub · Cloudflare Pages</footer>
 </main>
 
 <script>
 "use strict";
 
-const KEY="king_europe_manager_EMERGENZA_2026_v1";
+const KEY="king_europe_manager_2026_v1";
 
 const LOC=[
 ["IT","Italia","🇮🇹"],["PL","Polonia","🇵🇱"],
@@ -1307,26 +1328,217 @@ todo:"Da verificare"
 }[s]||"Da verificare";
 }
 
-/* MODALITA EMERGENZA: dati unicamente in localStorage, ZERO API Supabase. */
-let cloudUser={id:"backup-locale",email:"Questo dispositivo"},cloudRole="owner",cloudVersion=0,cloudWorking=false,cloudReady=true;
+/* SUPABASE: archivio condiviso con merge per record e controllo versione. Archivio canonico: shared. */
+const CLOUD_URL="https://umuyfbjqpftfqhnhoiig.supabase.co";
+const CLOUD_KEY="sb_publishable_CFLEIJ97UT31_jxxHaeI2Q_r_uEmTEP";
+const cloud=window.supabase?.createClient(CLOUD_URL,CLOUD_KEY,{auth:{persistSession:true,autoRefreshToken:true}});
+let cloudUser=null,cloudRole=null,cloudVersion=null,cloudWorking=false,cloudReady=false;
 let cloudBase=clone(db),cloudQueue=[],cloudTimer=null,cloudRefreshing=false;
+const collections=["accounts","stock","orders","products","ideas","tasks","boxes","marketingRecords"];
 const copy=x=>JSON.parse(JSON.stringify(x));
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
-function cloudStatus(message){const el=$("syncStatusLabel");if(el)el.textContent=message;}
-function cloudGateStatus(message,error=false){const el=$("cloudGateStatus");if(el){el.textContent=message;el.className=error?"auth-error":"auth-status";}}
-function cloudQueueKey(){return "king_emergency_pending_local";}
-function cloudStore(){try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){cloudStatus("⚠️ Spazio locale esaurito: esporta subito il JSON");alert("Memoria del browser piena. Esporta il backup JSON prima di continuare.");}}
-function save(){cloudStore();render();if(document.getElementById('kingSearchPanel')?.classList.contains('visible') && typeof kingSearchMode!=='undefined' && kingSearchMode==='internal')kingSearchResults();cloudStatus("✅ Salvato su questo dispositivo · nessuna connessione Supabase");}
-async function cloudRead(){return {data:clone(db),version:cloudVersion};}
-async function cloudFlush(){cloudQueue.length=0;cloudStore();}
-async function cloudRefresh(){}
-async function cloudRetry(){cloudStatus("✅ Modalità locale · nessuna sincronizzazione esterna");}
-function cloudAdopt(data,version,force=false){db=clone(data);cloudBase=clone(db);cloudStore();if(force){render();}}
-function cloudShowLogin(show){}
-async function cloudLogin(){}
-async function cloudOpen(user){}
-async function cloudLogout(){alert("Questa versione è locale e non richiede accesso. Per proteggere i dati, esporta periodicamente il backup JSON.");}
-async function cloudBoot(){cloudReady=true;cloudRole="owner";document.body.classList.add("cloud-ready");$("cloudUserLabel").textContent="🛡️ KING EURO BACKUP · Questo dispositivo";const e=$("cloudIdentity");if(e){const b=e.querySelector('button');if(b){b.textContent="Esporta JSON";b.onclick=backup;}}cloudStatus("✅ Archivio locale · Supabase disattivato");kingOpenRequestedTarget();}
+function cloudStatus(message){
+ const el=$("syncStatusLabel");if(el)el.textContent=message;
+}
+function cloudGateStatus(message,error=false){
+ const el=$("cloudGateStatus");el.textContent=message;
+ el.className=error?"auth-error":"auth-status";
+}
+function cloudQueueKey(){return "king_pending_"+(cloudUser?.id||"unknown");}
+function cloudStore(){
+ try{localStorage.setItem(KEY,JSON.stringify(db));if(cloudUser)localStorage.setItem(cloudQueueKey(),JSON.stringify(cloudQueue));}
+ catch(e){cloudStatus("⚠️ Memoria locale piena: esporta un backup subito");}
+}
+function cloudOps(before,after){
+ let ops=[];
+ for(const key of collections){
+  const a=Array.isArray(before[key])?before[key]:[];
+  const b=Array.isArray(after[key])?after[key]:[];
+  const ma=new Map(a.map(x=>[String(x.id),x]));
+  const mb=new Map(b.map(x=>[String(x.id),x]));
+  for(const [id,old] of ma){if(!mb.has(id))ops.push({kind:"remove",key,id});}
+  for(const [id,item] of mb){
+   if(!ma.has(id)){ops.push({kind:"add",key,item:copy(item)});continue;}
+   const old=ma.get(id);
+   for(const field of new Set([...Object.keys(old),...Object.keys(item)])){
+    if(same(old[field],item[field]))continue;
+    if(key==="stock"&&field==="qty"&&Number.isFinite(Number(old[field]))&&Number.isFinite(Number(item[field])))
+     ops.push({kind:"increment",key,id,field,amount:Number(item[field])-Number(old[field])});
+    else ops.push({kind:"field",key,id,field,value:copy(item[field]===undefined?null:item[field])});
+   }
+  }
+ }
+ for(const key of Object.keys(after)){
+  if(collections.includes(key))continue;
+  if(key==="countries"){
+   const old=before.countries||{},now=after.countries||{};
+   for(const code of new Set([...Object.keys(old),...Object.keys(now)])){
+    if(!same(old[code],now[code]))ops.push({kind:"country",code,value:copy(now[code]||{})});
+   }
+  }else if(!same(before[key],after[key]))ops.push({kind:"root",key,value:copy(after[key]===undefined?null:after[key])});
+ }
+ return ops;
+}
+function cloudApply(data,ops){
+ let out=copy(data);
+ for(const op of ops){
+  if(op.kind==="replace"){out=copy(op.data);continue;}
+  if(op.kind==="root"){out[op.key]=copy(op.value);continue;}
+  if(op.kind==="country"){out.countries ||= {};out.countries[op.code]=copy(op.value);continue;}
+  out[op.key] ||= [];
+  let arr=out[op.key];
+  if(op.kind==="remove")out[op.key]=arr.filter(x=>String(x.id)!==op.id);
+  if(op.kind==="add" && !arr.some(x=>String(x.id)===String(op.item.id)))arr.push(copy(op.item));
+  if(op.kind==="field"||op.kind==="increment"){
+   const item=arr.find(x=>String(x.id)===op.id);if(!item)continue;
+   if(op.kind==="increment")item[op.field]=Math.max(0,(Number(item[op.field])||0)+op.amount);
+   else item[op.field]=copy(op.value);
+  }
+ }
+ return out;
+}
+function cloudAdopt(data,version,force=false){
+ cloudVersion=Number(version);
+ db=cloudQueue.length?cloudApply(data,cloudQueue):copy(data);
+ // La base delle nuove modifiche è SEMPRE la vista locale già composta
+ // con le operazioni pendenti; così non le rimettiamo in coda due volte.
+ cloudBase=copy(db);
+ if(!db.boxes?.some(x=>String(x.id)===String(selectedBox)))selectedBox=db.boxes?.[0]?.id||"";
+ cloudStore();
+ if(force||!document.querySelector('input:focus,textarea:focus,select:focus')){
+  render();if(document.activeElement!==$("quickNote"))$("quickNote").value=db.quickNote||"";
+ }
+}
+async function cloudRead(){
+ const {data,error}=await cloud.from("king_manager_data").select("data,version").eq("id","shared").maybeSingle();
+ if(error)throw error;
+ if(!data)throw Error("Archivio condiviso 'shared' non trovato. Non creo o sostituisco dati automaticamente.");
+ return data;
+}
+function save(){
+ if(!cloudReady||!cloudUser){cloudStatus("⚠️ Non connesso: attendi o accedi prima di salvare.");alert("Archivio condiviso non disponibile. Accedi prima di modificare i dati.");return;}
+ const ops=cloudOps(cloudBase,db);
+ if(ops.length){cloudQueue.push(...ops);cloudBase=copy(db);cloudStore();}
+ render();
+ if(document.getElementById('kingSearchPanel')?.classList.contains('visible') && typeof kingSearchMode!=='undefined' && kingSearchMode==='internal')kingSearchResults();
+ if(ops.length){cloudStatus("⏳ Modifiche in attesa di sincronizzazione…");void cloudFlush();}
+}
+async function cloudFlush(){
+ if(cloudWorking||!cloudReady||!cloudUser||!cloudQueue.length)return;
+ cloudWorking=true;
+ try{
+  let attempts=0;
+  while(cloudQueue.length&&cloudUser){
+   if(++attempts>12)throw Error("Troppi conflitti contemporanei. Riprovare tra poco.");
+   const batch=cloudQueue.slice();
+   const remote=await cloudRead();
+   const merged=cloudApply(remote.data,batch);
+   const {data:next,error}=await cloud.rpc("king_save_shared",{p_data:merged,p_expected_version:Number(remote.version)});
+   if(error){if(/VERSION_CONFLICT/i.test(error.message||""))continue;throw error;}
+   // La funzione RPC restituisce {success,version} (JSON), non un numero.
+   if(!next || typeof next!=="object")throw Error("Risposta inattesa dalla funzione di salvataggio.");
+   if(next.success===false && next.reason==="conflict")continue;
+   if(next.success!==true || !Number.isFinite(Number(next.version)))
+    throw Error("Il database non ha confermato il salvataggio.");
+   cloudQueue.splice(0,batch.length);
+   cloudAdopt(merged,Number(next.version));
+   cloudStatus(cloudQueue.length?"⏳ Sincronizzazione in corso…":"✅ Tutto sincronizzato con il team");
+   attempts=0;
+  }
+ }catch(err){console.error("Sync KING:",err);cloudStore();cloudStatus("⚠️ Dati in attesa sul dispositivo: "+(err.message||"errore"));}
+ finally{cloudWorking=false;}
+}
+async function cloudRefresh(){
+ if(!cloudReady||!cloudUser||cloudWorking||cloudRefreshing)return;
+ cloudRefreshing=true;
+ try{
+  if(cloudQueue.length){await cloudFlush();return;}
+  const remote=await cloudRead();
+  if(Number(remote.version)!==cloudVersion){cloudAdopt(remote.data,remote.version);cloudStatus("✅ Dati del team aggiornati");}
+ }catch(e){cloudStatus("⚠️ Connessione assente; ritenterò automaticamente");}
+ finally{cloudRefreshing=false;}
+}
+async function cloudRetry(){if(!cloudReady)return;await cloudFlush();await cloudRefresh();}
+function cloudShowLogin(show){
+ const fields=$("cloudLoginFields");if(fields)fields.hidden=!show;
+ const title=$("cloudGateTitle"),description=$("cloudGateDescription");
+ if(title)title.textContent=show?"🔐 Accesso al team":"☁️ Apertura gestionale";
+ if(description)description.textContent=show?"Accedi con l’account autorizzato per aprire il magazzino condiviso.":"Verifica della sessione in corso…";
+}
+async function cloudLogin(){
+ cloudShowLogin(true);
+ if(!cloud)return cloudGateStatus("Libreria Supabase non caricata. Controlla internet.",true);
+ const email=$("cloudEmail").value.trim(),password=$("cloudPassword").value;
+ if(!email||!password)return cloudGateStatus("Inserisci email e password.",true);
+ $("cloudLoginBtn").disabled=true;cloudGateStatus("Accesso in corso…");
+ try{
+  const {data,error}=await cloud.auth.signInWithPassword({email,password});if(error)throw error;
+  $("cloudPassword").value="";
+  await cloudOpen(data.user);
+ }catch(e){cloudGateStatus("Accesso non riuscito: "+e.message,true);}
+ finally{$("cloudLoginBtn").disabled=false;}
+}
+async function cloudOpen(user){
+ if(!user)return;
+ cloudGateStatus("Verifica autorizzazioni e caricamento archivio…");
+ try{
+  const [roleResult,remote]=await Promise.all([
+   cloud.from("king_team_roles").select("role").eq("user_id",user.id).maybeSingle(),
+   cloudRead()
+  ]);
+  const {data:role,error:roleError}=roleResult;
+  if(roleError)throw roleError;
+  if(!role||!["owner","staff"].includes(role.role))throw Error("Questo account non è autorizzato nel team.");
+  cloudUser=user;cloudRole=role.role;
+  try{cloudQueue=JSON.parse(localStorage.getItem(cloudQueueKey())||"[]");if(!Array.isArray(cloudQueue))cloudQueue=[];}
+  catch{cloudQueue=[];}
+  cloudAdopt(remote.data,remote.version,true);
+  cloudReady=true;document.body.classList.add("cloud-ready");
+  kingOpenRequestedTarget();
+  // Aggiornamento una tantum dei tre account già esistenti, senza alterare punti o posizioni
+  const accountUsernames={
+   "ostro-it-01":"vania.dadea@gmail.com",
+   "ostro-pl-01":"sergheidadea66@gmail.com",
+   "ostro-cz-01":"gasper.ravbar@sbirux.33mail.com"
+  };
+  let needSaveUsernames=false;
+  for(const a of db.accounts||[]){
+   if(accountUsernames[a.id]&&!a.username){
+    a.username=accountUsernames[a.id];
+    needSaveUsernames=true;
+   }
+  }
+  // Bulk non viene ricreato automaticamente a ogni login.
+  // È un account normale gestito e salvato dal team.
+  if(needSaveUsernames)save();
+  $("cloudUserLabel").textContent="☁️ "+(user.email||"Team")+" · "+(role.role==="owner"?"Proprietario":"Collaboratore");
+  cloudStatus(cloudQueue.length?"⏳ Recupero modifiche non sincronizzate…":"✅ Archivio condiviso collegato");
+  if(cloudQueue.length)void cloudFlush();
+  clearInterval(cloudTimer);cloudTimer=setInterval(()=>void cloudRefresh(),7000);
+ }catch(e){cloudUser=null;cloudReady=false;document.body.classList.remove("cloud-ready");cloudGateStatus("Impossibile aprire i dati: "+e.message,true);}
+}
+async function cloudLogout(){
+ if(cloudQueue.length&&!confirm("Ci sono modifiche non ancora sincronizzate. Uscire comunque? Verranno conservate su questo dispositivo."))return;
+ clearInterval(cloudTimer);cloudTimer=null;cloudReady=false;document.body.classList.remove("cloud-ready");
+ cloudUser=null;cloudRole=null;
+ try{await cloud?.auth.signOut();}catch(e){console.warn(e);}
+ cloudQueue=[];cloudShowLogin(true);cloudGateStatus("Disconnesso. Accedi per aprire i dati.");
+}
+async function cloudBoot(){
+ cloudShowLogin(false);
+ if(!cloud){cloudShowLogin(true);cloudGateStatus("Connessione non disponibile: libreria Supabase non caricata.",true);return;}
+ try{
+  const {data,error}=await cloud.auth.getSession();if(error)throw error;
+  if(data.session?.user){
+   await cloudOpen(data.session.user);
+   // Se il recupero del catalogo fallisce, consenti di riprovare l'accesso.
+   if(!cloudReady)cloudShowLogin(true);
+  }else{
+   cloudShowLogin(true);
+   cloudGateStatus("Inserisci le credenziali del tuo account.");
+  }
+ }catch(e){cloudShowLogin(true);cloudGateStatus("Errore di connessione: "+e.message,true);}
+}
 
 function kingOpenRequestedTarget(){
  const qs=new URLSearchParams(location.search);
@@ -2436,14 +2648,25 @@ function kingLinksForStock(x){
  return kingLinksMarkup(product,"magazzino");
 }
 function kingLinksMarkup(product,section){
- const links=kingProductLinks(product).filter(l=>secureUrl(l.url));
- if(!links.length)return "";
- return `<div class="king-linked-suppliers" aria-label="Collegamenti fornitori">${links.map(l=>{
-  const host=(()=>{try{return new URL(l.url).hostname.replace(/^www\./,"");}catch(e){return "Sito";}})();
-  const title=l.title||host;
-  return `<a class="king-linked-pill" href="${esc(secureUrl(l.url))}" target="_blank" rel="noopener noreferrer" title="Apri ${esc(title)}">🔗 ${esc(title)} ↗</a>`;
- }).join("")}</div>`;
-}
+  const links=kingProductLinks(product).filter(l=>secureUrl(l.url));
+  if(!links.length)return "";
+  const suppliers=[],ebay=[];
+  for(const l of links){
+   const host=(()=>{try{return new URL(l.url).hostname.replace(/^www\./,"");}catch(e){return "Sito";}})();
+   const title=String(l.title||host);
+   const isEbay=/^ebay(?:\b|[ _-])/i.test(title.trim())||/(^|\.)ebay\.[a-z.]+$/i.test(host);
+   const html=`<a class="king-linked-pill" href="${esc(secureUrl(l.url))}" target="_blank" rel="noopener noreferrer" title="Apri ${esc(title)}">🔗 ${esc(title)} ↗</a>`;
+   (isEbay?ebay:suppliers).push(html);
+  }
+  const groups=(suppliers?suppliers.length:0)?`<div class="king-link-group"><small>FORNITORI E ALTRI LINK</small><div class="king-link-items">${suppliers.join('')}</div></div>`:'';
+  const ebayGroup=ebay.length?`<div class="king-link-group"><small>NEGOZI EBAY</small><div class="king-link-items">${ebay.join('')}</div></div>`:'';
+  if(section==='prodotti')return `<details class="king-all-links"><summary>🔗 Tutti i link (${links.length}) ▾</summary><div class="king-link-panel">${groups}${ebayGroup}</div></details>`;
+  return `<div class="king-linked-suppliers" aria-label="Collegamenti fornitori eBay">${links.map(l=>{
+   const host=(()=>{try{return new URL(l.url).hostname.replace(/^www\./,"");}catch(e){return "Sito";}})();
+   const title=l.title||host;
+   return `<a class="king-linked-pill" href="${esc(secureUrl(l.url))}" target="_blank" rel="noopener noreferrer" title="Apri ${esc(title)}">🔗 ${esc(title)} ↗</a>`;
+  }).join("")}</div>`;
+ }
 function kingStockThumb(x){
  const r=kingStockRecord(x);
  const src=kingImageSource(r.image)||(r.sku==='20690'?KING_SKU_THUMB_20690:'');
@@ -3091,13 +3314,12 @@ data-done="${esc(x.id)}">✓</button>
 :"<small>Nessun ordine.</small>";
 
 $("productList").innerHTML=db.products.length
-?db.products.map(x=>`<div class="row" data-king-catalog-row="1" data-search="${esc((x.name+" "+kingSkuOf(x)).toLocaleLowerCase("it-IT"))}"><div class="row-main"><div class="king-stock-head">${kingProductThumb(x)}<strong>${esc(x.name)}</strong></div>${x.catalogSku?`<small>SKU ${esc(x.catalogSku)} · ${Math.max(0,Number(kingStockForProduct(x)?.qty)||0)} confezioni disponibili · € ${fmt(x.catalogPrice)} ${!kingStockForProduct(x)||Number(kingStockForProduct(x).qty)<=0?'<span class="tag bad">SCORTE ESAURITE</span>':''}</small>`:""}
-${kingProductActions(x)}
-${kingPurchasePriceMarkup(x)}
-${kingSalePriceMarkup(x)}
-<div class="king-catalog-qty"><small>📦 Magazzino</small> ${kingInlineQty(kingStockForProduct(x))}</div>
-${kingLinksMarkup(x,"prodotti")}
-</div><button class="mini-edit" data-edit-product-full="${esc(x.id)}" title="Modifica prodotto">✏️ Modifica</button>${delButton("products",x)}</div>`).join("")
+?db.products.map(x=>`<div class="row king-compact-product" data-king-catalog-row="1" data-search="${esc((x.name+" "+kingSkuOf(x)).toLocaleLowerCase("it-IT"))}">
+ <div class="king-compact-header">${kingProductThumb(x)}<div class="king-compact-identity"><strong>${esc(x.name)}</strong>${x.catalogSku?`<small>SKU ${esc(x.catalogSku)} · ${Math.max(0,Number(kingStockForProduct(x)?.qty)||0)} confezioni disponibili · € ${fmt(x.catalogPrice)}</small>${!kingStockForProduct(x)||Number(kingStockForProduct(x).qty)<=0?'<span class="tag bad">SCORTE ESAURITE</span>':''}`:""}</div><div class="king-compact-edit"><button class="mini-edit" data-edit-product-full="${esc(x.id)}" title="Modifica prodotto">✏️ Modifica</button>${delButton("products",x)}</div></div>
+ <div class="king-compact-prices">${kingPurchasePriceMarkup(x)}${kingSalePriceMarkup(x)}</div>
+ <div class="king-compact-controls"><div class="king-catalog-qty"><small>📦 Magazzino</small>${kingInlineQty(kingStockForProduct(x))}</div>${kingLinksMarkup(x,"prodotti")}</div>
+ ${kingProductActions(x)}
+ </div>`).join("")
 :"<small>Nessun prodotto.</small>";
 
 $("ideaList").innerHTML=db.ideas.length
@@ -3151,124 +3373,6 @@ a.click();
 setTimeout(()=>URL.revokeObjectURL(url),2000);
 }
 
-
-/* KING SYNC: importazione incrementale e non distruttiva. */
-const KING_SYNC_LEDGER_KEY = "king_backup_imported_order_ids_v2";
-function kingOrderKey(o){
- const id=o?.id==null?'':String(o.id).trim();
- if(id)return 'id:'+id;
- const ref=String(o?.ref||o?.reference||'').trim().toLowerCase();
- const channel=String(o?.platform||o?.channel||'').trim().toLowerCase();
- return ref&&channel?'ref:'+channel+':'+ref:null;
-}
-function kingSyncSignature(x){
- if(Array.isArray(x))return x.map(kingSyncSignature);
- if(x&&typeof x==='object')return Object.fromEntries(Object.keys(x).sort().map(k=>[k,kingSyncSignature(x[k])]));
- return x;
-}
-// KING BACKUP: sincronizzazione incrementale; data di riferimento 25/10/2026.
-// L'identità dell'ordine e il registro degli scarichi persistono nell'archivio locale.
-function kingSyncDate(o){
- const raw=o.orderDate||o.date||o.createdAt||o.created_at||o.dataOrdine||o.data||'';
- if(typeof raw!=='string')return null;
- const it=raw.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})(?:\s|$)/);
- if(it){const d=`${it[3]}-${it[2].padStart(2,'0')}-${it[1].padStart(2,'0')}`;return Number.isFinite(Date.parse(d+'T12:00:00'))?d:null;}
- const iso=raw.match(/^(\d{4}-\d{2}-\d{2})/);
- return iso&&Number.isFinite(Date.parse(iso[1]+'T12:00:00'))?iso[1]:null;
-}
-function kingSyncOrderIdentity(o){
- const id=kingOrderKey(o);if(id)return id;
- const ref=String(o.ref||o.reference||o.orderNumber||'').trim().toLowerCase();
- const platform=String(o.platform||o.channel||'').trim().toLowerCase();
- return ref&&platform?'ref:'+platform+':'+ref:null;
-}
-function kingSyncSaleItems(o){
- if(Array.isArray(o.items)&&o.items.length)return o.items;
- return [o];
-}
-function kingSyncFindStock(item){
- const sku=String(item.sku||item.catalogSku||item.productSku||'').trim().toLowerCase();
- const productId=String(item.catalogProductId||item.productId||item.product||'');
- const product=db.products.find(p=>String(p.id)===productId);
- const code=sku||String(product?.sku||product?.catalogSku||'').trim().toLowerCase();
- const stockId=String(item.stockId||item.stockItemId||'');
- if(stockId){const byId=db.stock.filter(x=>String(x.id)===stockId);if(byId.length===1)return byId[0];}
- if(code){const bySku=db.stock.filter(x=>String(x.sku||x.catalogSku||'').trim().toLowerCase()===code);if(bySku.length===1)return bySku[0];}
- const name=String(item.productName||item.name||product?.name||'').trim().toLowerCase();
- if(name){const byName=db.stock.filter(x=>String(x.name||'').trim().toLowerCase()===name);if(byName.length===1)return byName[0];}
- return null;
-}
-document.getElementById('kingSyncOrdersFile').addEventListener('change',async function(event){
- const file=event.target.files?.[0],out=document.getElementById('kingSyncOrdersResult');
- if(!file)return;
- try{
-  if(file.size>100*1024*1024)throw Error('JSON troppo grande (massimo 100 MB).');
-  const parsed=JSON.parse(await file.text());
-  const incoming=Array.isArray(parsed)?parsed:parsed?.orders;
-  if(!Array.isArray(incoming))throw Error('JSON senza elenco orders. Esporta il JSON completo del principale.');
-  if(!Array.isArray(db.orders)||!Array.isArray(db.stock))throw Error('Archivio locale non valido.');
-  const ids=new Set(db.orders.map(kingSyncOrderIdentity).filter(Boolean));
-  const sigs=new Set(db.orders.map(o=>JSON.stringify(kingSyncSignature(o))));
-  const newOrders=[];let duplicates=0,invalid=0;
-  for(const o of incoming){
-   if(!o||typeof o!=='object'||Array.isArray(o)){invalid++;continue;}
-   const id=kingSyncOrderIdentity(o),sig=JSON.stringify(kingSyncSignature(o));
-   if((id&&ids.has(id))||sigs.has(sig)){duplicates++;continue;}
-   newOrders.push({...o,kingSyncImportedAt:new Date().toISOString()});
-   if(id)ids.add(id);sigs.add(sig);
-  }
-  if(!newOrders.length){out.textContent=`✓ Nessun nuovo ordine. ${duplicates} già presenti; magazzino invariato.`;return;}
-  // Prima di sottrarre, calcolare e mostrare un'anteprima di ogni singolo scarico.
-  const plans=[];let historical=0,uncertain=0,post=0;
-  const ledger=new Set(Array.isArray(db.kingSyncStockLedger)?db.kingSyncStockLedger:[]);
-  for(const o of newOrders){
-   const date=kingSyncDate(o),id=kingSyncOrderIdentity(o);
-   if(date&&date<='2026-10-25'){o.kingSyncStockStatus='storico';historical++;continue;}
-   if(!date||!id){o.kingSyncStockStatus='da_verificare';uncertain++;continue;}
-   post++;
-   const items=kingSyncSaleItems(o);
-   const entries=[];let ok=true;
-   for(let j=0;j<items.length;j++){
-    const item=items[j],key=id+':'+j;
-    const q=Number(item.qty??item.quantity??o.qty??o.quantity);
-    const stock=kingSyncFindStock(item);
-    if(!stock||!Number.isInteger(q)||q<=0||ledger.has(key)){ok=false;break;}
-    entries.push({stock,key,q});
-   }
-   if(!ok||!entries.length){o.kingSyncStockStatus='da_verificare';uncertain++;continue;}
-   o.kingSyncStockStatus='pronto';plans.push({order:o,entries});
-  }
-  const amounts=new Map();
-  for(const p of plans)for(const e of p.entries)amounts.set(e.stock.id,(amounts.get(e.stock.id)||0)+e.q);
-  const insuff=[...amounts].filter(([id,q])=>Number(db.stock.find(x=>x.id===id)?.qty)<q);
-  if(insuff.length){
-   const blocked=new Set(insuff.map(([id])=>String(id)));
-   for(let i=plans.length-1;i>=0;i--){
-    const p=plans[i];if(p.entries.some(e=>blocked.has(String(e.stock.id)))){
-     p.order.kingSyncStockStatus='da_verificare';plans.splice(i,1);uncertain++;
-    }
-   }
-  }
-  const total=plans.reduce((n,p)=>n+p.entries.reduce((m,e)=>m+e.q,0),0);
-  const msg=`${newOrders.length} ordini nuovi; ${duplicates} duplicati. ${historical} storici senza scarico. ${plans.length} ordini successivi al 25/10 da scaricare (${total} pezzi). ${uncertain} ordini richiedono verifica e NON saranno scalati.`;
-  if(!confirm(msg+'\n\nConfermi importazione e scarichi indicati? Prima verrà creata una copia di sicurezza.')){out.textContent='Sincronizzazione annullata.';return;}
-  const previous=JSON.stringify(db);
-  // Copia di sicurezza scaricabile: non raddoppia l'uso della memoria Safari.
-  const safeBlob=new Blob([previous],{type:'application/json'});
-  const safeUrl=URL.createObjectURL(safeBlob),safeLink=document.createElement('a');
-  safeLink.href=safeUrl;safeLink.download='king-backup-prima-sincronizzazione-'+new Date().toISOString().slice(0,10)+'.json';safeLink.click();
-  setTimeout(()=>URL.revokeObjectURL(safeUrl),10000);
-  try{
-   for(const p of plans){for(const e of p.entries){e.stock.qty=Number(e.stock.qty)-e.q;ledger.add(e.key);}p.order.kingSyncStockStatus='scalato';}
-   db.kingSyncStockLedger=[...ledger];db.orders.push(...newOrders);
-   localStorage.setItem(KEY,JSON.stringify(db));
-   if(JSON.parse(localStorage.getItem(KEY)||'{}').orders?.length!==db.orders.length)throw Error('Verifica del salvataggio fallita');
-  }catch(e){db=JSON.parse(previous);localStorage.setItem(KEY,previous);throw Error('Operazione annullata: '+e.message);}
-  render();out.textContent='✓ '+msg+' Importazione completata. Riapri Ordine Rapido per vedere lo storico.';
- }catch(e){out.textContent='⚠ '+(e.message||String(e));}
- finally{event.target.value='';}
-});
-
 $("backupFile").addEventListener("change",async e=>{
 try{
 const file=e.target.files[0];
@@ -3291,7 +3395,7 @@ if(cloudRole!=="owner"){
  e.target.value="";return;
 }
 if(confirm(
-"ATTENZIONE: il backup sostituirà i dati LOCALI di questa copia di emergenza (non il magazzino online). Continuare?"
+"ATTENZIONE: il backup sostituirà i dati condivisi del team. Hai una copia recente? Continuare?"
 )){
 db=obj;
 
@@ -3306,8 +3410,9 @@ selectedBox=db.boxes[0]?.id||"";
 editingStock=null;
 cancelStockEdit();
 
+cloudQueue.push({kind:"replace",data:copy(db)});
 cloudBase=copy(db);
-cloudStore();render();
+cloudStore();render();void cloudFlush();
 
 $("quickNote").value=db.quickNote||"";
 selectCountry(selected);
@@ -3584,23 +3689,6 @@ loadMap();
 
 /* MODULO AGGIUNTIVO: IMPORTAZIONE CATALOGO. Non cambia la logica del gestionale. */
 const KING_CATALOG_DATA=[{"sku":"25495","nome":"OstroVit Collagene marino + Acido ialuronico + Vitamina C 120 capsule","quantita":"0","prezzo_unitario_eur":"8.62","stato":"DA ORDINARE URGENTE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27170","nome":"Ethic Nutraceutici Collagene 90 compresse","quantita":"2","prezzo_unitario_eur":"4.19","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27174","nome":"EthicSport Glucosamina + Condroitina + MSM + Vitamina C 90 compresse","quantita":"2","prezzo_unitario_eur":"7.94","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26485","nome":"OstroVit 3C CLA Carnitine Chromium 150 g","quantita":"1","prezzo_unitario_eur":"7.12","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25830","nome":"OstroVit Acetil L-Carnitina 200 g","quantita":"1","prezzo_unitario_eur":"8.24","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26098","nome":"OstroVit Aceto di sidro di mele VEGE 90 capsule","quantita":"5","prezzo_unitario_eur":"6.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25037","nome":"OstroVit ADEK 200 compresse","quantita":"10","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26073","nome":"OstroVit Aglio Nero VEGE 90 capsule","quantita":"1","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"20645","nome":"OstroVit Aglio VEGE 90 capsule","quantita":"4","prezzo_unitario_eur":"4.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27429","nome":"OstroVit ALA 60 capsule","quantita":"3","prezzo_unitario_eur":"8.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"19895","nome":"OstroVit ALA 90 compresse","quantita":"2","prezzo_unitario_eur":"12.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25837","nome":"OstroVit Appetite Control 60 capsule","quantita":"3","prezzo_unitario_eur":"5.24","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25871","nome":"OstroVit Aqua Kick ADEK 10 g","quantita":"1","prezzo_unitario_eur":"0.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25890","nome":"OstroVit Aqua Kick ADEK 10 g x 24 BOX","quantita":"2","prezzo_unitario_eur":"5.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25872","nome":"OstroVit Aqua Kick Biotin 10 g","quantita":"1","prezzo_unitario_eur":"0.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26031","nome":"OstroVit Aqua Kick Biotin 300 g","quantita":"1","prezzo_unitario_eur":"6.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25873","nome":"OstroVit Aqua Kick Brain Focus 10 g","quantita":"2","prezzo_unitario_eur":"0.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25875","nome":"OstroVit Aqua Kick Flex 10 g","quantita":"1","prezzo_unitario_eur":"0.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25876","nome":"OstroVit Aqua Kick Good Night 10 g","quantita":"1","prezzo_unitario_eur":"0.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25877","nome":"OstroVit Aqua Kick L-Carnitina 10 g","quantita":"1","prezzo_unitario_eur":"0.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25878","nome":"OstroVit Aqua Kick Pear Power 10 g","quantita":"1","prezzo_unitario_eur":"0.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25880","nome":"OstroVit Aqua Kick Vitamina C 10 g","quantita":"1","prezzo_unitario_eur":"0.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26049","nome":"OstroVit ATP VEGE 60 capsule","quantita":"1","prezzo_unitario_eur":"17.65","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"18132","nome":"OstroVit Berberina VEGE 90 compresse","quantita":"12","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27204","nome":"OstroVit Beta Carotene Plus 120 capsule","quantita":"1","prezzo_unitario_eur":"9.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26010","nome":"OstroVit Betaina HCl VEGE 90 capsule","quantita":"2","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25039","nome":"OstroVit Biotin Plus 100 compresse","quantita":"16","prezzo_unitario_eur":"3.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26671","nome":"OstroVit Boric Acid VEGE 120 capsule","quantita":"2","prezzo_unitario_eur":"3.53","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25389","nome":"OstroVit Butirrato di sodio 90 capsule","quantita":"3","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25608","nome":"OstroVit Caffeine 200 mg VEGE 200 compresse","quantita":"2","prezzo_unitario_eur":"3.97","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26054","nome":"OstroVit Chaga VEGE 60 capsule","quantita":"1","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26011","nome":"OstroVit Chlorella 250 g","quantita":"1","prezzo_unitario_eur":"14.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25222","nome":"OstroVit Chlorella VEGE 1000 compresse","quantita":"3","prezzo_unitario_eur":"8.82","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25806","nome":"OstroVit Chlorella VEGE 1000 compresse + Spirulina VEGE 1000 compresse","quantita":"2","prezzo_unitario_eur":"17.5","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27252","nome":"OstroVit Chondroitin 120 compresse","quantita":"1","prezzo_unitario_eur":"6.18","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25610","nome":"OstroVit Chromium 200 µg 200 compresse","quantita":"1","prezzo_unitario_eur":"3.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"19134","nome":"OstroVit CLA + Tè verde + L-Carnitina 90 capsule","quantita":"1","prezzo_unitario_eur":"6.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16722","nome":"OstroVit CLA 1000 mg 180 capsule","quantita":"1","prezzo_unitario_eur":"11.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16668","nome":"OstroVit CLA 1000 mg 90 capsule","quantita":"1","prezzo_unitario_eur":"4.12","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27411","nome":"OstroVit Colina + Inositolo 120 capsule","quantita":"1","prezzo_unitario_eur":"8.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"24824","nome":"OstroVit Collagen + Vitamin C 400 g","quantita":"1","prezzo_unitario_eur":"9.71","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27123","nome":"OstroVit Collagen + Vitamin C 400 g","quantita":"1","prezzo_unitario_eur":"9.71","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26691","nome":"OstroVit Collagene + Matcha 210 g","quantita":"3","prezzo_unitario_eur":"11.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26009","nome":"OstroVit Collagene + Vitamina C 400 g","quantita":"1","prezzo_unitario_eur":"10.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16709","nome":"OstroVit Collagene + Vitamina C 90 compresse","quantita":"5","prezzo_unitario_eur":"3.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16713","nome":"OstroVit Complesso Vitaminico B 90 compresse","quantita":"4","prezzo_unitario_eur":"3.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16618","nome":"OstroVit Creatina Monoidrato 500 g","quantita":"2","prezzo_unitario_eur":"6.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16620","nome":"OstroVit Creatina Monoidrato 500 g","quantita":"1","prezzo_unitario_eur":"6.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16622","nome":"OstroVit Creatina Monoidrato 500 g","quantita":"1","prezzo_unitario_eur":"6.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16623","nome":"OstroVit Creatina Monoidrato 500 g","quantita":"1","prezzo_unitario_eur":"6.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16624","nome":"OstroVit Creatina Monoidrato 500 g","quantita":"1","prezzo_unitario_eur":"6.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16625","nome":"OstroVit Creatina Monoidrato 500 g","quantita":"1","prezzo_unitario_eur":"6.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16743","nome":"OstroVit Creatina Monoidrato 500 g","quantita":"1","prezzo_unitario_eur":"6.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26770","nome":"OstroVit Curcumina + Pepe nero + Zenzero VEGE 90 capsule","quantita":"1","prezzo_unitario_eur":"11.24","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27379","nome":"OstroVit D-mannose 120 capsule","quantita":"4","prezzo_unitario_eur":"5.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27378","nome":"OstroVit D-ribosio 120 capsule","quantita":"2","prezzo_unitario_eur":"9.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26120","nome":"OstroVit Diet Spaghetti Carrot Konjac Noodles 250 g","quantita":"3","prezzo_unitario_eur":"1.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27274","nome":"OstroVit Diosmina + Esperidina + Rutina + Ruscogenina + Vitamina C 60 capsule","quantita":"1","prezzo_unitario_eur":"5.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26403","nome":"OstroVit Elettroliti 20 compresse effervescenti","quantita":"3","prezzo_unitario_eur":"1.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26268","nome":"OstroVit Elettroliti 90 compresse","quantita":"2","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25278","nome":"OstroVit Equiseto VEGE 90 capsule","quantita":"3","prezzo_unitario_eur":"5.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26224","nome":"OstroVit Eritritolo 1000 g","quantita":"1","prezzo_unitario_eur":"8.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25863","nome":"OstroVit Estratto di Equiseto 100 g","quantita":"1","prezzo_unitario_eur":"9.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25849","nome":"OstroVit Estratto di mango africano 100 g","quantita":"3","prezzo_unitario_eur":"12.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25864","nome":"OstroVit Estratto di palma sabal 100 g","quantita":"1","prezzo_unitario_eur":"9.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25859","nome":"OstroVit Estratto di semi d'uva 50 g","quantita":"1","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26228","nome":"OstroVit Extra Green Detox 200 g","quantita":"1","prezzo_unitario_eur":"7.12","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"24454","nome":"OstroVit Fat Burner eXtreme 90 capsule","quantita":"3","prezzo_unitario_eur":"8.62","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"23724","nome":"OstroVit Fat Burner for women 60 capsule","quantita":"3","prezzo_unitario_eur":"7.12","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"24156","nome":"OstroVit Fat Burner VEGE 60 capsule","quantita":"1","prezzo_unitario_eur":"5.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25486","nome":"OstroVit Ferr Aid 60 capsule","quantita":"4","prezzo_unitario_eur":"5.62","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"24302","nome":"OstroVit Fieno greco VEGE 90 capsule","quantita":"2","prezzo_unitario_eur":"6.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26630","nome":"OstroVit Flex Regen 120 compresse","quantita":"1","prezzo_unitario_eur":"6.62","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27363","nome":"OstroVit Foglie di Melissa 120 capsule","quantita":"1","prezzo_unitario_eur":"9.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27227","nome":"OstroVit GABA plus VEGE 120 capsule","quantita":"1","prezzo_unitario_eur":"6.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27275","nome":"OstroVit GABA plus VEGE 120 capsule","quantita":"2","prezzo_unitario_eur":"4.41","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25326","nome":"OstroVit Gelso Bianco VEGE 60 capsule","quantita":"1","prezzo_unitario_eur":"5.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26802","nome":"OstroVit Ginkgo Biloba VEGE 60 capsule","quantita":"7","prezzo_unitario_eur":"3.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25609","nome":"OstroVit Ginseng siberiano VEGE 120 compresse","quantita":"6","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27157","nome":"OstroVit Glucosamine + MSM + Chondroitin + Vitamin C 90 tabs","quantita":"1","prezzo_unitario_eur":"6.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26871","nome":"OstroVit Glucosamine + MSM + Chondroitin 150 g","quantita":"1","prezzo_unitario_eur":"7.06","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25327","nome":"OstroVit Glutathione VEGE 90 capsule","quantita":"2","prezzo_unitario_eur":"14.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27360","nome":"OstroVit Glycine 120 capsule","quantita":"2","prezzo_unitario_eur":"6.4","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27417","nome":"OstroVit Glycine 500 g","quantita":"1","prezzo_unitario_eur":"8.82","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16706","nome":"OstroVit Guarana VEGE 90 compresse","quantita":"2","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25292","nome":"OstroVit Hydro Out Diuretic 90 capsule","quantita":"2","prezzo_unitario_eur":"10.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26064","nome":"OstroVit Incenso indiano VEGE 90 compresse","quantita":"1","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26839","nome":"OstroVit Inulina 500 g","quantita":"4","prezzo_unitario_eur":"6.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27115","nome":"OstroVit Iodio Potassio Ioduro 200 µg 120 compresse","quantita":"2","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"18149","nome":"OstroVit Keep Sleep Melatonin 180 compresse","quantita":"5","prezzo_unitario_eur":"2.62","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25611","nome":"OstroVit Keep Sleep Melatonin 300 compresse","quantita":"2","prezzo_unitario_eur":"3.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25038","nome":"OstroVit Kelp VEGE 250 compresse","quantita":"12","prezzo_unitario_eur":"6.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26818","nome":"OstroVit KSM-66 Ashwagandha VEGE 120 capsule","quantita":"3","prezzo_unitario_eur":"9.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27373","nome":"OstroVit L-Proline 60 capsule","quantita":"2","prezzo_unitario_eur":"5.07","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26074","nome":"OstroVit L-Teanina 90 capsule","quantita":"5","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26570","nome":"OstroVit L-Tirosina 600 mg 120 capsule","quantita":"1","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27367","nome":"OstroVit Lysine 120 capsule","quantita":"3","prezzo_unitario_eur":"4.41","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"19882","nome":"OstroVit Maca VEGE 90 compresse","quantita":"13","prezzo_unitario_eur":"4.12","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16775","nome":"OstroVit Magnesio + Potassio 60 compresse","quantita":"4","prezzo_unitario_eur":"2.24","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25673","nome":"OstroVit Magnesio Citrato 400 mg + B6 90 compresse","quantita":"2","prezzo_unitario_eur":"3.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26641","nome":"OstroVit Magnesio Glicinato 90 capsule","quantita":"1","prezzo_unitario_eur":"5.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16774","nome":"OstroVit Magnesio MAX + Vitamina 60 compresse","quantita":"3","prezzo_unitario_eur":"2.69","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"24176","nome":"OstroVit Mango Africano VEGE 60 capsule","quantita":"5","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26005","nome":"OstroVit Marine Collagen 200 g","quantita":"1","prezzo_unitario_eur":"10.59","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26033","nome":"OstroVit Matcha Tè verde in polvere 100 g","quantita":"2","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16719","nome":"OstroVit Mg + B6 90 compresse","quantita":"15","prezzo_unitario_eur":"2.62","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16714","nome":"OstroVit MgZB 90 compresse","quantita":"1","prezzo_unitario_eur":"2.24","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16718","nome":"OstroVit MgZB 90 compresse","quantita":"16","prezzo_unitario_eur":"2.24","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"19116","nome":"OstroVit MgZB Ultra 120 compresse","quantita":"2","prezzo_unitario_eur":"4.12","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26806","nome":"OstroVit Mountain Rosary VEGE 60 capsule","quantita":"2","prezzo_unitario_eur":"3.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16717","nome":"OstroVit MSM 90 compresse","quantita":"2","prezzo_unitario_eur":"3.97","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16752","nome":"OstroVit MSM Plus 300 g","quantita":"1","prezzo_unitario_eur":"7.5","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"10838","nome":"OstroVit Multivitamin DailySet 90 compresse","quantita":"6","prezzo_unitario_eur":"3.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26651","nome":"OstroVit N.O. Booster Extreme 80 capsule","quantita":"4","prezzo_unitario_eur":"9.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27309","nome":"OstroVit NAC 120 capsule","quantita":"1","prezzo_unitario_eur":"0.0","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27273","nome":"OstroVit Natural Vitamin C from Rose Hips 60 capsule","quantita":"1","prezzo_unitario_eur":"5.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26664","nome":"OstroVit Omega 3 + ADEK 90 capsule","quantita":"2","prezzo_unitario_eur":"5.44","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"19024","nome":"OstroVit Omega 3 180 capsule","quantita":"3","prezzo_unitario_eur":"11.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"11194","nome":"OstroVit Omega 3 90 capsule","quantita":"1","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26140","nome":"OstroVit Omega 3 Easy to Swallow 90 capsule","quantita":"5","prezzo_unitario_eur":"2.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25585","nome":"OstroVit Omega 3 Extreme 90 capsule","quantita":"1","prezzo_unitario_eur":"11.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"18383","nome":"OstroVit Omega 3 Ultra 90 capsule","quantita":"1","prezzo_unitario_eur":"5.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"21524","nome":"OstroVit Omega 3-6-9 180 capsule","quantita":"3","prezzo_unitario_eur":"8.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25526","nome":"OstroVit Omega 3-6-9 30 capsule","quantita":"16","prezzo_unitario_eur":"2.62","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"19128","nome":"OstroVit Omega 3-6-9 90 capsule","quantita":"2","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25957","nome":"OstroVit PABA VEGE 120 capsule","quantita":"2","prezzo_unitario_eur":"7.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26899","nome":"OstroVit Pharma DailySet Sport 60 capsule","quantita":"4","prezzo_unitario_eur":"4.12","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26115","nome":"OstroVit Pharma PRO-60 BIOTIC LactoSpore® 60 capsule","quantita":"1","prezzo_unitario_eur":"0.0","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27421","nome":"OstroVit Pre-Workout 240 g","quantita":"2","prezzo_unitario_eur":"8.54","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25979","nome":"OstroVit Q10 Coenzyme 100 capsule","quantita":"1","prezzo_unitario_eur":"7.5","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16721","nome":"OstroVit Q10 Coenzyme 120 capsule","quantita":"1","prezzo_unitario_eur":"0.0","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26166","nome":"OstroVit Quatro Mushroom Blend VEGE 100 g","quantita":"1","prezzo_unitario_eur":"7.12","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25166","nome":"OstroVit Quercetina VEGE 90 capsule","quantita":"4","prezzo_unitario_eur":"6.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27036","nome":"OstroVit Red Antioxidants 200 g","quantita":"1","prezzo_unitario_eur":"12.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26051","nome":"OstroVit Reishi VEGE 60 capsule","quantita":"3","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25338","nome":"OstroVit Resveratrolo VEGE 60 capsule","quantita":"1","prezzo_unitario_eur":"8.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26486","nome":"OstroVit Sabal Palm VEGE 360 compresse","quantita":"2","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25831","nome":"OstroVit Selenium 220 compresse","quantita":"2","prezzo_unitario_eur":"3.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27137","nome":"OstroVit Shilajit 90 capsule","quantita":"2","prezzo_unitario_eur":"9.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25826","nome":"OstroVit Soprano Riccio VEGE 60 capsule","quantita":"1","prezzo_unitario_eur":"5.62","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25223","nome":"OstroVit Spirulina VEGE 1000 compresse","quantita":"4","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"19650","nome":"OstroVit Spiruline 90 compresse","quantita":"9","prezzo_unitario_eur":"3.09","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26642","nome":"OstroVit Stabilolactic 100 compresse","quantita":"1","prezzo_unitario_eur":"6.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27372","nome":"OstroVit Threonine 90 capsule","quantita":"3","prezzo_unitario_eur":"3.53","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26465","nome":"OstroVit Tribulus Terrestris VEGE 360 compresse","quantita":"2","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25733","nome":"OstroVit Triple Ginseng VEGE 90 capsule","quantita":"1","prezzo_unitario_eur":"9.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25690","nome":"OstroVit Triple Magnesium + B6 P-5-P 90 capsule","quantita":"1","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25783","nome":"OstroVit Triple Zinc 90 capsule","quantita":"1","prezzo_unitario_eur":"0.0","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"18155","nome":"OstroVit Triptofano 200 g","quantita":"3","prezzo_unitario_eur":"9.74","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26035","nome":"OstroVit VEGE Estratto di semi d'uva 90 capsule","quantita":"1","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25738","nome":"OstroVit VEGE Fibra di mela 200 g","quantita":"2","prezzo_unitario_eur":"3.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"19111","nome":"OstroVit Vit&Min FORTE 120 compresse","quantita":"2","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26034","nome":"OstroVit VIT&MIN in polvere 150 g","quantita":"3","prezzo_unitario_eur":"7.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25621","nome":"OstroVit VITA&MINERALS Sport 60 capsule","quantita":"8","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25492","nome":"OstroVit Vitamin K2 MK-7 90 compresse","quantita":"6","prezzo_unitario_eur":"5.29","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27418","nome":"OstroVit Vitamina A 120 capsule","quantita":"1","prezzo_unitario_eur":"4.12","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26820","nome":"OstroVit Vitamina B1 Tiamina 60 capsule","quantita":"1","prezzo_unitario_eur":"3.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"27114","nome":"OstroVit Vitamina B12 120 compresse","quantita":"3","prezzo_unitario_eur":"3.59","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26819","nome":"OstroVit Vitamina B6 P-5-P 60 capsule","quantita":"2","prezzo_unitario_eur":"3.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25893","nome":"OstroVit Vitamina C + Esperidina + Rutina 60 capsule","quantita":"1","prezzo_unitario_eur":"5.62","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25659","nome":"OstroVit Vitamina C 1000 mg 120 capsule","quantita":"1","prezzo_unitario_eur":"4.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"10440","nome":"OstroVit Vitamina C 1000 mg 90 compresse","quantita":"3","prezzo_unitario_eur":"3.14","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"13972","nome":"OstroVit Vitamina D3 + K2 + Calcio 90 compresse","quantita":"15","prezzo_unitario_eur":"3.69","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"16704","nome":"OstroVit Vitamina D3 + K2 90 compresse","quantita":"24","prezzo_unitario_eur":"2.24","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"20690","nome":"OstroVit Vitamina D3 2000 IU 60 capsule","quantita":"14","prezzo_unitario_eur":"1.49","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"19118","nome":"OstroVit Vitamina D3 4000 UI + K2 100 compresse","quantita":"4","prezzo_unitario_eur":"2.99","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"25299","nome":"OstroVit Vitamina D3 4000 UI + K2 110 compresse","quantita":"4","prezzo_unitario_eur":"3.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"26406","nome":"OstroVit Vitamine e minerali 20 compresse effervescenti","quantita":"3","prezzo_unitario_eur":"1.87","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""},{"sku":"24815","nome":"OstroVit Zinco picolinato 150 compresse","quantita":"1","prezzo_unitario_eur":"3.37","stato":"DISPONIBILE","link_acquisto_1":"","link_acquisto_2":"","link_acquisto_3":""}];
-/* BACKUP V2: il catalogo storico è già nel codice HTML.
-   Inizializzazione automatica SOLO se magazzino E prodotti sono vuoti.
-   Non si collega a Supabase, non sovrascrive archivi con prodotti esistenti. */
-function kingSeedLocalCatalogIfEmpty(){
-  if(!Array.isArray(db.products)||!Array.isArray(db.stock))return;
-  if(db.products.length||db.stock.length)return;
-  if(localStorage.getItem('king_emergency_catalog_seeded_v2')==='1')return;
-  for(const r of KING_CATALOG_DATA){
-    const sku=String(r.sku).trim(),qty=Math.max(0,Math.floor(Number(r.quantita)||0));
-    db.products.push({id:uid(),name:r.nome,sku,catalogSku:sku,catalogQty:qty,catalogPrice:Number(r.prezzo_unitario_eur)||0,
-      catalogStatus:qty===0?'DA ORDINARE URGENTE':'DISPONIBILE',supplier:'OstroVit',links:[],url:''});
-    db.stock.push({id:uid(),name:r.nome,qty,min:0,boxId:'',catalogSku:sku});
-  }
-  cloudStore();
-  localStorage.setItem('king_emergency_catalog_seeded_v2','1');
-}
-kingSeedLocalCatalogIfEmpty();
 function kingCatalogPreview(){
  const n=KING_CATALOG_DATA.reduce((s,r)=>s+Number(r.quantita||0),0);
  const urgent=KING_CATALOG_DATA.filter(r=>Number(r.quantita)===0);
@@ -3614,7 +3702,7 @@ function kingCatalogImport(){
  const existingStock=new Map((db.stock||[]).filter(x=>x.catalogSku).map(x=>[String(x.catalogSku).trim(),x]));
  const newP=KING_CATALOG_DATA.filter(r=>!existingProducts.has(String(r.sku))).length;
  const newS=KING_CATALOG_DATA.filter(r=>!existingStock.has(String(r.sku))).length;
- const message=`Catalogo: ${KING_CATALOG_DATA.length} prodotti e 499 confezioni.\n\nNuove schede catalogo: ${newP}. Nuove righe magazzino: ${newS}.\n\nLe schede già associate a uno SKU manterranno link, note e quantità di magazzino esistenti. Le righe di magazzino senza SKU NON verranno toccate.\n\nLe nuove righe saranno SENZA SCATOLA finché non le assegni.\n\nImportare nell'archivio LOCALE di emergenza?`;
+ const message=`Catalogo: ${KING_CATALOG_DATA.length} prodotti e 499 confezioni.\n\nNuove schede catalogo: ${newP}. Nuove righe magazzino: ${newS}.\n\nLe schede già associate a uno SKU manterranno link, note e quantità di magazzino esistenti. Le righe di magazzino senza SKU NON verranno toccate.\n\nLe nuove righe saranno SENZA SCATOLA finché non le assegni.\n\nImportare nell'archivio CONDIVISO del team?`;
  if(!confirm(message))return;
  let productsAdded=0,stockAdded=0,productsUpdated=0;
  for(const r of KING_CATALOG_DATA){
