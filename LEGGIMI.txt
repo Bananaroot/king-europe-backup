@@ -1,31 +1,5 @@
-KING BENESSERE — CONTATORE VISITE E CLIC EBAY
+KING BENESSERE V3 · 7 DOMANDE · SENZA DATI PERSONALI
 
-Che cosa registra:
-- Aperture di ciascuna pagina con il contatore GoatCounter.
-- Clic su link ebay.it, ebay.com, ebay.de, ebay.fr, ebay.es, ebay.co.uk e ebay.io.
-- Campagna QR TikTok se l'indirizzo porta ?utm_source=tiktok.
-NON registra nome, cognome, email, punteggi o risposte del test.
-
-1) Crea un sito analytics gratuito su https://www.goatcounter.com/ .
-   Esempio codice del sito: kingbenessere (scegli il tuo, se disponibile).
-2) Apri KING_analytics.js e scrivi quel codice nella riga SITE_CODE = '';
-3) Carica solo KING_analytics.js nella radice del repository GitHub.
-4) Prima di </body> aggiungi questa UNICA riga alle pagine pubbliche che vuoi misurare:
-   <script src="KING_analytics.js?v=1" defer></script>
-   Inseriscila in test-benessere.html, test-benessere-v2.html,
-   test-integratori.html e test-alimentazione.html SOLO se vuoi contare tutte le pagine.
-5) Il pannello con numeri e grafici è su:
-   https://TUOCODICE.goatcounter.com/  (usa il vero codice creato al punto 1).
-   Vedrai pagine visitate e eventi ebay-<id_inserzione>.
-6) Prova entrando nel sito da un altro telefono e toccando un prodotto eBay.
-   Alcuni adblocker possono bloccare il conteggio; i numeri sono indicativi.
-
-Per un nuovo QR TikTok puoi usare:
-https://bananaroot.github.io/king-europe-backup/test-benessere-v2.html?utm_source=tiktok&utm_medium=qr&utm_campaign=king_benessere_v2
-Non cambiare il QR già pubblicato senza rigenerarlo.
-
-NOTA: il conteggio analytics è separato dal salvataggio dei risultati clienti in Supabase.
-L'account GoatCounter e il suo codice devono essere creati dal proprietario.
-Non usare il codice analytics per fingere che Supabase sia connesso.
-
-Questo pacchetto NON sovrascrive nessuna pagina già funzionante.
+Carica SOLO test-benessere-v3.html e KING_report_mobile_v3.js nella cartella principale del BACKUP.
+V1 e V2 e index.html non si toccano.
+Il risultato appare subito; PDF con Salva PDF / Stampa; esportazione risultato JSON opzionale. Nessun invio a database server.
