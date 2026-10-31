@@ -2446,7 +2446,7 @@ function kingLinksMarkup(product,section){
 }
 function kingStockThumb(x){
  const r=kingStockRecord(x);
- const src=kingImageSource(r.image)||(r.sku==='20690'?KING_SKU_THUMB_20690:'');
+ const src=kingImageSource(r.image)||kingPhotoFor(x)||window.KING_SYNC_PHOTO_FOR?.(r)||(r.sku==='20690'?KING_SKU_THUMB_20690:'');
  return src?`<img class="king-stock-thumb" src="${esc(src)}" loading="lazy" decoding="async" alt="Foto prodotto">`:`<span class="king-stock-thumb" style="display:grid;place-items:center;color:#8da2b1;font-size:21px">📦</span>`;
 }
 document.addEventListener("change",function(e){
@@ -4005,7 +4005,13 @@ render();
 kingLabRender();kingLoadShipping();
 void cloudBoot();
 </script>
-<script src="./KING_sync_foto_catalogo.js?v=20261031-1"></script>
+<script src="./KING_sync_foto_catalogo.js?v=20261031-2"></script>
+<script>
+/* Il catalogo foto viene caricato dopo il primo render: aggiorna le miniature senza modificare il database. */
+if (typeof window.KING_SYNC_PHOTO_FOR === 'function') {
+  try { if (typeof render === 'function') render(); } catch (e) { console.warn('KING foto render', e); }
+}
+</script>
 <script src="./king-github-sync-bridge.js?v=20261031-foto-pull-1"></script>
 </body>
 </html>
