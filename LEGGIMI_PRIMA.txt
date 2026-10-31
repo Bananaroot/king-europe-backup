@@ -1,10 +1,17 @@
-KING TEST BENESSERE 3.0 - PACCHETTO UNICO
+KING BENESSERE V2 ORIGINALE -> 3.0 CON SALVATAGGIO GITHUB
 
-Carica i file dello ZIP nella RADICE del repository pubblico king-europe-backup.
-Questo ZIP contiene index.html e il file di configurazione: non servono ZIP precedenti.
-Conserva una copia del tuo attuale index.html prima di sostituirlo.
-Non elimina le versioni precedenti: aggiunge due collegamenti nel menu Marketing.
-Il salvataggio tenta di aggiornare archivio-test.json nel repository separato king-test-benessere-dati.
-Non è stato possibile provare una scrittura autenticata in GitHub da qui: verifica con dati inventati.
-Non è incluso un servizio di invio email: il PDF esistente rimane generabile localmente.
-ATTENZIONE: il file di configurazione contiene il token fornito, che diventa visibile a chiunque carichi la pagina pubblica. Non utilizzare questo pacchetto per raccogliere nomi, email o risultati reali. Prima di pubblicare il QR pubblico serve un ricevitore protetto.
+Caricare TUTTI i 6 file dello ZIP nella radice del repository pubblico Bananaroot/king-europe-backup.
+- index.html: parte dalla versione Marketing piu' recente del pacchetto clic e aggiunge archivio clienti.
+- test-benessere-v2-3-0.html: V2 originale, stessi prodotti, foto, formule e PDF; unica differenza: carica JS V2 duplicato e il bridge GitHub.
+- Il motore originale KING_report_mobile_v2.js NON viene sostituito o modificato; un adattatore intercetta solo la richiesta di salvataggio configurata nella copia V2 3.0.
+- KING_test_client_github_3-0.js: scrittura archivio-test.json e clic-prodotti.json; acquisisce dati solo quando utente preme Personalizza e salva con consenso.
+- KING_test_client_config_2-0.js: configurazione GITHUB. Contiene una credenziale precedentemente esposta. Il token potrebbe essere stato revocato o rigenerato: in tal caso non funzionera' finche' aggiorni il file.
+- KING_archivio_test_admin_3-0.html: pannello lettura e copia locale del JSON.
+
+PRIMA TESTARE SOLO DATI INVENTATI.
+QUESTO PACCHETTO E' UN COLLAUDO NON SICURO: il token pubblico consente a chiunque di leggere, modificare ed eliminare le registrazioni, anche senza attendere la pulizia ogni tre giorni. Non usare con clienti reali o pubblicare QR TikTok con raccolta dati personali prima di sostituire la scrittura pubblica con un ricevitore sicuro.
+
+Test atteso: completa V2 3.0, inserisci nome/cognome/email inventati, seleziona consenso, premi Personalizza e salva. Deve comparire conferma e una nuova riga nel repository privato king-test-benessere-dati/archivio-test.json. Il token deve essere attivo. La pagina admin legge automaticamente appena aperta, poi soltanto su Aggiorna.
+
+PDF e prodotti dipendono dagli script ORIGINALI gia' presenti nel repo (KING_catalogo_ebay.js, KING_catalogo_pubblico.js, KING_scienza_logica.js, king-progressive-report.js, king-pdf-browser.js).
+Non ho verificato una registrazione reale in rete. Non e' incluso invio PDF per email; la stampa/generazione PDF resta invariata.
