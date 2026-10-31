@@ -1,17 +1,33 @@
-KING BENESSERE V2 ORIGINALE -> 3.0 CON SALVATAGGIO GITHUB
+KING TEST BENESSERE 3.0 - CORREZIONE MIRATA
 
-Caricare TUTTI i 6 file dello ZIP nella radice del repository pubblico Bananaroot/king-europe-backup.
-- index.html: parte dalla versione Marketing piu' recente del pacchetto clic e aggiunge archivio clienti.
-- test-benessere-v2-3-0.html: V2 originale, stessi prodotti, foto, formule e PDF; unica differenza: carica JS V2 duplicato e il bridge GitHub.
-- Il motore originale KING_report_mobile_v2.js NON viene sostituito o modificato; un adattatore intercetta solo la richiesta di salvataggio configurata nella copia V2 3.0.
-- KING_test_client_github_3-0.js: scrittura archivio-test.json e clic-prodotti.json; acquisisce dati solo quando utente preme Personalizza e salva con consenso.
-- KING_test_client_config_2-0.js: configurazione GITHUB. Contiene una credenziale precedentemente esposta. Il token potrebbe essere stato revocato o rigenerato: in tal caso non funzionera' finche' aggiorni il file.
-- KING_archivio_test_admin_3-0.html: pannello lettura e copia locale del JSON.
+Errore individuato: nel repository PRIVATO il file si chiama
+stazione-test.json, mentre il codice cercava archivio-test.json.
 
-PRIMA TESTARE SOLO DATI INVENTATI.
-QUESTO PACCHETTO E' UN COLLAUDO NON SICURO: il token pubblico consente a chiunque di leggere, modificare ed eliminare le registrazioni, anche senza attendere la pulizia ogni tre giorni. Non usare con clienti reali o pubblicare QR TikTok con raccolta dati personali prima di sostituire la scrittura pubblica con un ricevitore sicuro.
+REPOSITORY PUBBLICO king-europe-backup:
+1. Sostituisci soltanto KING_test_client_github_3-0.js
+2. Sostituisci soltanto KING_archivio_test_admin_3-0.html
+3. NON cambiare index.html, V2 originale, pagine test 3.0,
+   motori PDF, foto e cataloghi: sono gia' presenti.
 
-Test atteso: completa V2 3.0, inserisci nome/cognome/email inventati, seleziona consenso, premi Personalizza e salva. Deve comparire conferma e una nuova riga nel repository privato king-test-benessere-dati/archivio-test.json. Il token deve essere attivo. La pagina admin legge automaticamente appena aperta, poi soltanto su Aggiorna.
+REPOSITORY PRIVATO king-test-benessere-dati:
+4. Conserva stazione-test.json senza cancellarlo.
+5. Crea clic-prodotti.json prendendo quello in questo ZIP,
+   solo se non esiste gia'. NON sovrascrivere un file con clic reali.
 
-PDF e prodotti dipendono dagli script ORIGINALI gia' presenti nel repo (KING_catalogo_ebay.js, KING_catalogo_pubblico.js, KING_scienza_logica.js, king-progressive-report.js, king-pdf-browser.js).
-Non ho verificato una registrazione reale in rete. Non e' incluso invio PDF per email; la stampa/generazione PDF resta invariata.
+Apri test-benessere-v2-3-0.html, premi Personalizza e salva
+con DATI INVENTATI. Se compare un errore, ora il messaggio
+mostrera' 401/403/404 ecc. Controlla poi stazione-test.json.
+
+ATTENZIONE: il token e' gia' pubblicato nel file di configurazione
+esistente. Chiunque puo' leggerlo e, con i permessi dati, leggere
+le registrazioni private. Non usare dati veri finche' non c'e'
+un ricevitore che custodisce il token.
+
+PULIZIA SETTIMANALE: non e' implementata in questo ZIP. Una pagina
+statica non puo' eseguire un reset a tempo quando nessuno la apre.
+Serve una GitHub Action pianificata (ed e' necessario archiviare
+prima i dati in modo privato e verificato).
+
+NOTA: il codice di conteggio clic considera i clic effettuati
+sui link eBay del test, non le vendite; il passaggio a un'altra
+pagina puo' interrompere qualche richiesta.
