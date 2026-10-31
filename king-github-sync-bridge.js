@@ -53,7 +53,7 @@ function mergeCatalog(current,incoming){
  for(const field of ['stock','products']){
    const existing=d[field]||[];
    const byId=new Map(existing.map((o,i)=>[String(o.id),i]));
-   const bySku=new Map(existing.filter(o=>o.catalogSku||o.sku).map((o,i)=>[String(o.catalogSku||o.sku),i]));
+   const bySku=new Map(existing.map((o,i)=>[o.catalogSku||o.sku,i]).filter(x=>x[0]!=null).map(x=>[String(x[0]),x[1]]));
    for(const item of incoming[field]||[]){
      const i=byId.get(String(item.id))??bySku.get(String(item.catalogSku||item.sku||''));
      if(i===undefined){const safe=snapshot(item);existing.push(safe);if(safe.id)byId.set(String(safe.id),existing.length-1)}
@@ -64,14 +64,36 @@ function mergeCatalog(current,incoming){
  for(const k of Object.keys(incoming))if(!(k in d))d[k]=snapshot(incoming[k]);
  return {data:d,added};
 }
-function persistState(d){
- // Prima si libera la vecchia baseline, spesso duplicata con fotografie, poi si salva.
- const tiny=snapshot(d);
- try{store(LAST,tiny);store(KEY,d)}catch(e){
-  if(e?.name==='QuotaExceededError'||/quota/i.test(String(e)))throw Error('Memoria browser piena. Non ho sovrascritto gli ordini. Serve liberare spazio SENZA cancellare il BACKUP oppure usare un archivio IndexedDB.');
-  throw e;
+async function persistState(d){await persistSmart(d)}
+
+// Backup ampio e privato del browser. IndexedDB non ha il piccolo limite di localStorage.
+const DATA_DB='king_sync_full_store_v2';
+function dataDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DATA_DB,1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains('data'))r.result.createObjectStore('data')};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function putLarge(d){const database=await dataDB();try{await new Promise((res,rej)=>{const tx=database.transaction('data','readwrite');tx.objectStore('data').put(d,'full');tx.oncomplete=res;tx.onerror=()=>rej(tx.error);tx.onabort=()=>rej(tx.error)})}finally{database.close()}}
+async function getLarge(){const database=await dataDB();try{return await new Promise((res,rej)=>{const tx=database.transaction('data','readonly');const q=tx.objectStore('data').get('full');q.onsuccess=()=>res(q.result||null);q.onerror=()=>rej(q.error)})}finally{database.close()}}
+function currentState(){try{return typeof db==='object'&&db&&Array.isArray(db.orders)?db:local()}catch{return local()}}
+async function persistSmart(d){
+ // Scrivere PRIMA nella memoria grande; nessuna operazione rischia di distruggere la vecchia copia.
+ await putLarge(d);
+ try{store(KEY,d)}catch(e){
+  // Ultima risorsa: conservare il magazzino leggero nel vecchio formato e le foto in IndexedDB.
+  if(!/quota|storage/i.test(String(e))&&e?.name!=='QuotaExceededError')throw e;
+  try{store(KEY,snapshot(d))}catch(ex){throw Error('Archivio IndexedDB salvato, ma spazio locale insufficiente anche per il JSON leggero: '+ex.message)}
  }
- last=tiny;
+ // la baseline ha SOLO metadati, mai foto: aggiornarla dopo il salvataggio.
+ const compact=snapshot(d);try{store(LAST,compact)}catch(e){console.warn('Baseline temporaneamente non salvata',e)}
+ last=compact;
+ try{if(typeof db==='object'){db=clone(d); if(typeof render==='function')render()}}catch(e){console.warn('KING rendering',e)}
+}
+async function restoreLarge(){
+ try{const saved=await getLarge();if(!saved)return;
+   const raw=local();const localIds=new Set((raw?.orders||[]).map(x=>String(x.id)));
+   const hasUnseen=(raw?.orders||[]).some(x=>!new Set((saved.orders||[]).map(a=>String(a.id))).has(String(x.id)));
+   // Non recuperare sopra ordini più recenti: fondere i nuovi ordini e mantenere i dati correnti.
+   const result=hasUnseen?mergeCatalog(saved,raw).data:saved;
+   if(hasUnseen)await putLarge(result);
+   if(typeof db==='object'){db=clone(result);if(typeof render==='function')render()}
+ }catch(e){st('⚠️ Archivio locale: '+e.message,true)}
 }
 
 const sig=o=>JSON.stringify(o);
@@ -105,9 +127,9 @@ async function push(){if(busy)return;const q=read(Q,[]);if(!q.length){st('Nessun
 let last=snapshot(read(LAST,null));
 // Memorizza lo stato iniziale PRIMA della prima modifica: non perdere il primo salvataggio.
 if(!last && local()){last=snapshot(local());try{store(LAST,last)}catch(e){console.warn('KING SYNC baseline',e)}}
-window.KING_SYNC_AFTER_SAVE=function(){try{const c=cfg();const now=local();if(!now)return;if(!last){last=snapshot(now);store(LAST,last);st('Prima sincronizzazione: inizializza/recupera archivio');return}const changes=diff(last,now);last=snapshot(now);store(LAST,last);if(changes.length){store(Q,read(Q,[]).concat(changes));st('⏳ '+changes.length+' modifiche salvate localmente, invio GitHub');void push();}}catch(e){st('SYNC: '+e.message,true)}};
-async function initialize(){if(!confirm('PRIMO AVVIO: creare archivio privato con i dati attuali di questo dispositivo? NON sovrascrive un archivio già esistente. Confermi?'))return;try{const old=await remoteRead();if(old.doc)throw Error('Archivio esiste già: usa Recupera aggiornamenti');const base=local();if(!base)throw Error('Importa prima il JSON aggiornato');await remoteWrite(null,{schema:1,createdAt:new Date().toISOString(),base:snapshot(base),events:[]});last=snapshot(base);store(LAST,last);store(Q,[]);const c=cfg();c.enabled=true;store(CFG,c);enableRefresh();st('✅ Archivio iniziale privato creato. SYNC attivo.')}catch(e){st(e.message,true)}}
-async function pull(){try{if(read(Q,[]).length)throw Error('Ci sono modifiche locali da inviare: prima premi Invia in attesa. Nessun dato sovrascritto.');const r=await remoteRead();if(!r.doc)throw Error('Archivio remoto non inizializzato');const remote=apply(r.doc.base,r.doc.events);const current=local();const d=mergeCatalog(current,remote).data;if(current&&last&&sig(snapshot(current))!==sig(last))throw Error('Dati locali modificati: blocco importazione per sicurezza');if(!confirm('Unire gli aggiornamenti remoti senza eliminare gli ordini locali? Esporta comunque una copia di sicurezza prima'))return;store('king_sync_auto_import_confirmed_v1',true);persistState(d);const c=cfg();c.enabled=true;store(CFG,c);st('✅ Dati recuperati: '+(d.orders?.length||0)+' ordini, '+(d.stock?.length||0)+' voci magazzino. Ricarica la pagina.');setTimeout(()=>location.reload(),900)}catch(e){st('⚠️ '+e.message,true)}}
+window.KING_SYNC_AFTER_SAVE=function(){try{const c=cfg();const now=currentState();if(!now)return;void putLarge(clone(now)).catch(e=>console.warn('IndexedDB backup',e));if(!last){last=snapshot(now);store(LAST,last);st('Prima sincronizzazione: inizializza/recupera archivio');return}const changes=diff(last,now);last=snapshot(now);store(LAST,last);if(changes.length){store(Q,read(Q,[]).concat(changes));st('⏳ '+changes.length+' modifiche salvate localmente, invio GitHub');void push();}}catch(e){st('SYNC: '+e.message,true)}};
+async function initialize(){if(!confirm('PRIMO AVVIO: creare archivio privato con i dati attuali di questo dispositivo? NON sovrascrive un archivio già esistente. Confermi?'))return;try{const old=await remoteRead();if(old.doc)throw Error('Archivio esiste già: usa Recupera aggiornamenti');const base=currentState();if(!base)throw Error('Importa prima il JSON aggiornato');await remoteWrite(null,{schema:1,createdAt:new Date().toISOString(),base:snapshot(base),events:[]});last=snapshot(base);store(LAST,last);store(Q,[]);const c=cfg();c.enabled=true;store(CFG,c);enableRefresh();st('✅ Archivio iniziale privato creato. SYNC attivo.')}catch(e){st(e.message,true)}}
+async function pull(){try{if(read(Q,[]).length)throw Error('Ci sono modifiche locali da inviare: prima premi Invia in attesa. Nessun dato sovrascritto.');const r=await remoteRead();if(!r.doc)throw Error('Archivio remoto non inizializzato');const remote=apply(r.doc.base,r.doc.events);const current=currentState();const d=mergeCatalog(current,remote).data;if(current&&last&&sig(snapshot(current))!==sig(last))throw Error('Dati locali modificati: blocco importazione per sicurezza');if(!confirm('Unire gli aggiornamenti remoti senza eliminare gli ordini locali? Esporta comunque una copia di sicurezza prima'))return;store('king_sync_auto_import_confirmed_v1',true);await persistState(d);const c=cfg();c.enabled=true;store(CFG,c);st('✅ Dati recuperati: '+(d.orders?.length||0)+' ordini, '+(d.stock?.length||0)+' voci magazzino. Ricarica la pagina.');setTimeout(()=>location.reload(),900)}catch(e){st('⚠️ '+e.message,true)}}
 // Recupero una volta dopo l'autorizzazione: nessuna verifica periodica.
 async function autoPull(){
  if(busy||!token())return;
@@ -115,14 +137,14 @@ async function autoPull(){
   if(read(Q,[]).length){st('⏳ Modifiche locali in attesa: inviarle prima di recuperare GitHub');return}
   const r=await remoteRead();
   if(!r.doc){st('⚠️ Archivio remoto non inizializzato: importa il JSON e premi Crea archivio iniziale');return}
-  const remote=apply(r.doc.base,r.doc.events),current=local();const fresh=mergeCatalog(current,remote).data;
+  const remote=apply(r.doc.base,r.doc.events),current=currentState();const fresh=mergeCatalog(current,remote).data;
   if(current&&last&&sig(snapshot(current))!==sig(last)){st('⚠️ Dati locali differenti: recupero automatico sospeso per non perdere vendite',true);return}
   if(current&&sig(snapshot(current))===sig(snapshot(fresh))){st('✅ GitHub già aggiornato · '+(fresh.orders?.length||0)+' ordini');return}
   // Primo recupero con conferma: evita conflitti con dati locali non sincronizzati.
   if(!read('king_sync_auto_import_confirmed_v1',false)){
     st('📥 Aggiornamenti GitHub disponibili: premi Recupera aggiornamenti per la prima importazione');return;
   }
-  persistState(fresh);
+  await persistState(fresh);
   st('✅ GitHub sincronizzato all’accesso · '+(fresh.orders?.length||0)+' ordini');location.reload();
  }catch(e){st('⚠️ Lettura GitHub: '+e.message,true)}
 }
@@ -133,9 +155,9 @@ function syncUi(){const s=document.createElement('section');s.id='king-sync-cont
  $('#king-sync-forget').onclick=async()=>{try{await forgetToken();$('#king-sync-token').value='';$('#king-sync-remember').checked=false;st('✅ Autorizzazione rimossa da questo browser')}catch(e){st('⚠️ '+e.message,true)}};
  $('#king-sync-init').onclick=initialize;$('#king-sync-pull').onclick=pull;$('#king-sync-push').onclick=push;
  $('#king-sync-import').onclick=()=>$('#king-sync-file').click();
- $('#king-sync-file').onchange=async e=>{try{const f=e.target.files?.[0];if(!f)return;const data=JSON.parse(await f.text());if(!Array.isArray(data.stock)||!Array.isArray(data.products)||!Array.isArray(data.orders))throw Error('JSON non compatibile');if(read(Q,[]).length)throw Error('Esistono modifiche in attesa');const current=local();const {data:merged,added}=mergeCatalog(current,data);if(!confirm('Unire i dati del JSON: '+added+' ordini NUOVI su '+data.orders.length+' (gli ordini gia presenti non saranno duplicati). Aggiornare anche le giacenze?'))return;persistState(merged);st('✅ Importati '+added+' ordini nuovi. Totale '+merged.orders.length+'. Foto locali preservate. Ricarico pagina');setTimeout(()=>location.reload(),650)}catch(x){st('Errore importazione: '+x.message,true)}};
+ $('#king-sync-file').onchange=async e=>{try{const f=e.target.files?.[0];if(!f)return;const data=JSON.parse(await f.text());if(!Array.isArray(data.stock)||!Array.isArray(data.products)||!Array.isArray(data.orders))throw Error('JSON non compatibile');if(read(Q,[]).length)throw Error('Esistono modifiche in attesa');const current=currentState();const {data:merged,added}=mergeCatalog(current,data);if(!confirm('Confronto per ID: '+added+' ordini NUOVI su '+data.orders.length+'; gli altri restano. Aggiornare soltanto le quantita diverse?'))return;await persistState(merged);st('✅ Importati '+added+' ordini nuovi. Totale '+merged.orders.length+'. Foto protette in IndexedDB. Ricarico pagina');setTimeout(()=>location.reload(),650)}catch(x){st('Errore importazione: '+x.message,true)}};
 }
 function enableRefresh(){/* Nessun polling. Il recupero avviene all’apertura con sessione autorizzata. */}
-async function bootSync(){syncUi();if(!token()){try{if(await restoreToken()){st('✅ Token ricordato recuperato automaticamente');void autoPull()}}catch(e){st('⚠️ Credenziali locali: '+e.message,true)}}else void autoPull()}
+async function bootSync(){await restoreLarge();syncUi();if(!token()){try{if(await restoreToken()){st('✅ Token ricordato recuperato automaticamente');void autoPull()}}catch(e){st('⚠️ Credenziali locali: '+e.message,true)}}else void autoPull()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{void bootSync()});else void bootSync()
 })();

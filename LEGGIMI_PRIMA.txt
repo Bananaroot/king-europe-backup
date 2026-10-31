@@ -1,0 +1,6 @@
+KING BACKUP SYNC - test
+Sostituisci soltanto index.html, ordine-rapido.html e king-github-sync-bridge.js nel repository pubblico king-europe-backup. Non caricare il JSON privato.
+1 Autorizza GitHub
+2 Importa JSON aggiornato con 9 ordini
+3 Controlla il totale e premi Crea archivio iniziale solo se il remoto non esiste
+Questo codice preserva la copia dati completa in IndexedDB e usa localStorage solo come copia compatibile. NON e ancora un sistema di login permanente. Il token non e incluso.
