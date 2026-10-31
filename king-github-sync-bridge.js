@@ -183,19 +183,28 @@ async function recoverTrustedRemote(){
 async function autoPull(){
  if(busy||!token())return;
  try{
-  if(read(Q,[]).length){st('⏳ Modifiche locali in attesa: inviarle prima di recuperare GitHub');return}
+  // Una sola lettura all'apertura: niente timer e nessun clic richiesto.
+  const pending=read(Q,[]);
+  if(pending.length){st('⏳ '+pending.length+' modifiche locali da inviare: recupero sospeso per sicurezza');return}
   const r=await remoteRead();
-  if(!r.doc){st('⚠️ Archivio remoto non inizializzato: importa il JSON e premi Crea archivio iniziale');return}
-  const remote=apply(r.doc.base,r.doc.events),current=currentState();const fresh=mergeCatalog(current,remote).data;
-  if(current&&last&&sig(snapshot(current))!==sig(last)&&!canInitialJoin(current,remote)){st('⚠️ Dati locali differenti: recupero automatico sospeso per non perdere vendite',true);return}
-  if(current&&sig(snapshot(current))===sig(snapshot(fresh))){st('✅ GitHub già aggiornato · '+(fresh.orders?.length||0)+' ordini');return}
-  if(canInitialJoin(current,remote)){await persistState(fresh);store('king_sync_auto_import_confirmed_v1',true);st('✅ Primo accesso completato: '+fresh.orders.length+' ordini dal GitHub privato');location.reload();return}
-  // Primo recupero con conferma: evita conflitti con dati locali non sincronizzati.
-  if(!read('king_sync_auto_import_confirmed_v1',false)){
-    st('📥 Aggiornamenti GitHub disponibili: premi Recupera aggiornamenti per la prima importazione');return;
+  if(!r.doc){st('⚠️ Archivio remoto non inizializzato: non creare una seconda copia');return}
+  const remote=apply(r.doc.base,r.doc.events),current=currentState();
+  // Non cancellare vendite presenti soltanto su questo dispositivo.
+  const ids=new Set((remote.orders||[]).filter(o=>o&&o.id!=null).map(o=>String(o.id)));
+  const exclusive=(current?.orders||[]).filter(o=>o&&o.id!=null&&!ids.has(String(o.id)));
+  if(exclusive.length){st('⚠️ '+exclusive.length+' ordini soltanto su questo dispositivo: sincronizzali prima di recuperare GitHub',true);return}
+  // Una modifica locale non registrata in coda deve essere verificata, non sovrascritta.
+  if(current&&last&&sig(snapshot(current))!==sig(last)&&!canInitialJoin(current,remote)){
+   st('⚠️ Modifiche locali non inviate: recupero sospeso per sicurezza',true);return;
   }
+  const fresh=mergeCatalog(current,remote).data;
+  if(current&&sig(snapshot(current))===sig(snapshot(fresh))){st('✅ GitHub già aggiornato · '+(fresh.orders?.length||0)+' ordini');return}
+  // Prima memorizza in IndexedDB e localStorage, poi aggiorna la pagina.
+  // Il riferimento LAST è riscritto solo dopo il salvataggio completato.
   await persistState(fresh);
-  st('✅ GitHub sincronizzato all’accesso · '+(fresh.orders?.length||0)+' ordini');location.reload();
+  store('king_sync_auto_import_confirmed_v1',true);
+  st('✅ Aggiornamento GitHub recuperato automaticamente · '+(fresh.orders?.length||0)+' ordini');
+  location.reload();
  }catch(e){st('⚠️ Lettura GitHub: '+e.message,true)}
 }
 async function reconcileLocal(){
