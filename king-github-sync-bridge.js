@@ -93,7 +93,7 @@ async function restoreLarge(){
    const raw=local();const localIds=new Set((raw?.orders||[]).map(x=>String(x.id)));
    const hasUnseen=(raw?.orders||[]).some(x=>!new Set((saved.orders||[]).map(a=>String(a.id))).has(String(x.id)));
    // Non recuperare sopra ordini più recenti: fondere i nuovi ordini e mantenere i dati correnti.
-   const result=hasUnseen?mergeCatalog(saved,raw).data:saved;
+   const result=hasUnseen?mergeCatalog(saved,raw).data:(raw&&sig(snapshot(raw))!==sig(snapshot(saved))?mergeCatalog(raw,saved).data:saved);
    if(hasUnseen)await putLarge(result);
    if(typeof db==='object'){db=clone(result);if(typeof render==='function')render()}
  }catch(e){st('⚠️ Archivio locale: '+e.message,true)}
@@ -145,7 +145,15 @@ window.KING_SYNC_AFTER_SAVE=function(){try{
  }catch(e){st('⚠️ SYNC salvataggio: '+e.message,true)}};
 
 async function initialize(){if(!confirm('PRIMO AVVIO: creare archivio privato con i dati attuali di questo dispositivo? NON sovrascrive un archivio già esistente. Confermi?'))return;try{const old=await remoteRead();if(old.doc)throw Error('Archivio esiste già: usa Recupera aggiornamenti');const base=currentState();if(!base)throw Error('Importa prima il JSON aggiornato');await remoteWrite(null,{schema:1,createdAt:new Date().toISOString(),base:snapshot(base),events:[]});last=snapshot(base);store(LAST,last);store(Q,[]);const c=cfg();c.enabled=true;store(CFG,c);enableRefresh();st('✅ Archivio iniziale privato creato. SYNC attivo.')}catch(e){st(e.message,true)}}
-async function pull(){try{if(read(Q,[]).length)throw Error('Ci sono modifiche locali da inviare: prima premi Invia in attesa. Nessun dato sovrascritto.');const r=await remoteRead();if(!r.doc)throw Error('Archivio remoto non inizializzato');const remote=apply(r.doc.base,r.doc.events);const current=currentState();const d=mergeCatalog(current,remote).data;if(current&&last&&sig(snapshot(current))!==sig(last))throw Error('Dati locali modificati: blocco importazione per sicurezza');if(!confirm('Unire gli aggiornamenti remoti senza eliminare gli ordini locali? Esporta comunque una copia di sicurezza prima'))return;store('king_sync_auto_import_confirmed_v1',true);await persistState(d);const c=cfg();c.enabled=true;store(CFG,c);st('✅ Dati recuperati: '+(d.orders?.length||0)+' ordini, '+(d.stock?.length||0)+' voci magazzino. Ricarica la pagina.');setTimeout(()=>location.reload(),900)}catch(e){st('⚠️ '+e.message,true)}}
+function canInitialJoin(current,remote){
+ if(!current||!remote||read(Q,[]).length)return false;
+ const localOrders=Array.isArray(current.orders)?current.orders:[];
+ const remoteOrders=Array.isArray(remote.orders)?remote.orders:[];
+ if(!remoteOrders.length||localOrders.length>=remoteOrders.length)return false;
+ const ids=new Set(remoteOrders.filter(o=>o&&o.id!=null).map(o=>String(o.id)));
+ return localOrders.every(o=>o&&o.id!=null&&ids.has(String(o.id)));
+}
+async function pull(){try{if(read(Q,[]).length)throw Error('Ci sono modifiche locali da inviare: prima premi Invia in attesa. Nessun dato sovrascritto.');const r=await remoteRead();if(!r.doc)throw Error('Archivio remoto non inizializzato');const remote=apply(r.doc.base,r.doc.events);const current=currentState();const d=mergeCatalog(current,remote).data;if(current&&last&&sig(snapshot(current))!==sig(last)) {if(!canInitialJoin(current,remote))throw Error('Dati locali modificati: blocco importazione per sicurezza');}if(!confirm('Unire gli aggiornamenti remoti senza eliminare gli ordini locali? Esporta comunque una copia di sicurezza prima'))return;store('king_sync_auto_import_confirmed_v1',true);await persistState(d);const c=cfg();c.enabled=true;store(CFG,c);st('✅ Dati recuperati: '+(d.orders?.length||0)+' ordini, '+(d.stock?.length||0)+' voci magazzino. Ricarica la pagina.');setTimeout(()=>location.reload(),900)}catch(e){st('⚠️ '+e.message,true)}}
 // Recupero una volta dopo l'autorizzazione: nessuna verifica periodica.
 async function autoPull(){
  if(busy||!token())return;
@@ -154,8 +162,9 @@ async function autoPull(){
   const r=await remoteRead();
   if(!r.doc){st('⚠️ Archivio remoto non inizializzato: importa il JSON e premi Crea archivio iniziale');return}
   const remote=apply(r.doc.base,r.doc.events),current=currentState();const fresh=mergeCatalog(current,remote).data;
-  if(current&&last&&sig(snapshot(current))!==sig(last)){st('⚠️ Dati locali differenti: recupero automatico sospeso per non perdere vendite',true);return}
+  if(current&&last&&sig(snapshot(current))!==sig(last)&&!canInitialJoin(current,remote)){st('⚠️ Dati locali differenti: recupero automatico sospeso per non perdere vendite',true);return}
   if(current&&sig(snapshot(current))===sig(snapshot(fresh))){st('✅ GitHub già aggiornato · '+(fresh.orders?.length||0)+' ordini');return}
+  if(canInitialJoin(current,remote)){await persistState(fresh);store('king_sync_auto_import_confirmed_v1',true);st('✅ Primo accesso completato: '+fresh.orders.length+' ordini dal GitHub privato');location.reload();return}
   // Primo recupero con conferma: evita conflitti con dati locali non sincronizzati.
   if(!read('king_sync_auto_import_confirmed_v1',false)){
     st('📥 Aggiornamenti GitHub disponibili: premi Recupera aggiornamenti per la prima importazione');return;

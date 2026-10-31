@@ -1585,7 +1585,7 @@ function kingProductActions(x){
  return `<div class="actions king-product-actions"><a class="btn small" target="_blank" rel="noopener noreferrer" href="${esc(direct||url)}">🛒 ${direct?'Apri prodotto':'Cerca SKU OstroVit'} ↗</a><button class="btn small" type="button" data-king-order="${esc(sku)}">📋 Prepara ordine</button></div>`;
 }
 function kingImageSource(v){const t=String(v||"");return /^data:image\/(?:webp|jpeg|png);base64,[A-Za-z0-9+/=]+$/i.test(t)?t:secureUrl(t);}
-function kingPhotoFor(x){const sku=kingSkuOf(x);const st=(db.stock||[]).find(a=>(kingSkuOf(a)===sku&&sku)||a.name===x.name);return kingImageSource(x.imageUrl)||kingImageSource(st?.imageUrl)||(sku==='20690'?KING_SKU_THUMB_20690:'');}
+function kingPhotoFor(x){const sku=kingSkuOf(x);const st=(db.stock||[]).find(a=>(kingSkuOf(a)===sku&&sku)||a.name===x.name);return kingImageSource(x.imageUrl)||kingImageSource(st?.imageUrl)||window.KING_SYNC_PHOTO_FOR?.(x)||window.KING_SYNC_PHOTO_FOR?.(st)||(sku==='20690'?KING_SKU_THUMB_20690:'');}
 function kingProductThumb(x){const sku=kingSkuOf(x),src=kingPhotoFor(x);return src?`<img class="king-stock-thumb" src="${esc(src)}" alt="Miniatura ${esc(x.name)}" loading="lazy" decoding="async">`:`<span class="king-stock-thumb" style="display:grid;place-items:center">📦</span>`;}
 function kingFuzzyMatch(value,query){
  const normalize=v=>String(v||'').toLocaleLowerCase('it-IT').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
@@ -4005,7 +4005,8 @@ render();
 kingLabRender();kingLoadShipping();
 void cloudBoot();
 </script>
-<script src="./king-github-sync-bridge.js?v=20261031-verifica-qty-3"></script>
+<script src="./KING_sync_foto_catalogo.js?v=20261031-1"></script>
+<script src="./king-github-sync-bridge.js?v=20261031-foto-pull-1"></script>
 </body>
 </html>
 
