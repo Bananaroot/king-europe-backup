@@ -1021,6 +1021,10 @@ onclick="cancelStockEdit()">Annulla modifica</button>
   <a class="btn" href="./test-benessere.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🧬</span><strong>01 · Test Ormonale</strong><small>Gratuito · pubblico</small></a>
   <a class="btn" href="./test-benessere-v2.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🧬</span><strong>01B · Benessere V2</strong><small>15 domande · completo</small></a>
   <a class="btn" href="./test-benessere-v3.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">⚡</span><strong>01C · Benessere V3</strong><small>7 domande · rapido</small></a>
+  <a class="btn" href="./test-benessere-v2-3-0.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🧬</span><strong>01F · Benessere V2 · 3.0</strong><small>15 domande · archivio prova</small></a>
+  <a class="btn" href="./test-benessere-v3-3-0.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🧪</span><strong>01G · Benessere V3 · 3.0</strong><small>7 domande · archivio prova</small></a>
+  <a class="btn" href="./test-benessere-v2-2-0.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🧪</span><strong>01D · Benessere V2 · 2.0 PROVA</strong><small>15 domande · test archivio</small></a>
+  <a class="btn" href="./test-benessere-v3-2-0.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🧪</span><strong>01E · Benessere V3 · 2.0 PROVA</strong><small>7 domande · test archivio</small></a>
   <a class="btn" href="./test-integratori.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">💊</span><strong>02 · Test Integratori</strong><small>Gratuito · pubblico</small></a>
   <a class="btn" href="./test-alimentazione.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🥦</span><strong>03 · Test Alimentazione</strong><small>Gratuito · pubblico</small></a>
   <a class="btn" href="./database-scientifico.html" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:112px;text-decoration:none;text-align:center"><span aria-hidden="true" style="font-size:32px">🗃️</span><strong>Database scientifico</strong><small>Archivio pubblico</small></a>
@@ -2446,7 +2450,7 @@ function kingLinksMarkup(product,section){
 }
 function kingStockThumb(x){
  const r=kingStockRecord(x);
- const src=kingImageSource(r.image)||kingPhotoFor(x)||window.KING_SYNC_PHOTO_FOR?.(r)||(r.sku==='20690'?KING_SKU_THUMB_20690:'');
+ const src=kingImageSource(r.image)||(r.sku==='20690'?KING_SKU_THUMB_20690:'');
  return src?`<img class="king-stock-thumb" src="${esc(src)}" loading="lazy" decoding="async" alt="Foto prodotto">`:`<span class="king-stock-thumb" style="display:grid;place-items:center;color:#8da2b1;font-size:21px">📦</span>`;
 }
 document.addEventListener("change",function(e){
@@ -4005,14 +4009,8 @@ render();
 kingLabRender();kingLoadShipping();
 void cloudBoot();
 </script>
-<script src="./KING_sync_foto_catalogo.js?v=20261031-2"></script>
-<script>
-/* Il catalogo foto viene caricato dopo il primo render: aggiorna le miniature senza modificare il database. */
-if (typeof window.KING_SYNC_PHOTO_FOR === 'function') {
-  try { if (typeof render === 'function') render(); } catch (e) { console.warn('KING foto render', e); }
-}
-</script>
-<script src="./king-github-sync-bridge.js?v=20261031-foto-pull-1"></script>
+<script src="./KING_sync_foto_catalogo.js?v=20261031-1"></script>
+<script src="./king-github-sync-bridge.js?v=20261031-auto-pull-2"></script>
 </body>
 </html>
 

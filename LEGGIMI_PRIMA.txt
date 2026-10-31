@@ -1,6 +1,10 @@
-KING BACKUP SYNC - test
-Sostituisci soltanto index.html, ordine-rapido.html e king-github-sync-bridge.js nel repository pubblico king-europe-backup. Non caricare il JSON privato.
-1 Autorizza GitHub
-2 Importa JSON aggiornato con 9 ordini
-3 Controlla il totale e premi Crea archivio iniziale solo se il remoto non esiste
-Questo codice preserva la copia dati completa in IndexedDB e usa localStorage solo come copia compatibile. NON e ancora un sistema di login permanente. Il token non e incluso.
+KING TEST BENESSERE 3.0 - PACCHETTO UNICO
+
+Carica i file dello ZIP nella RADICE del repository pubblico king-europe-backup.
+Questo ZIP contiene index.html e il file di configurazione: non servono ZIP precedenti.
+Conserva una copia del tuo attuale index.html prima di sostituirlo.
+Non elimina le versioni precedenti: aggiunge due collegamenti nel menu Marketing.
+Il salvataggio tenta di aggiornare archivio-test.json nel repository separato king-test-benessere-dati.
+Non è stato possibile provare una scrittura autenticata in GitHub da qui: verifica con dati inventati.
+Non è incluso un servizio di invio email: il PDF esistente rimane generabile localmente.
+ATTENZIONE: il file di configurazione contiene il token fornito, che diventa visibile a chiunque carichi la pagina pubblica. Non utilizzare questo pacchetto per raccogliere nomi, email o risultati reali. Prima di pubblicare il QR pubblico serve un ricevitore protetto.
