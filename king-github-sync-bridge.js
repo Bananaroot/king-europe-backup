@@ -93,8 +93,10 @@ async function restoreLarge(){
    const raw=local();const localIds=new Set((raw?.orders||[]).map(x=>String(x.id)));
    const hasUnseen=(raw?.orders||[]).some(x=>!new Set((saved.orders||[]).map(a=>String(a.id))).has(String(x.id)));
    // Non recuperare sopra ordini più recenti: fondere i nuovi ordini e mantenere i dati correnti.
-   const result=hasUnseen?mergeCatalog(saved,raw).data:(raw&&sig(snapshot(raw))!==sig(snapshot(saved))?mergeCatalog(raw,saved).data:saved);
-   if(hasUnseen)await putLarge(result);
+   // Il JSON del browser e' lo stato corrente quando presente; IndexedDB conserva foto/backup.
+   // Non ripristinare una giacenza vecchia da IndexedDB sopra quella appena letta da GitHub.
+   const result=raw?mergeCatalog(saved,raw).data:saved;
+   if(hasUnseen || (raw && sig(snapshot(result))!==sig(snapshot(saved))))await putLarge(result);
    if(typeof db==='object'){db=clone(result);if(typeof render==='function')render()}
  }catch(e){st('⚠️ Archivio locale: '+e.message,true)}
 }
@@ -155,6 +157,29 @@ function canInitialJoin(current,remote){
 }
 async function pull(){try{if(read(Q,[]).length)throw Error('Ci sono modifiche locali da inviare: prima premi Invia in attesa. Nessun dato sovrascritto.');const r=await remoteRead();if(!r.doc)throw Error('Archivio remoto non inizializzato');const remote=apply(r.doc.base,r.doc.events);const current=currentState();const d=mergeCatalog(current,remote).data;if(current&&last&&sig(snapshot(current))!==sig(last)) {if(!canInitialJoin(current,remote))throw Error('Dati locali modificati: blocco importazione per sicurezza');}if(!confirm('Unire gli aggiornamenti remoti senza eliminare gli ordini locali? Esporta comunque una copia di sicurezza prima'))return;store('king_sync_auto_import_confirmed_v1',true);await persistState(d);const c=cfg();c.enabled=true;store(CFG,c);st('✅ Dati recuperati: '+(d.orders?.length||0)+' ordini, '+(d.stock?.length||0)+' voci magazzino. Ricarica la pagina.');setTimeout(()=>location.reload(),900)}catch(e){st('⚠️ '+e.message,true)}}
 // Recupero una volta dopo l'autorizzazione: nessuna verifica periodica.
+// Recupero esplicito da un altro browser: preserva i dati locali prima di adottare GitHub.
+// NON elimina ordini esclusivi del dispositivo o eventi in attesa.
+async function recoverTrustedRemote(){
+ try{
+  if(!token())throw Error('Autorizza prima GitHub');
+  if(read(Q,[]).length)throw Error('Ci sono modifiche locali in attesa: prima controlla e inviale');
+  const r=await remoteRead();
+  if(!r.doc)throw Error('Archivio remoto non inizializzato');
+  const remote=apply(r.doc.base,r.doc.events),current=currentState();
+  if(!Array.isArray(remote.orders)||!Array.isArray(remote.stock))throw Error('Archivio GitHub non valido');
+  const ids=new Set(remote.orders.filter(x=>x&&x.id!=null).map(x=>String(x.id)));
+  const localOnly=(current?.orders||[]).filter(x=>x&&x.id!=null&&!ids.has(String(x.id)));
+  if(localOnly.length)throw Error('Ci sono '+localOnly.length+' ordini SOLO in questo browser. Esportali e verifica prima di allineare.');
+  const before=current?clone(current):null;
+  const adopted=mergeCatalog(current,remote).data;
+  if(!confirm('GitHub: '+remote.orders.length+' ordini. Sul dispositivo: '+(current?.orders?.length||0)+'. Allineare giacenze e dati da GitHub? Creo prima un backup locale, senza toccare l’archivio privato.'))return;
+  if(before){const database=await dataDB();try{await new Promise((resolve,reject)=>{const tx=database.transaction('data','readwrite');tx.objectStore('data').put(before,'pre-recupero-github');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})}finally{database.close()}}
+  await persistState(adopted);
+  store('king_sync_auto_import_confirmed_v1',true);
+  st('✅ Ripristino da GitHub completato: '+adopted.orders.length+' ordini. Ricarico la pagina.');
+  setTimeout(()=>location.reload(),600);
+ }catch(e){st('⚠️ Recupero GitHub: '+e.message,true)}
+}
 async function autoPull(){
  if(busy||!token())return;
  try{
@@ -195,12 +220,12 @@ async function verifyRemoteStock(){
   st((a&&b&&Number(a.qty)===Number(b.qty)?'✅ ':'⚠️ ')+text,!!(a&&b&&Number(a.qty)!==Number(b.qty)));
  }catch(e){st('⚠️ Verifica GitHub: '+e.message,true)}
 }
-function syncUi(){const s=document.createElement('section');s.id='king-sync-controls';s.style='max-width:920px;margin:12px auto;padding:14px;border:2px solid #a6b4a6;border-radius:12px;background:#f4faf4;color:#14271c;font:14px system-ui;';s.innerHTML=`<details id="king-sync-details"><summary style="cursor:pointer;font-weight:bold">🔄 KING BACKUP · SYNC · Impostazioni</summary><p style="margin:7px 0">Il gestionale continua a funzionare in locale. Ogni salvataggio invia automaticamente a GitHub le modifiche; nessun timer. Per sincronizzare serve prima autorizzare GitHub e inizializzare l’archivio privato.</p><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><label>Repository <input id="king-sync-repo" value="king-sync-test" style="width:125px"></label><label>Token <input id="king-sync-token" type="password" placeholder="Token privato, non pubblicarlo" style="width:160px"></label><button id="king-sync-access" type="button">Autorizza</button><label style="font-size:12px;display:inline-flex;align-items:center;gap:5px"><input id="king-sync-remember" type="checkbox"> Ricorda su questo dispositivo (prova)</label><button id="king-sync-forget" type="button">Rimuovi autorizzazione</button><button id="king-sync-pull" type="button">Recupera aggiornamenti</button><button id="king-sync-push" type="button">Invia in attesa</button><button id="king-sync-verify" type="button">Verifica giacenza GitHub</button><button id="king-sync-reconcile" type="button">Rileva modifiche non inviate</button><button id="king-sync-init" type="button">Crea archivio iniziale</button><button id="king-sync-import" type="button">Importa JSON iniziale</button><input type="file" id="king-sync-file" accept=".json,application/json" hidden></div></details><p id="king-sync-status" style="margin:8px 0">SYNC automatica su modifica. Se il token non è configurato, le operazioni restano in attesa in locale.</p>`;
+function syncUi(){const s=document.createElement('section');s.id='king-sync-controls';s.style='max-width:920px;margin:12px auto;padding:14px;border:2px solid #a6b4a6;border-radius:12px;background:#f4faf4;color:#14271c;font:14px system-ui;';s.innerHTML=`<details id="king-sync-details"><summary style="cursor:pointer;font-weight:bold">🔄 KING BACKUP · SYNC · Impostazioni</summary><p style="margin:7px 0">Il gestionale continua a funzionare in locale. Ogni salvataggio invia automaticamente a GitHub le modifiche; nessun timer. Per sincronizzare serve prima autorizzare GitHub e inizializzare l’archivio privato.</p><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><label>Repository <input id="king-sync-repo" value="king-sync-test" style="width:125px"></label><label>Token <input id="king-sync-token" type="password" placeholder="Token privato, non pubblicarlo" style="width:160px"></label><button id="king-sync-access" type="button">Autorizza</button><label style="font-size:12px;display:inline-flex;align-items:center;gap:5px"><input id="king-sync-remember" type="checkbox"> Ricorda su questo dispositivo (prova)</label><button id="king-sync-forget" type="button">Rimuovi autorizzazione</button><button id="king-sync-pull" type="button">Recupera aggiornamenti</button><button id="king-sync-rescue" type="button" style="font-weight:700">Allinea da GitHub (backup locale)</button><button id="king-sync-push" type="button">Invia in attesa</button><button id="king-sync-verify" type="button">Verifica giacenza GitHub</button><button id="king-sync-reconcile" type="button">Rileva modifiche non inviate</button><button id="king-sync-init" type="button">Crea archivio iniziale</button><button id="king-sync-import" type="button">Importa JSON iniziale</button><input type="file" id="king-sync-file" accept=".json,application/json" hidden></div></details><p id="king-sync-status" style="margin:8px 0">SYNC automatica su modifica. Se il token non è configurato, le operazioni restano in attesa in locale.</p>`;
  const where=document.querySelector('main')||document.body;where.parentNode.insertBefore(s,where);
  const saved=cfg();$('#king-sync-repo').value=saved.repo;
  $('#king-sync-access').onclick=async()=>{const c=cfg();c.repo=$('#king-sync-repo').value.trim();store(CFG,c);const t=$('#king-sync-token').value.trim();try{if(t){sessionStorage.setItem('KING_SYNC_TOKEN',t);if($('#king-sync-remember').checked){await rememberToken(t);st('✅ Token ricordato su questo dispositivo. Nessun timer: SYNC sulle modifiche.')}else{await vaultOperation('delete');st('✅ Token valido per questa sessione.')}}else if(!token()){if(await restoreToken())st('✅ Autorizzazione recuperata dal dispositivo');else throw Error('Inserisci il token')}$('#king-sync-token').value='';if(read(Q,[]).length)void push();else void autoPull()}catch(e){st('⚠️ '+e.message,true)}};
  $('#king-sync-forget').onclick=async()=>{try{await forgetToken();$('#king-sync-token').value='';$('#king-sync-remember').checked=false;st('✅ Autorizzazione rimossa da questo browser')}catch(e){st('⚠️ '+e.message,true)}};
- $('#king-sync-verify').onclick=verifyRemoteStock;$('#king-sync-reconcile').onclick=reconcileLocal;$('#king-sync-init').onclick=initialize;$('#king-sync-pull').onclick=pull;$('#king-sync-push').onclick=push;
+ $('#king-sync-rescue').onclick=recoverTrustedRemote;$('#king-sync-verify').onclick=verifyRemoteStock;$('#king-sync-reconcile').onclick=reconcileLocal;$('#king-sync-init').onclick=initialize;$('#king-sync-pull').onclick=pull;$('#king-sync-push').onclick=push;
  $('#king-sync-import').onclick=()=>$('#king-sync-file').click();
  $('#king-sync-file').onchange=async e=>{try{const f=e.target.files?.[0];if(!f)return;const data=JSON.parse(await f.text());if(!Array.isArray(data.stock)||!Array.isArray(data.products)||!Array.isArray(data.orders))throw Error('JSON non compatibile');if(read(Q,[]).length)throw Error('Esistono modifiche in attesa');const current=currentState();const {data:merged,added}=mergeCatalog(current,data);if(!confirm('Confronto per ID: '+added+' ordini NUOVI su '+data.orders.length+'; gli altri restano. Aggiornare soltanto le quantita diverse?'))return;await persistState(merged);st('✅ Importati '+added+' ordini nuovi. Totale '+merged.orders.length+'. Foto protette in IndexedDB. Ricarico pagina');setTimeout(()=>location.reload(),650)}catch(x){st('Errore importazione: '+x.message,true)}};
 }
