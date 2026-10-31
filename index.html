@@ -1316,7 +1316,7 @@ function cloudStatus(message){const el=$("syncStatusLabel");if(el)el.textContent
 function cloudGateStatus(message,error=false){const el=$("cloudGateStatus");if(el){el.textContent=message;el.className=error?"auth-error":"auth-status";}}
 function cloudQueueKey(){return "king_emergency_pending_local";}
 function cloudStore(){try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){cloudStatus("⚠️ Spazio locale esaurito: esporta subito il JSON");alert("Memoria del browser piena. Esporta il backup JSON prima di continuare.");}}
-function save(){cloudStore();render();if(document.getElementById('kingSearchPanel')?.classList.contains('visible') && typeof kingSearchMode!=='undefined' && kingSearchMode==='internal')kingSearchResults();cloudStatus("✅ Salvato su questo dispositivo · nessuna connessione Supabase");}
+function save(){cloudStore();window.KING_SYNC_AFTER_SAVE?.();render();if(document.getElementById('kingSearchPanel')?.classList.contains('visible') && typeof kingSearchMode!=='undefined' && kingSearchMode==='internal')kingSearchResults();cloudStatus("✅ Salvato su questo dispositivo · nessuna connessione Supabase");}
 async function cloudRead(){return {data:clone(db),version:cloudVersion};}
 async function cloudFlush(){cloudQueue.length=0;cloudStore();}
 async function cloudRefresh(){}
@@ -4005,6 +4005,7 @@ render();
 kingLabRender();kingLoadShipping();
 void cloudBoot();
 </script>
+<script src="./king-github-sync-bridge.js?v=20261031-auto-2"></script>
 </body>
 </html>
 

@@ -118,6 +118,7 @@ function localWrite(next){
  const check=localRead();
  if(check.orders.length!==next.orders.length||JSON.stringify(check.stock)!==JSON.stringify(next.stock))throw Error('Verifica salvataggio locale non riuscita.');
  data=check;
+ window.KING_SYNC_AFTER_SAVE?.();
 }
 async function loadData(){
  if(busy)return;
@@ -233,4 +234,5 @@ function kingReturnHome(event){
  return false;
 }
 </script>
+<script src="./king-github-sync-bridge.js?v=20261031-auto-2"></script>
 </body></html>
