@@ -1,18 +1,34 @@
-KING BENESSERE V2 3.0 - COLLEGAMENTO AL WORKER CLOUDFARE
+KING EUROPE · CORREZIONE DATABASE CLIENTI 3.0
 
-CARICA SOLO: test-benessere-v2-3-0.html
-DESTINAZIONE: repository pubblico Bananaroot/king-europe-backup, nella radice.
-Sostituisci il file omonimo. Non cambiare index.html, V2 originale, PDF, JS, magazzino o token.
+PROBLEMA
+Il pulsante Database clienti nel Marketing apre una vecchia pagina che legge GitHub con un token revocato. Non e' un problema del salvataggio dei test.
 
-REQUISITI:
-- Worker king-benessere-save.vania-dadea.workers.dev gia pubblicato con codice /save.
-- Segreto GITHUB_TOKEN valido configurato nel Worker in Produzione.
-- Repository PRIVATO king-test-benessere-dati con file archivio-test.json sul ramo main.
+CORREZIONE (2 file operativi)
+1. CLOUDFARE WORKER esistente king-benessere-save:
+   - Apri Modifica codice, incolla l'intero contenuto di worker.js e Distribuisci.
+   - Conserva invariato il segreto GITHUB_TOKEN che hai gia' configurato.
+   - Impostazioni > Variabili e segreti > Aggiungi variabile:
+       Chiave: ADMIN_KEY
+       Tipo: Segreto
+       Valore: una nuova password lunga e casuale (almeno 20 caratteri), DIFFERENTE dal token GitHub.
+     Salva e distribuisci. Non condividere la chiave in chat.
+   - Questo Worker mantiene /save e aggiunge /admin, accessibile solo con ADMIN_KEY.
+2. GITHUB PUBLIC REPO Bananaroot/king-europe-backup:
+   - Sostituisci SOLO KING_archivio_test_admin_3-0.html con il file incluso.
+   - NON sostituire index.html: il link Database clienti 3.0 gia' esiste.
+   - NON toccare i test, PDF, immagini, prodotti, KING BACKUP SYNC o il magazzino.
+3. APRI:
+   https://bananaroot.github.io/king-europe-backup/KING_archivio_test_admin_3-0.html?v=admin-worker-2
+   Inserisci ADMIN_KEY, premi Leggi da GitHub e verifica il numero di registrazioni.
 
-TEST: Apri https://bananaroot.github.io/king-europe-backup/test-benessere-v2-3-0.html?v=worker-save-1
-Completa prova con nome/email inventati, seleziona consenso, premi Personalizza e salva.
-Controlla poi il file archivio-test.json sul repository privato. Non usare dati reali fino alla configurazione delle misure di privacy e antiabuso.
+ARCHIVIO LETTO
+Repository privato: Bananaroot/king-test-benessere-dati
+File test: archivio-test.json
+File clic: clic-prodotti.json (puo' essere ancora assente)
 
-NOTA: non contiene token. I clic eBay restano apribili ma il vecchio conteggio GitHub dal browser non viene caricato su questa pagina, poiche dipendeva dal token pubblico. Per tracciare clic in sicurezza aggiungeremo poi endpoint /click al Worker, dopo aver verificato il salvataggio.
-
-Se il Worker restituisce HTTP 401, il token segreto non e valido o non ha accesso al repository. Se compare 'Archivio online non ancora configurato', il browser potrebbe avere una pagina vecchia in cache.
+PRIVACY E STATO
+- Nessun token GitHub compare nel nuovo HTML amministrativo.
+- Il Worker non compie polling; legge GitHub soltanto quando premi o apri il pannello.
+- Il conteggio clic richiede un endpoint di tracciamento aggiuntivo che non e' incluso qui.
+- Non sono stati testati in remoto POST /save e GET /admin con le credenziali del tuo account.
+- Prima di campagne pubbliche, configura protezione dagli invii automatici e un'adeguata gestione dei dati personali.
