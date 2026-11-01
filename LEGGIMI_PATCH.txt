@@ -1,0 +1,18 @@
+KING EUROPE BACKUP — PATCH MINIMA 01/11/2026
+
+CONTENUTO: sostituisci SOLO i 2 file omonimi index.html e test-benessere-v2.html e AGGIUNGI KING_MARKETING_CENTER.html nella RADICE della repository.
+
+- index.html: aggiunta scheda/pulsante Marketing Center sotto Marketing e negozi. Nessun altro codice modificato.
+- test-benessere-v2.html: copiato esclusivamente submissionEndpoint HTTPS della versione test-benessere-v2-3-0.html, senza modificare PDF, layout e script del test. Il salvataggio remoto resta subordinato al consenso esplicito e al pulsante Personalizza e salva (come nella 3.0).
+- KING_MARKETING_CENTER.html: prototipo locale. Per ora i dati restano nel browser e non nel database GitHub/Cloudflare.
+
+NON toccare test-benessere-v2-3-0.html, il Worker, il magazzino o altri file.
+
+TEST DOPO LA PUBBLICAZIONE:
+1. Vai su index.html?page=marketing, verifica Apri KING MARKETING CENTER.
+2. Apri V2, completa il test e salva con dati di prova e spunta di consenso; verifica la risposta dall'interfaccia e poi leggi l'archivio amministrativo (Aggiorna il database).
+3. Riapri V3.0 e controlla che registrazioni e clic eBay siano invariati.
+
+ATTENZIONE: il backend può differenziare i dati secondo il campo test/schema_version inviato dal modulo V2. Se il Worker rifiuta il payload, servirà correggere solo l'adattamento dei dati dopo aver letto risposta e log; non è stato possibile testare il Worker in produzione.
+
+I file sono già estratti nello ZIP, non devi caricare il documento LEGGIMI come pagina web.
