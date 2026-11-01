@@ -1,33 +1,15 @@
-KING TEST BENESSERE 3.0 - CORREZIONE MIRATA
+KING BACKUP · Patch navigazione e rapporti · 01-11-2026
 
-Errore individuato: nel repository PRIVATO il file si chiama
-stazione-test.json, mentre il codice cercava archivio-test.json.
+File da mettere nella radice della repository (sovrascrivere solo i nomi presenti):
+- index.html: conserva il pulsante Marketing Center già aggiunto nel precedente aggiornamento.
+- KING_MARKETING_CENTER.html: AGGIUNTO PULSANTE "Torna al gestionale · Marketing".
+- test-benessere-v2.html: mantiene il collegamento Worker introdotto nel precedente aggiornamento.
+- king-progressive-report.js: nei PDF Alimentazione/Integratori mostra anche le domande e risposte reali nella pagina 3; conserva sei pagine per modulo.
+- test-benessere.html, test-alimentazione.html, test-integratori.html: pulsante per tornare al gestionale e indicazione PDF.
 
-REPOSITORY PUBBLICO king-europe-backup:
-1. Sostituisci soltanto KING_test_client_github_3-0.js
-2. Sostituisci soltanto KING_archivio_test_admin_3-0.html
-3. NON cambiare index.html, V2 originale, pagine test 3.0,
-   motori PDF, foto e cataloghi: sono gia' presenti.
-
-REPOSITORY PRIVATO king-test-benessere-dati:
-4. Conserva stazione-test.json senza cancellarlo.
-5. Crea clic-prodotti.json prendendo quello in questo ZIP,
-   solo se non esiste gia'. NON sovrascrivere un file con clic reali.
-
-Apri test-benessere-v2-3-0.html, premi Personalizza e salva
-con DATI INVENTATI. Se compare un errore, ora il messaggio
-mostrera' 401/403/404 ecc. Controlla poi stazione-test.json.
-
-ATTENZIONE: il token e' gia' pubblicato nel file di configurazione
-esistente. Chiunque puo' leggerlo e, con i permessi dati, leggere
-le registrazioni private. Non usare dati veri finche' non c'e'
-un ricevitore che custodisce il token.
-
-PULIZIA SETTIMANALE: non e' implementata in questo ZIP. Una pagina
-statica non puo' eseguire un reset a tempo quando nessuno la apre.
-Serve una GitHub Action pianificata (ed e' necessario archiviare
-prima i dati in modo privato e verificato).
-
-NOTA: il codice di conteggio clic considera i clic effettuati
-sui link eBay del test, non le vendite; il passaggio a un'altra
-pagina puo' interrompere qualche richiesta.
+LIMITAZIONI DA NON CONFONDERE:
+1) Il PDF a 6 pagine già esisteva in king-progressive-report.js. Qui sono migliorate le risposte dei test brevi, NON è stato duplicato il PDF del Test 3.0 che usa anche moduli differenti.
+2) Alimentazione e Integratori oggi invocano KING_test_sync.js, ma KING_TEST_SYNC_ENDPOINT è vuoto. Il salvataggio remoto NON sarà attivo finché non verrà configurato un Worker compatibile; il salvataggio PDF locale è indipendente.
+3) Non è stato alterato nessun Worker o database, nessun token, né la 3.0 pubblica. Non cancellare nulla.
+4) Dopo aver caricato i file, provare navigazione e PDF dai tre test e verificare che siano sei pagine (su Safari: Condividi/Stampa/Salva PDF).
+5) Prima di collegare gli altri test allo stesso database clienti è necessario verificare il formato accettato dal Worker e definire un campo test per distinguere le registrazioni.
