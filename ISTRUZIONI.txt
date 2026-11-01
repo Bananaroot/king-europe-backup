@@ -1,1 +1,18 @@
-Caricare soltanto index.html, ordine-rapido.html, king-github-sync-bridge.js nel repository king-europe-backup. Non caricare questo ZIP nel repo privato. NON premere Crea archivio iniziale. Aprire index.html, espandere SYNC Impostazioni, autorizzare GitHub e premere Verifica giacenza GitHub per controllare SKU 19128. Nessun dato cancellato.
+KING BENESSERE V2 3.0 - COLLEGAMENTO AL WORKER CLOUDFARE
+
+CARICA SOLO: test-benessere-v2-3-0.html
+DESTINAZIONE: repository pubblico Bananaroot/king-europe-backup, nella radice.
+Sostituisci il file omonimo. Non cambiare index.html, V2 originale, PDF, JS, magazzino o token.
+
+REQUISITI:
+- Worker king-benessere-save.vania-dadea.workers.dev gia pubblicato con codice /save.
+- Segreto GITHUB_TOKEN valido configurato nel Worker in Produzione.
+- Repository PRIVATO king-test-benessere-dati con file archivio-test.json sul ramo main.
+
+TEST: Apri https://bananaroot.github.io/king-europe-backup/test-benessere-v2-3-0.html?v=worker-save-1
+Completa prova con nome/email inventati, seleziona consenso, premi Personalizza e salva.
+Controlla poi il file archivio-test.json sul repository privato. Non usare dati reali fino alla configurazione delle misure di privacy e antiabuso.
+
+NOTA: non contiene token. I clic eBay restano apribili ma il vecchio conteggio GitHub dal browser non viene caricato su questa pagina, poiche dipendeva dal token pubblico. Per tracciare clic in sicurezza aggiungeremo poi endpoint /click al Worker, dopo aver verificato il salvataggio.
+
+Se il Worker restituisce HTTP 401, il token segreto non e valido o non ha accesso al repository. Se compare 'Archivio online non ancora configurato', il browser potrebbe avere una pagina vecchia in cache.
