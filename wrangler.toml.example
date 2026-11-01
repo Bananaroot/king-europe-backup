@@ -1,0 +1,8 @@
+name = "king-campaign-analytics"
+main = "cloudflare-worker.js"
+compatibility_date = "2026-11-01"
+
+[[d1_databases]]
+binding = "ANALYTICS_DB"
+database_name = "king-campaign-analytics"
+database_id = "INSERIRE_ID_REALE_D1"
