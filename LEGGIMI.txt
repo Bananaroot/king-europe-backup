@@ -1,11 +1,13 @@
-KING EUROPE — VERSIONE SPERIMENTALE, SENZA SUPABASE
+KING - FIX 404 STATISTICHE
 
-Carica nella sottocartella marketing/ del solo repository DI BACKUP i tre test HTML, catalogo-link-prodotti.js e king-progressive-report.js. I test originali mantengono il questionario e la grafica; il salvataggio dei risultati è nel localStorage di questo browser e sito.
+1. index.html - link a KING_archivio_test_admin_3-0.html
+2. KING_MARKETING_CENTER.html - tasto ritorno
+3. KING_archivio_test_admin_3-0.html - pagina da ZIP originale del 1 novembre ore 20:59, SENZA MODIFICHE.
 
-Dopo un test: 6 pagine. Dopo due: 12 pagine. Dopo tre: 18 pagine, ordine Benessere/Alimentazione/Integratori. Le pagine HTML/CSS si stampano in PDF tramite Stampa > Salva come PDF. L’opzione IT/EN/RU determina la lingua del PDF, NON traduce interamente i questionari originali Alimentazione e Integratori.
+Carica index.html e KING_MARKETING_CENTER.html nella RADICE della repository.
+Carica KING_archivio_test_admin_3-0.html solo se MANCANTE nella radice.
+Se il file amministrativo esiste gia nella repository, NON SOVRASCRIVERLO: potrebbe avere miglioramenti successivi.
+Controlla che GitHub Pages pubblichi dalla stessa cartella e branch.
+URL atteso: https://bananaroot.github.io/king-europe-backup/KING_archivio_test_admin_3-0.html
 
-Collegamenti eBay inseriti solo se già presenti nell'archivio dell'utente. Non pubblicare dati personali, indirizzi, account o JSON originale in repository pubblici. Non si inviano email: è un prototipo da verificare su iPhone prima del deploy originale.
-
-Non modificare l'originale. Verifica le pagine dopo la pubblicazione, stampa PDF, link e salvataggio ricaricando il sito.
-
-VERSIONE MAIN ROOT: index.html e stato rinominato laboratorio-pdf.html per non sovrascrivere il gestionale. Caricare file estratti nella radice (main/root); nessuna cartella marketing necessaria.
+Non modificare gli altri file o Worker.

@@ -6,8 +6,8 @@ a.home-link{display:inline-flex;align-items:center;padding:13px 18px;background:
 </style></head>
 <body><main><a class="home-link" href="./index.html">⌂ Torna alla Home del gestionale</a><h1>KING · Database test benessere 3.0</h1><p>Lettura tramite Cloudflare Worker ADMIN soltanto quando premi il pulsante. Nessuna sincronizzazione continua. Nessun token GitHub nel browser.</p>
 <section class="card"><div class="bar"><button id="refresh">↻ Aggiorna il database</button><button id="export" disabled>Scarica copia JSON</button></div><p id="state" role="status">Inserisci la chiave per leggere il database.</p><p id="count"></p>
-<p id="storageStatus" class="muted" role="status" style="font-size:13px"></p><details id="kingOptions" open><summary>⚙️ Impostazioni accesso (tocca per chiudere)</summary>
-<p class="muted"><small>Chiave ADMIN_KEY di Cloudflare, non il token GitHub. Se abiliti Ricorda, la chiave viene conservata solo su questo dispositivo (memoria browser), non nel JSON GitHub. La pagina rilegge il database quando la riapri. Usa solo un dispositivo personale e non la navigazione privata.</small></p>
+<details id="kingOptions" open><summary>⚙️ Impostazioni accesso (tocca per chiudere)</summary>
+<p class="muted"><small>Chiave ADMIN_KEY di Cloudflare, non il token GitHub. Se abiliti Ricorda, la password verrà conservata in questo browser finché non premi Dimentica accesso. Utilizzalo solo su un dispositivo personale.</small></p>
 <label for="adminKey"><b>Password amministrativa</b></label>
 <div class="admin-tools"><input id="adminKey" type="password" autocomplete="current-password" spellcheck="false" placeholder="ADMIN_KEY"><label><input id="rememberAccess" type="checkbox"> Ricorda accesso su questo iPhone</label><button id="forgetAccess" type="button">Dimentica accesso</button></div>
 </details></section>
@@ -18,31 +18,8 @@ a.home-link{display:inline-flex;align-items:center;padding:13px 18px;background:
 const endpoint='https://king-benessere-admin.vania-dadea.workers.dev/admin';
 const el=id=>document.getElementById(id);let snapshot=null;
 const ACCESS_STORE='king_benessere_admin_access_device_v1';
-// Memoria locale: localStorage primario, IndexedDB come alternativa per browser che lo limitano.
-// Credenziali MAI inviate al repository e MAI incluse nel JSON scaricato.
-const IDB_NAME='king_admin_private_device_v1', IDB_STORE='settings';
-function dbStore(mode, operation){return new Promise((resolve,reject)=>{
- if(!('indexedDB' in window)){reject(Error('IndexedDB non disponibile'));return}
- const request=indexedDB.open(IDB_NAME,1);
- request.onupgradeneeded=()=>{if(!request.result.objectStoreNames.contains(IDB_STORE))request.result.createObjectStore(IDB_STORE)};
- request.onerror=()=>reject(request.error||Error('Memoria alternativa non disponibile'));
- request.onsuccess=()=>{const db=request.result;let tx;
- try{tx=db.transaction(IDB_STORE,mode);let rq=operation(tx.objectStore(IDB_STORE));rq.onsuccess=()=>resolve(rq.result);rq.onerror=()=>reject(rq.error);tx.oncomplete=()=>db.close();tx.onerror=()=>db.close();}catch(e){db.close();reject(e)}};
-})}
-async function savedAccess(){
- try{const k=localStorage.getItem(ACCESS_STORE);if(k)return k}catch(_){}
- try{return await dbStore('readonly',st=>st.get(ACCESS_STORE))||''}catch(_){return ''}
-}
-async function rememberKey(key){
- if(!el('rememberAccess').checked){await clearSaved();return true}
- let localOK=false,dbOK=false;
- try{localStorage.setItem(ACCESS_STORE,key);localOK=localStorage.getItem(ACCESS_STORE)===key}catch(_){}
- try{await dbStore('readwrite',st=>st.put(key,ACCESS_STORE));dbOK=true}catch(_){}
- const ok=localOK||dbOK;
- el('storageStatus').textContent=ok?'✓ Accesso ricordato su questo dispositivo. Alla riapertura il database verrà riletto.':'⚠️ Questo browser non consente di conservare la chiave. Usa una scheda normale di Safari e controlla le impostazioni dei dati dei siti.';
- return ok;
-}
-async function clearSaved(){try{localStorage.removeItem(ACCESS_STORE)}catch(_){}try{await dbStore('readwrite',st=>st.delete(ACCESS_STORE))}catch(_){}}
+function savedAccess(){try{return localStorage.getItem(ACCESS_STORE)||''}catch(_){return ''}}
+function rememberKey(key){try{if(el('rememberAccess').checked){localStorage.setItem(ACCESS_STORE,key)}else{localStorage.removeItem(ACCESS_STORE)}}catch(_){el('state').textContent='Non posso ricordare la password: memoria browser non disponibile.'}}
 
 function cell(tr,value){const td=document.createElement('td');td.textContent=String(value??'');tr.append(td)}
 async function load(){const key=el('adminKey').value.trim();if(!key){el('state').textContent='Inserisci la password ADMIN_KEY configurata nel Worker ADMIN.';return}el('state').textContent='Lettura in corso…';el('refresh').disabled=true;
@@ -52,12 +29,10 @@ const counts=new Map();for(const x of items){const e=String(x.email||'').trim().
 el('rows').replaceChildren();for(const x of [...items].reverse()){const tr=document.createElement('tr');[x.received_at||x.date||'',`${x.name||''} ${x.surname||''}`.trim(),x.email||'',x.version||x.test||'',counts.get(String(x.email||'').trim().toLowerCase())||0,JSON.stringify(x.values||[])].forEach(v=>cell(tr,v));el('rows').append(tr)}
 el('count').textContent=`${items.length} test · ${counts.size} email distinte`;el('state').textContent='✓ Archivio letto correttamente tramite Cloudflare.';
 el('clickstatus').textContent=`Clic registrati: ${Number(clicks.totale)||0}`;el('clickrows').replaceChildren();for(const x of (clicks.links||[]).slice().sort((a,b)=>Number(b.clic)-Number(a.clic))){const p=document.createElement('p');p.textContent=`${x.clic} clic · ${x.nome||''} · ${x.url||''}`;el('clickrows').append(p)}
-await rememberKey(key);
 el('export').disabled=false;
 }catch(e){el('state').textContent='Lettura fallita: '+e.message+' — controlla nome ADMIN_KEY, segreti del Worker ADMIN e pubblicazione del codice.';el('export').disabled=true}finally{el('refresh').disabled=false}}
-el('forgetAccess').onclick=async()=>{await clearSaved();el('adminKey').value='';el('rememberAccess').checked=false;el('kingOptions').open=true;el('state').textContent='Accesso dimenticato su questo dispositivo. Inserisci la password.';el('storageStatus').textContent='Accesso locale cancellato.';};
-(async()=>{const recovered=await savedAccess();if(recovered){el('adminKey').value=recovered;el('rememberAccess').checked=true;el('kingOptions').open=false;el('storageStatus').textContent='✓ Accesso recuperato dal dispositivo: aggiorno il database…';await load()}else{el('storageStatus').textContent='Nessun accesso ricordato su questo browser. Inserisci ADMIN_KEY e seleziona Ricorda accesso.'}})();
-el('rememberAccess').addEventListener('change',async()=>{const key=el('adminKey').value.trim();if(!el('rememberAccess').checked){await clearSaved();el('storageStatus').textContent='Accesso non memorizzato.'}else if(key){el('storageStatus').textContent='Premi Aggiorna il database per verificare la chiave e memorizzarla.'}else{el('storageStatus').textContent='Inserisci prima la password e premi Aggiorna il database.'}});
+el('forgetAccess').onclick=()=>{try{localStorage.removeItem(ACCESS_STORE)}catch(_){};el('adminKey').value='';el('rememberAccess').checked=false;el('kingOptions').open=true;el('state').textContent='Accesso dimenticato su questo dispositivo. Inserisci la password.';};
+const recovered=savedAccess();if(recovered){el('adminKey').value=recovered;el('rememberAccess').checked=true;el('kingOptions').open=false;queueMicrotask(load)}
 el('refresh').onclick=load;el('adminKey').addEventListener('keydown',e=>{if(e.key==='Enter')load()});el('export').onclick=()=>{if(!snapshot)return;const u=URL.createObjectURL(new Blob([JSON.stringify(snapshot,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=u;a.download='KING_TEST_BACKUP_'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000)};
 })();
 </script></main></body></html>
