@@ -29,10 +29,12 @@ const counts=new Map();for(const x of items){const e=String(x.email||'').trim().
 el('rows').replaceChildren();for(const x of [...items].reverse()){const tr=document.createElement('tr');[x.received_at||x.date||'',`${x.name||''} ${x.surname||''}`.trim(),x.email||'',x.version||x.test||'',counts.get(String(x.email||'').trim().toLowerCase())||0,JSON.stringify(x.values||[])].forEach(v=>cell(tr,v));el('rows').append(tr)}
 el('count').textContent=`${items.length} test · ${counts.size} email distinte`;el('state').textContent='✓ Archivio letto correttamente tramite Cloudflare.';
 el('clickstatus').textContent=`Clic registrati: ${Number(clicks.totale)||0}`;el('clickrows').replaceChildren();for(const x of (clicks.links||[]).slice().sort((a,b)=>Number(b.clic)-Number(a.clic))){const p=document.createElement('p');p.textContent=`${x.clic} clic · ${x.nome||''} · ${x.url||''}`;el('clickrows').append(p)}
+rememberKey(key);
 el('export').disabled=false;
 }catch(e){el('state').textContent='Lettura fallita: '+e.message+' — controlla nome ADMIN_KEY, segreti del Worker ADMIN e pubblicazione del codice.';el('export').disabled=true}finally{el('refresh').disabled=false}}
 el('forgetAccess').onclick=()=>{try{localStorage.removeItem(ACCESS_STORE)}catch(_){};el('adminKey').value='';el('rememberAccess').checked=false;el('kingOptions').open=true;el('state').textContent='Accesso dimenticato su questo dispositivo. Inserisci la password.';};
 const recovered=savedAccess();if(recovered){el('adminKey').value=recovered;el('rememberAccess').checked=true;el('kingOptions').open=false;queueMicrotask(load)}
+el('rememberAccess').addEventListener('change',()=>{const key=el('adminKey').value.trim();if(key)rememberKey(key);else if(!el('rememberAccess').checked){try{localStorage.removeItem(ACCESS_STORE)}catch(_){}}});
 el('refresh').onclick=load;el('adminKey').addEventListener('keydown',e=>{if(e.key==='Enter')load()});el('export').onclick=()=>{if(!snapshot)return;const u=URL.createObjectURL(new Blob([JSON.stringify(snapshot,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=u;a.download='KING_TEST_BACKUP_'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000)};
 })();
 </script></main></body></html>
