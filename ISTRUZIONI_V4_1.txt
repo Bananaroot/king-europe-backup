@@ -1,0 +1,11 @@
+KING LAB V4.1 — SOLO MODIFICHE
+
+Sostituisci nella radice di GitHub:
+- king-lab-v4.js
+- king-lab-v4.css
+
+Il file ISTRUZIONI_V4_1.txt è solo informativo. Non caricarlo se non vuoi.
+
+Conserva il file scientifico king-lab-v4-dati.js, il database originale e tutti i test intatti.
+
+Ricerca nome/varianti e sensazioni: restituisce subito schede specifiche; clicca sulla scheda per aprire dettagli; per sintomi non documentati mostra assenza di collegamenti senza suggerimenti inventati.
