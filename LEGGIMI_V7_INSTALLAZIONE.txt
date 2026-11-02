@@ -1,0 +1,16 @@
+KING EUROPE - AGGIORNAMENTO LABORATORIO V7
+
+Caricare nella radice main del repository SOLO i 5 file operativi:
+- king-laboratorio-scientifico.html (sostituisce)
+- king-lab-v5.js (sostituisce)
+- king-lab-reader.css (sostituisce)
+- king-lab-v7-dati.js (nuovo)
+- king-lab-v7-archivio.json (nuovo, archivio cumulativo leggibile)
+
+Non cancellare il vecchio archivio V6; e un backup naturale della versione precedente.
+Non cambiare index.html, gli altri JavaScript, CSS, Cloudflare, Test o Ordine Rapido.
+
+Verifiche: Spirulina, Guarana, Omega-3, Orzo giovane, Papaya, Pappa reale e Ribes nero.
+Il Ribes nero rimane incompleto nel materiale fornito.
+La pagina usa il file JS V7 per i dati; il JSON V7 e il riferimento permanente per le aggiunte.
+Punteggi null NON sono zero. Le associazioni boccette restano locali con export JSON, non sincronizzate con GitHub.
