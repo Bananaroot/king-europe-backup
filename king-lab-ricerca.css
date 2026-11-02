@@ -5,3 +5,6 @@
 .lab-empty{padding:18px;border:1px solid #e5d8b7;border-radius:15px;background:#fffaf0;color:#5f573f;line-height:1.55;margin:12px 0}
 .lab-empty strong{display:block;margin-bottom:6px;color:#554829}.lab-empty p{margin:0 0 8px;font-size:13px}.lab-empty button{background:#446f52;color:#fff;border:0;border-radius:12px;padding:9px 13px}
 @media(max-width:780px){.lab-search-guide{font-size:12px}.lab-empty{padding:14px}}
+
+/* Coerenza con testata Ordine Rapido */
+.lab-search-guide{background:#f2f7fa;border-color:#d8e5ea;color:#465c6d}.lab-example{color:#35617b;border-color:#c8dce6}.lab-empty button{background:#467d99}

@@ -13,3 +13,6 @@ function refresh(){const q=input.value.trim();const shown=[...catalog.querySelec
 input.addEventListener('input',()=>setTimeout(refresh,0));
 document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>setTimeout(refresh,0)));refresh();
 })();
+
+// Accesso rapido: '/' apre la ricerca superiore, Escape la chiude.
+document.addEventListener('keydown', e=>{const box=document.getElementById('kr-searchbox');const button=document.getElementById('search-open');if(!box||!button)return;if(e.key==='Escape'&&!box.hidden){box.hidden=true;button.setAttribute('aria-expanded','false');button.focus()}else if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement?.tagName)){e.preventDefault();if(box.hidden)button.click();else document.getElementById('kr-top-search')?.focus()}});
