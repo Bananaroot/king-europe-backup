@@ -1,0 +1,36 @@
+{
+  "package": "KING_EUROPE_CONSEGNA_UNICA_V3",
+  "status": "proposed_not_import_ready",
+  "records": 2,
+  "requires_existing_schema_review": true,
+  "files": {
+    "01_LEGGIMI_E_SCRIPT_PER_CHAT_TECNICA.md": {
+      "sha256": "b8dc831de0a4320364fbd139fde00a4a162fc0d34982c599675372a3ecb125f8",
+      "bytes": 4489
+    },
+    "02_ARCHIVIO_SCIENTIFICO_ACETO_SPIRULINA.json": {
+      "sha256": "3a45d4939775048983d5e218c6dcdd58a3f389ee6b447726e9b4a2b52f2b2d43",
+      "bytes": 24703
+    },
+    "03_TASSONOMIA_COMPLETA.json": {
+      "sha256": "c646f093392d8efa1976d56150c186e475d2818163ff7a759850923a17dc479b",
+      "bytes": 5135
+    },
+    "04_REGOLE_PUNTEGGI_E_SEMAFORI.json": {
+      "sha256": "d19e88b8395a1229875066ed4a07000e0ab0f08711c7160a18c52e9fcb954f6b",
+      "bytes": 4379
+    },
+    "05_CONFRONTI_DIMOSTRATIVI.json": {
+      "sha256": "2ce927c07c68f790d4b725c95a786768e0be17d54243b5d88e1869efd3493a34",
+      "bytes": 399
+    },
+    "06_INDICE_LIBRO.json": {
+      "sha256": "80f3dfc87fd4a6b8b47bb8df64159d4388ed7960325b62b5c60d99f33aebb4e7",
+      "bytes": 3114
+    },
+    "07_NOTE_VERSIONI.md": {
+      "sha256": "14def928bcc9c1a7fbec43efc830d1cf54795dc2300a6a392004fd5b74854b53",
+      "bytes": 486
+    }
+  }
+}

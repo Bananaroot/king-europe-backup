@@ -1,0 +1,195 @@
+{
+  "book_id": "book-hannes-integratori-2001",
+  "chapters": [
+    {
+      "title": "Prefazione",
+      "page": 7,
+      "type": "editoriale"
+    },
+    {
+      "title": "Aceto di mele",
+      "page": 16,
+      "id": "ingredient-apple-cider-vinegar"
+    },
+    {
+      "title": "Acidophilus",
+      "page": 21
+    },
+    {
+      "title": "Alfalfa - Erba medica",
+      "page": 25
+    },
+    {
+      "title": "Alghe in genere",
+      "page": 28
+    },
+    {
+      "title": "Spirulina",
+      "page": 31,
+      "id": "ingredient-spirulina",
+      "note": "La pagina 170 dell’indice riguarda semi di pompelmo, non Spirulina."
+    },
+    {
+      "title": "Klamath",
+      "page": 32
+    },
+    {
+      "title": "Kelp",
+      "page": 34
+    },
+    {
+      "title": "Ananas",
+      "page": 37
+    },
+    {
+      "title": "Argento colloidale",
+      "page": 43
+    },
+    {
+      "title": "Avena",
+      "page": 47
+    },
+    {
+      "title": "Carotene",
+      "page": 51
+    },
+    {
+      "title": "Carubba",
+      "page": 55
+    },
+    {
+      "title": "Creatina",
+      "page": 60
+    },
+    {
+      "title": "Iperico",
+      "page": 64
+    },
+    {
+      "title": "Fico d’India - Opuntia",
+      "page": 67
+    },
+    {
+      "title": "Ginkgo",
+      "page": 71
+    },
+    {
+      "title": "Guaranà",
+      "page": 74
+    },
+    {
+      "title": "Incenso",
+      "page": 79
+    },
+    {
+      "title": "Jatoba",
+      "page": 83
+    },
+    {
+      "title": "Kiwi",
+      "page": 88
+    },
+    {
+      "title": "Kombucha - fungo da tè",
+      "page": 91
+    },
+    {
+      "title": "L-Carnitina",
+      "page": 99
+    },
+    {
+      "title": "L-Glutammina",
+      "page": 102
+    },
+    {
+      "title": "Lapacho",
+      "page": 106
+    },
+    {
+      "title": "Maca",
+      "page": 115
+    },
+    {
+      "title": "Maitake",
+      "page": 120
+    },
+    {
+      "title": "Matricaria",
+      "page": 125
+    },
+    {
+      "title": "Nigella",
+      "page": 131
+    },
+    {
+      "title": "Nim",
+      "page": 138
+    },
+    {
+      "title": "Nivello spinoso",
+      "page": 143
+    },
+    {
+      "title": "Omega 3 (Acidi grassi)",
+      "page": 148
+    },
+    {
+      "title": "Orzo selvatico",
+      "page": 153
+    },
+    {
+      "title": "Papaya",
+      "page": 158
+    },
+    {
+      "title": "Pappa Reale",
+      "page": 164
+    },
+    {
+      "title": "Ribes nero",
+      "page": 167
+    },
+    {
+      "title": "Semi di pompelmo",
+      "page": 170
+    },
+    {
+      "title": "Stevia",
+      "page": 176
+    },
+    {
+      "title": "Tè Pai Mu Tan",
+      "page": 185
+    },
+    {
+      "title": "Tè Pu Erh",
+      "page": 190
+    },
+    {
+      "title": "Tè verde",
+      "page": 194
+    },
+    {
+      "title": "Tea tree oil",
+      "page": 202
+    },
+    {
+      "title": "Unghia di gatto",
+      "page": 208
+    },
+    {
+      "title": "Uva (vino rosso)",
+      "page": 214
+    },
+    {
+      "title": "Osservazioni conclusive",
+      "page": 219,
+      "type": "editoriale"
+    },
+    {
+      "title": "Appendice all'edizione italiana",
+      "page": 223,
+      "type": "editoriale"
+    }
+  ]
+}

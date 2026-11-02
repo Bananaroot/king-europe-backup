@@ -1,0 +1,8 @@
+{
+  "base": "king-europe-backup-main2.11.26.zip",
+  "modificati_originali": [
+    "index.html"
+  ],
+  "file_originali_mancanti": [],
+  "note": "Solo link nuovo nel menu. Originali preservati byte per byte altrimenti."
+}

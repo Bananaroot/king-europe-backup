@@ -1,0 +1,15 @@
+{
+  "version": "0.2-draft",
+  "examples": [
+    {
+      "goal": "glicemia_postprandiale",
+      "candidates": [
+        "ingredient-apple-cider-vinegar",
+        "ingredient-spirulina"
+      ],
+      "winner": null,
+      "result": "NESSUNA CLASSIFICA AUTOMATICA",
+      "reason": "Differenze negli studi e nelle formulazioni; verificare dose, evidenza comparabile e rischi individuali"
+    }
+  ]
+}

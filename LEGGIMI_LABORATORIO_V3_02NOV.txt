@@ -1,0 +1,21 @@
+KING EUROPE BACKUP — LABORATORIO SCIENTIFICO V3
+BASE: ZIP backup originale 02/11/2026 ricevuto dall’utente.
+
+INSTALLAZIONE: Questo archivio contiene LA COPIA COMPLETA del backup.
+Per evitare regressioni, confronta i file prima di caricare. Nessun Worker Cloudflare né database online viene aggiornato automaticamente da questo ZIP.
+
+MODIFICA ESISTENTE UNICA: index.html — aggiunto un link nella navigazione a king-laboratorio-scientifico.html. Nessun’altra riga della versione originale index.html è stata cambiata.
+
+NUOVI FILE alla radice:
+- king-laboratorio-scientifico.html
+- king-laboratorio-v3.css
+- king-laboratorio-v3.js
+- king-laboratorio-v3-dati.js (snapshot di lettura dei dati V3)
+
+FONTI & REGOLE: cartella LABORATORIO_V3_FONTI_E_AGGIORNAMENTI/ — originali forniti dalla chat scientifica, tassonomia, regole, comparazioni, script di aggiornamento.
+
+CONSERVATI E NON MODIFICATI: test, catalogo, database-scientifico.html, king-database-scientifico.json, KING_scienza_logica.js, menu originale eccetto link aggiunto.
+
+LIMITI: La pagina V3 è lettura locale dei dati V3; il JSON scientifico esistente NON viene migrato/fuso. Non è stato attivato un database Cloudflare per la biblioteca; nuovi ingredienti richiedono aggiornamento dati e pubblicazione.
+
+VERIFICA: consulta il file VERIFICA_INTEGRITA.json per l'elenco dei file preesistenti alterati (deve essere solo index.html).

@@ -1,0 +1,11 @@
+KING LABORATORIO V3 — ZIP SENZA SOTTOCARTELLE
+
+Tutti i file dello ZIP sono direttamente nella radice.
+Carica i file nella radice (root) del repository king-europe-backup, nel ramo main, insieme all’index.html esistente.
+Sovrascrivi SOLO index.html. Gli altri file di questa versione sono nuovi, salvo file con gli stessi nomi che hai già caricato.
+Non caricare lo ZIP stesso su GitHub: estrai e seleziona i file.
+Non cancellare file preesistenti. Non cambiare i file di Test, Worker o database originale.
+I file .py e .md sono documentazione/strumenti e non sono eseguiti dal sito.
+La pagina del Laboratorio è king-laboratorio-scientifico.html.
+Se hai già caricato una cartella LABORATORIO_V3_FONTI_E_AGGIORNAMENTI, non eliminarla prima di avere verificato il nuovo caricamento.
+Questo ZIP cambia soltanto la disposizione dei file, non la logica.

@@ -1,0 +1,174 @@
+{
+  "schema_name": "KING_SCIENZA_SCORE_POLICY",
+  "version": "0.2-draft",
+  "policy": "didactic decision support, not validated clinical score or medical prescription",
+  "scale_range": [
+    1,
+    10
+  ],
+  "missing_value": null,
+  "missing_label": "DATI INSUFFICIENTI",
+  "metrics": {
+    "evidence_strength": {
+      "direction": "higher_better",
+      "anchors": {
+        "1": "sole affermazioni senza studi verificabili",
+        "3": "preclinici o osservazionali deboli",
+        "5": "piccoli trial umani con forti limiti",
+        "7": "piu trial coerenti con limiti moderati",
+        "10": "evidenze cliniche solide, coerenti e direttamente applicabili"
+      }
+    },
+    "benefit_magnitude": {
+      "direction": "higher_better",
+      "anchors": {
+        "1": "effetto clinicamente trascurabile",
+        "5": "effetto misurabile ma modesto",
+        "10": "effetto grande e clinicamente importante"
+      },
+      "requires": "outcome numeric, absolute/relative change, dose, comparator, population; else null"
+    },
+    "dose_match": {
+      "direction": "higher_better",
+      "anchors": {
+        "1": "forma o dose profondamente diversa dagli studi",
+        "5": "approssimativamente comparabile con incertezze",
+        "10": "forma, dose e durata coincidenti con evidenza pertinente"
+      },
+      "requires": "verified product label + study dose"
+    },
+    "risk_severity": {
+      "direction": "higher_worse",
+      "anchors": {
+        "1": "disturbo lieve transitorio",
+        "4": "evento che può richiedere modifica o interruzione",
+        "7": "evento serio e intervento medico",
+        "10": "evento potenzialmente letale o danno irreversibile"
+      },
+      "note": "independent of frequency"
+    },
+    "risk_likelihood": {
+      "direction": "higher_worse",
+      "anchors": {
+        "1": "molto raro con dati attendibili",
+        "5": "non comune ma documentato",
+        "10": "molto frequente con dati attendibili"
+      },
+      "requires": "incidence or comparable pharmacovigilance data, otherwise null"
+    },
+    "product_quality": {
+      "direction": "higher_better",
+      "anchors": {
+        "1": "identita o provenienza non verificabile",
+        "5": "etichetta nota ma analisi non documentate",
+        "10": "tracciabilita, controlli lotti e test pertinenti verificati"
+      },
+      "requires": "finished product documentation"
+    }
+  },
+  "traffic_lights": {
+    "evidence_strength": {
+      "red": [
+        1,
+        3
+      ],
+      "yellow": [
+        4,
+        6
+      ],
+      "green": [
+        7,
+        10
+      ]
+    },
+    "benefit_magnitude": {
+      "red": [
+        1,
+        3
+      ],
+      "yellow": [
+        4,
+        6
+      ],
+      "green": [
+        7,
+        10
+      ]
+    },
+    "dose_match": {
+      "red": [
+        1,
+        3
+      ],
+      "yellow": [
+        4,
+        6
+      ],
+      "green": [
+        7,
+        10
+      ]
+    },
+    "product_quality": {
+      "red": [
+        1,
+        3
+      ],
+      "yellow": [
+        4,
+        6
+      ],
+      "green": [
+        7,
+        10
+      ]
+    },
+    "risk_severity": {
+      "green": [
+        1,
+        3
+      ],
+      "yellow": [
+        4,
+        6
+      ],
+      "red": [
+        7,
+        10
+      ]
+    },
+    "risk_likelihood": {
+      "green": [
+        1,
+        3
+      ],
+      "yellow": [
+        4,
+        6
+      ],
+      "red": [
+        7,
+        10
+      ]
+    }
+  },
+  "traffic_light_note": "color is metric-specific; yellow also for unknown but displayed as grey question mark, not as numeric middle value",
+  "decision_logic": {
+    "step_1": "identify outcome and user-independent population/context",
+    "step_2": "screen red flags (contraindications, potential interactions, pregnancy, quality doubts)",
+    "step_3": "check quality of evidence and study-product match",
+    "step_4": "compare benefit and risk dimensions separately",
+    "step_5": "if evidence is insufficient return NON CLASSIFICABILE; never fill missing scores",
+    "step_6": "show reasoned explanation and citations, not medical advice"
+  },
+  "no_single_score": true,
+  "no_automatic_weighted_sum": true,
+  "no_guarantee_of_infallibility": true,
+  "review_required_for": [
+    "contraindications",
+    "drug_interactions",
+    "serious_adverse_events",
+    "medical_conditions",
+    "commercial_claims"
+  ]
+}

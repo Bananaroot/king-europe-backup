@@ -1,0 +1,220 @@
+{
+  "schema_name": "KING_SCIENZA_TASSONOMIA_PROPOSTA",
+  "version": "0.2-draft",
+  "integration_status": "MAPPARE SUL DATABASE ORIGINALE PRIMA DI IMPORTARE",
+  "policy": {
+    "multi_label": true,
+    "no_inferred_nutrient_presence": true,
+    "no_automatic_legal_claims": true,
+    "distinguish_book_vs_modern": true,
+    "unknown_is_null_not_zero": true
+  },
+  "dimensions": {
+    "identity_type": [
+      "vitamina",
+      "minerale",
+      "aminoacido",
+      "acido_grasso",
+      "fibra",
+      "probiotico",
+      "prebiotico",
+      "cianobatterio",
+      "alga",
+      "fungo",
+      "estratto_vegetale",
+      "alimento_derivato",
+      "enzima",
+      "miscela",
+      "altro"
+    ],
+    "nutrient_family": [
+      "vitamine_liposolubili",
+      "vitamine_idrosolubili",
+      "minerali_macro",
+      "oligoelementi",
+      "aminoacidi_essenziali",
+      "aminoacidi_non_essenziali",
+      "acidi_grassi_omega_3",
+      "acidi_grassi_omega_6",
+      "acidi_grassi_omega_9",
+      "carotenoidi",
+      "polifenoli",
+      "pigmenti_ficobiliproteici",
+      "acidi_organici",
+      "proteine",
+      "fibre",
+      "altro"
+    ],
+    "vitamins": [
+      "A",
+      "B1",
+      "B2",
+      "B3",
+      "B5",
+      "B6",
+      "B7",
+      "B9",
+      "B12",
+      "C",
+      "D",
+      "E",
+      "K"
+    ],
+    "minerals": [
+      "calcio",
+      "ferro",
+      "magnesio",
+      "fosforo",
+      "potassio",
+      "sodio",
+      "zinco",
+      "rame",
+      "manganese",
+      "iodio",
+      "selenio",
+      "cromo",
+      "molibdeno",
+      "cloruro",
+      "fluoruro",
+      "altro"
+    ],
+    "physiology": [
+      "metabolismo_energetico",
+      "metabolismo_glucidico",
+      "metabolismo_lipidico",
+      "apparato_digerente",
+      "microbiota",
+      "sistema_nervoso",
+      "funzioni_cognitive",
+      "sistema_immunitario",
+      "muscoli",
+      "ossa",
+      "cute_capelli_unghie",
+      "sistema_cardiovascolare",
+      "sonno",
+      "stress",
+      "funzione_epatica",
+      "altro"
+    ],
+    "study_outcome": [
+      "glicemia_digiuno",
+      "glicemia_postprandiale",
+      "hba1c",
+      "pressione_sistolica",
+      "pressione_diastolica",
+      "colesterolo_totale",
+      "ldl",
+      "hdl",
+      "trigliceridi",
+      "peso",
+      "circonferenza_vita",
+      "sintomi_digestivi",
+      "performance",
+      "eventi_avversi",
+      "altro"
+    ],
+    "usage_context": [
+      "alimentare",
+      "integratore_orale",
+      "uso_tradizionale",
+      "uso_topico",
+      "uso_studiato_non_raccomandato"
+    ],
+    "adverse_event_category": [
+      "gastrointestinale",
+      "dentale",
+      "allergico",
+      "epatico",
+      "renale",
+      "neurologico",
+      "cardiovascolare",
+      "metabolico",
+      "contaminazione",
+      "interazione_farmaco",
+      "altro"
+    ],
+    "special_population": [
+      "gravidanza",
+      "allattamento",
+      "minori",
+      "anziani",
+      "diabete",
+      "malattia_renale",
+      "malattia_epatica",
+      "immunodepressione",
+      "allergie",
+      "terapia_farmacologica"
+    ],
+    "evidence_type": [
+      "tradizione",
+      "libro_storico",
+      "ipotesi_meccanicistica",
+      "in_vitro",
+      "animali",
+      "studio_osservazionale",
+      "trial_randomizzato",
+      "revisione_sistematica",
+      "meta_analisi",
+      "valutazione_autorita"
+    ],
+    "claim_status": [
+      "non_valutato",
+      "autorizzato_ue_con_condizioni",
+      "non_autorizzato",
+      "uso_educativo_non_commerciale"
+    ],
+    "association_status": [
+      "documentata",
+      "potenziale",
+      "contraddittoria",
+      "non_dimostrata",
+      "non_valutata"
+    ]
+  },
+  "relation_types": [
+    "contiene",
+    "puo_contenere",
+    "correlato_a",
+    "studiato_per",
+    "interagisce_con",
+    "non_sostituisce",
+    "comparato_con",
+    "collegato_a_prodotto"
+  ],
+  "assertion_contract": {
+    "id": "stable id",
+    "ingredient_id": "stable id",
+    "topic_code": "taxonomy tag",
+    "assertion": "short original scientific formulation",
+    "source_ids": [
+      "book or research identifier"
+    ],
+    "page_refs": [
+      "numeric or page range"
+    ],
+    "origin": "book_claim | modern_evidence | product_label | regulatory",
+    "study_context": "population, formulation, dose and duration if known",
+    "evidence_type": "enum",
+    "status": "documented | hypothesis | disputed | refuted | unknown",
+    "measured_amount": "number or null",
+    "unit": "string or null",
+    "nutritionally_significant": "true | false | null",
+    "checked_at": "ISO date or null"
+  },
+  "product_link_contract": {
+    "product_id": null,
+    "verified_label": false,
+    "declared_dose": null,
+    "batch_quality_docs": null,
+    "store_link": null,
+    "warehouse_state": null
+  },
+  "comparison_constraints": [
+    "compare same measured outcome and population",
+    "same dosage/formulation and duration whenever possible",
+    "do not infer from ingredient alone to finished product",
+    "red safety flags require human review",
+    "missing safety data never treated as safe",
+    "no diagnosis or individualized medical choice from wellness quiz"
+  ]
+}
