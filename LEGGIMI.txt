@@ -1,7 +1,13 @@
-KING LAB V7: SOLUZIONE CACHE E RITORNO MENU A SEI PULSANTI
+KING LABORATORIO SCIENTIFICO V7.2 — ERBARIO COMPATTO
 
-Carica i 3 file HTML, JS e CSS nella radice GitHub. Sostituisci SOLO king-laboratorio-scientifico.html; i due nomi nuovi di JS e CSS sono aggiuntivi. NON cancellare i vecchi: lasciamo intatte altre funzionalita. Il file king-lab-v7-dati.js deve essere gia presente dalla V7.
+CARICARE nella radice MAIN del repository king-europe-backup:
+- king-laboratorio-scientifico.html  [SOSTITUISCE]
+- king-lab-erbario-v7-2.js  [NUOVO]
+- king-lab-erbario-v7-2.css  [NUOVO]
 
-Prova: apri Laboratorio > Spirulina o Aceto di mele; in alto deve comparire SCHEDA CUMULATIVA V7, seguita da 6 pulsanti colorati. I dettagli lunghi devono essere sotto Informazioni complete.
-
-Questo aggiornamento non modifica i dati V7, cloudflare, index o test.
+Non cancellare nessun altro file e NON ricaricare il database V7.
+La pagina continua a utilizzare i file esistenti king-lab-v5.css e king-lab-v7-dati.js.
+Il menu si apre su Panoramica; i sei tasti mantengono le funzioni precedenti.
+L'archivio integrale V7 resta nel pulsante secondario Informazioni complete.
+Ricerca a finestra, stellina, import/export associazioni e catalogo prodotti non cambiano.
+I dati rimangono in GitHub; nessuna nuova dipendenza Cloudflare.
