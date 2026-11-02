@@ -1,0 +1,7 @@
+/* KING EUROPE · miglioramenti additivi della ricerca. Non tocca altri moduli. */
+.lab-search-guide{margin:10px 0 2px;padding:12px 14px;background:#f3f8f0;border:1px solid #dae8d6;border-radius:13px;color:#466750;font-size:13px;line-height:1.5}
+.lab-search-guide b{color:#2b533b}.lab-search-guide .examples{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+.lab-example{border:1px solid #c8dcc4;border-radius:20px;background:white;color:#365b3e;padding:7px 11px;font-size:12px}
+.lab-empty{padding:18px;border:1px solid #e5d8b7;border-radius:15px;background:#fffaf0;color:#5f573f;line-height:1.55;margin:12px 0}
+.lab-empty strong{display:block;margin-bottom:6px;color:#554829}.lab-empty p{margin:0 0 8px;font-size:13px}.lab-empty button{background:#446f52;color:#fff;border:0;border-radius:12px;padding:9px 13px}
+@media(max-width:780px){.lab-search-guide{font-size:12px}.lab-empty{padding:14px}}
