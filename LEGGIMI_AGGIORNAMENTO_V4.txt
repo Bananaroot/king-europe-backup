@@ -1,0 +1,14 @@
+KING EUROPE - AGGIORNAMENTO LABORATORIO V4
+
+Carica tutti i file nella RADICE del ramo main su GitHub, sostituendo soltanto king-laboratorio-scientifico.html.
+NON sovrascrivere index.html, king-database-scientifico.json, Worker, test o vendita.
+
+La pagina apre dal menu gia presente tramite king-laboratorio-scientifico.html.
+Lente apre ricerca a finestra (non scorrimento). Stellina apre ricerca collegamenti commerciali verificati.
+La V4 e cumulativa: contiene Spirulina e Aceto di mele una volta sola, piu altri sette record.
+Il JSON originale V4 e consegnato senza alterazioni. king-lab-v4-dati.js e la copia browser dei dati originali.
+Le famiglie sono indici e non trasferiscono automaticamente effetti o rischi ai figli.
+Il database storico resta separato. Non c e stata migrazione del database originale: occorre verifica dedicata prima di fondere.
+
+File essenziali per la pagina: king-laboratorio-scientifico.html, king-lab-v4.css, king-lab-v4.js, king-lab-v4-dati.js.
+Gli altri file sono la fonte scientifica, tassonomia, regole, lezioni e documentazione V4 da conservare.

@@ -1,0 +1,36 @@
+{
+  "package": "KING EUROPE SCIENZA V4 cumulativa",
+  "files": {
+    "00_ISTRUZIONI_PER_ALTRA_CHAT.md": {
+      "sha256": "32209a860598ed5ba1acf8505a7b194b716df08a271862a440a0160c44a3b9ad",
+      "bytes": 2187
+    },
+    "01_ARCHIVIO_CUMULATIVO_V4.json": {
+      "sha256": "47b378b5255b194f6ca8494b31a413ba6593876dd39c8f7f519f930082199b64",
+      "bytes": 50812
+    },
+    "02_GERARCHIA_TASSONOMIA_V4.json": {
+      "sha256": "a610d1a6e79bc53e87ce2a551af9537d3c049dc5af0e596e0d60f01cf03995f6",
+      "bytes": 2052
+    },
+    "03_REGOLE_PUNTEGGI_V4.json": {
+      "sha256": "51be82710b4a46e2374e331435ebf3dbd818f342e52e75271e71e4de23f21c1c",
+      "bytes": 1270
+    },
+    "04_LEZIONI_E_QUIZ_V4.json": {
+      "sha256": "d1e61a563e7dc887410b4e16e5a5334dc92c84d14e069d8a90791d2129bb5282",
+      "bytes": 3925
+    },
+    "05_NOTE_SCIENTIFICHE_E_FONTI.md": {
+      "sha256": "c7625981512f85cf3ba3fd62397c5be5db458f66ff27beb188dd4b9f1e6b652d",
+      "bytes": 1477
+    },
+    "06_CHANGELOG.md": {
+      "sha256": "4c4fd901249cd36269ac4bf7800c4fce4f680191a40861c7dd28e28532872afb",
+      "bytes": 524
+    }
+  },
+  "record_count": 9,
+  "status": "integration proposal, existing schema not reviewed",
+  "created": "2026-11-02"
+}

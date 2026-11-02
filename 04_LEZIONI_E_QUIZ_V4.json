@@ -1,0 +1,98 @@
+[
+  {
+    "id": "family-algae-and-cyanobacteria",
+    "name": "Alghe e cianobatteri alimentari",
+    "lesson": {
+      "overview": "Scheda-ombrello per distinguere alghe e cianobatteri, non vendibile come prodotto specifico.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "ingredient-klamath-afa",
+    "name": "Klamath (AFA)",
+    "lesson": {
+      "overview": "Esercizio su differenza tra purezza proclamata, controllo analitico e contaminazione di lotto.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "ingredient-kelp",
+    "name": "Kelp (alghe brune)",
+    "lesson": {
+      "overview": "Esercizio per convertire mg in mcg e confrontare una porzione con il fabbisogno e il limite superiore pertinenti.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "family-carotenoids",
+    "name": "Carotenoidi (famiglia)",
+    "lesson": {
+      "overview": "Distinguere caroteni provitamina A, luteina e zeaxantina, alimento e dose concentrata.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "compound-beta-carotene",
+    "name": "Beta-carotene",
+    "lesson": {
+      "overview": "Spiegare perché carotene alimentare e supplemento ad alta dose hanno profili differenti; test vista/retinolo non sono diagnosi fai-da-te.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "nutrient-vitamin-a",
+    "name": "Vitamina A (collegata, non sinonimo di beta-carotene)",
+    "lesson": {
+      "overview": "Distinguere precursor carotenoide da retinolo, deficit e sovradosaggio.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "ingredient-ginkgo-biloba",
+    "name": "Ginkgo biloba",
+    "lesson": {
+      "overview": "Spiegare l’importanza di estratto standardizzato, interazioni e outcome clinici.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "ingredient-spirulina",
+    "name": "Spirulina",
+    "lesson": {
+      "overview": "Distingue cianobatteri da alghe brune, ficocianina, B12 non affidabile, qualità lotti e benefici clinici ancora da valutare per indicazione.",
+      "questions": [
+        "Perché non si devono attribuire tutte le vitamine della famiglia a Spirulina?",
+        "Perché la B12 della Spirulina non sostituisce una fonte affidabile?",
+        "Quali controlli di purezza servono?"
+      ]
+    }
+  }
+]

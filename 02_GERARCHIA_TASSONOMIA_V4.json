@@ -1,0 +1,86 @@
+{
+  "version": "4.0-proposed",
+  "hierarchy": [
+    {
+      "id": "family-algae-and-cyanobacteria",
+      "name": "Alghe e organismi fotosintetici affini",
+      "children": [
+        {
+          "id": "subfamily-cyanobacteria",
+          "name": "Cianobatteri (non alghe vere)",
+          "children": [
+            "ingredient-spirulina",
+            "ingredient-klamath-afa"
+          ]
+        },
+        {
+          "id": "subfamily-brown-seaweed",
+          "name": "Alghe brune",
+          "children": [
+            "ingredient-kelp"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "family-carotenoids",
+      "name": "Carotenoidi",
+      "children": [
+        "compound-beta-carotene"
+      ],
+      "related_not_synonymous": [
+        "nutrient-vitamin-a"
+      ]
+    },
+    {
+      "id": "family-fat-soluble-vitamins",
+      "name": "Vitamine liposolubili",
+      "children": [
+        "nutrient-vitamin-a"
+      ]
+    },
+    {
+      "id": "family-botanical-extracts",
+      "name": "Estratti botanici",
+      "children": [
+        "ingredient-ginkgo-biloba"
+      ]
+    },
+    {
+      "id": "family-fermented-foods",
+      "name": "Fermentati",
+      "children": [
+        "ingredient-apple-cider-vinegar"
+      ]
+    }
+  ],
+  "graph_relations": [
+    "is_a",
+    "contains",
+    "may_contain",
+    "precursor_of",
+    "has_biological_function",
+    "studied_for",
+    "contraindicated_in",
+    "interaction_with",
+    "related_not_equivalent"
+  ],
+  "search": "Ricerca per ID/nome/sinonimo; dettaglio del figlio prioritario quando esiste; panoramica famiglia come navigazione, non fonte di benefici automaticamente ereditati.",
+  "inheritance": "solo tassonomia e navigazione; mai ereditarietà automatica di benefici, vitamine o sicurezza",
+  "vitamins_index": [
+    "A",
+    "B1",
+    "B2",
+    "B3",
+    "B5",
+    "B6",
+    "B7/biotina",
+    "B9/folati",
+    "B12",
+    "C",
+    "D",
+    "E",
+    "K"
+  ],
+  "record_rule": "non attribuire ogni vitamina a ogni alga; presence confirmed only with source and amount when available"
+}
