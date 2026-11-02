@@ -1,0 +1,34 @@
+
+/* Scheda a due livelli: navigazione semplice e lettura integrale */
+.readerIntro{padding:13px 0 16px}.readerIntro h2{font-size:clamp(23px,5vw,31px);margin:8px 0}.readerIntro p{color:#6a7e71;margin:0}.readerTabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.readerTab{border:1px solid #d6e4d8;background:#f5faf3;color:#355c46;border-radius:13px;min-height:59px;padding:8px 5px;font-weight:700;font-size:12px;line-height:1.3}.readerTab.active{background:#315e48;color:white;border-color:#315e48;box-shadow:0 2px 8px #1c49301b}.readerPanel{background:#f9fbf8;border:1px solid #e0ebe0;border-radius:17px;padding:16px;line-height:1.55}.readerPanel>p:first-child{margin-top:0}.readerPanel h4{margin:16px 0 6px}.readerMini{background:#fff;border:1px solid #e3ebe1;border-radius:12px;padding:12px;margin:9px 0}.readerMini b{color:#315d46}.readerMini p{margin:5px 0}.readerMini small{color:#677d6c}.readerList{padding-left:19px;margin:7px 0}.readerList li{margin:6px 0}.readerFields{margin:0}.readerFields>div{padding:8px 0;border-bottom:1px solid #e4ece4}.readerFields dt{color:#486a53;font-weight:700}.readerFields dd{margin:3px 0 0}.readerAction{margin:18px 0}.readerAction>details{background:#edf4ed;border:1px solid #d3e3d4;border-radius:15px;overflow:hidden}.readerAction>details>summary{padding:16px;cursor:pointer;font-weight:800;color:#315c44;list-style:none}.readerAction>details>summary span{display:block;font-weight:400;color:#64816f;font-size:12px;margin-top:3px}.readerFullContent{padding:0 14px 16px;border-top:1px solid #d7e5d9}.readerFullContent .section details{margin:5px 0}.readerFullContent .section summary{cursor:pointer;color:#416550;font-size:14px}.readerFullContent .dataItem{padding:9px;margin:6px 0}.readerFullContent .dataItem .dataItem{margin-left:3px}.readerFullContent .dataItem strong{font-size:13px}.readerFullContent .section h3{font-size:16px}.quizItem{margin:9px 0;padding:8px;background:white;border-radius:9px}.scoreRow{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #dce8dd}.riskFlag{border-radius:10px;padding:3px 9px;font-size:12px;font-weight:bold}.riskFlag.low{background:#d6efdc;color:#19582b}.riskFlag.medium{background:#fff0c8;color:#795100}.riskFlag.high{background:#fce0dc;color:#8b1c16}
+@media(max-width:380px){.readerTab{font-size:11px;padding:7px 3px;min-height:55px}}
+
+/* KING V7 - menu grafico, coerente su tutte le schede */
+.readerIntro{position:relative;border-radius:20px;padding:16px;background:linear-gradient(130deg,#f4faf3,#fff,#ebf5eb);border:1px solid #d7e6d8}
+.readerIntro .eyebrow{font-size:11px;color:#55765b;letter-spacing:.065em}.readerIntro h2{color:#174b32}
+.readerTabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:17px 0 14px}
+.readerTab{display:flex;position:relative;flex-direction:column;text-align:left;align-items:flex-start;justify-content:space-between;gap:6px;min-width:0;min-height:116px;padding:13px 12px;border-radius:19px;border:1.5px solid var(--tile-border,#d9e7db);background:var(--tile-bg,#f7fbf6);color:#254534;box-shadow:0 3px 8px #1938210a;font-size:15px;font-weight:800;line-height:1.22;transition:transform .12s,box-shadow .12s}
+.readerTab:hover,.readerTab:focus-visible{box-shadow:0 5px 12px #233d3220;transform:translateY(-1px)}
+.readerTab.active{border-width:2px;background:var(--tile-bg,#f7fbf6);border-color:var(--tile-accent,#5c9465);color:#183d29;box-shadow:0 0 0 2px #fff,0 5px 14px #23452e30}
+.readerTab[data-tab="overview"]{--tile-bg:#eaf7e3;--tile-border:#b5d9a4;--tile-accent:#63a84b}
+.readerTab[data-tab="benefits"]{--tile-bg:#fff3db;--tile-border:#f4cd7d;--tile-accent:#eaa52c}
+.readerTab[data-tab="safety"]{--tile-bg:#eaf4ff;--tile-border:#a7cbea;--tile-accent:#3b92d1}
+.readerTab[data-tab="course"]{--tile-bg:#f3ebff;--tile-border:#c8a8e6;--tile-accent:#9365cd}
+.readerTab[data-tab="sources"]{--tile-bg:#fff0f4;--tile-border:#efb4c8;--tile-accent:#d96e94}
+.readerTab[data-tab="scores"]{--tile-bg:#fff2d6;--tile-border:#efcd84;--tile-accent:#daa538}
+.readerTab .tabEmoji{font-size:25px;line-height:1;display:block}.readerTab .tabName{font-size:15px;display:block}.readerTab .tabDesc{font-size:11px;font-weight:500;display:block;opacity:.82;max-width:100%}.readerTab .tabArrow{position:absolute;right:11px;top:13px;font-size:16px;opacity:.7}
+.readerPanel{padding:16px;border:1px solid #dfe9dd;border-radius:19px;background:white;min-height:92px}
+.readerAction>details{background:linear-gradient(115deg,#0d573a,#1a7550);border:1px solid #0d6841;border-radius:17px;box-shadow:0 4px 14px #123f2928}
+.readerAction>details>summary{color:white;padding:16px 19px;font-size:16px}
+.readerAction>details>summary span{color:#d5ebdc;font-size:12px}
+.readerAction>details[open]{background:white}
+.readerAction>details[open]>summary{background:#146342;color:white}
+.readerFullContent{padding:7px 8px 18px;background:#fcfdfb}
+.readerFullContent .section{padding:12px 0}
+.readerFullContent .section>details{margin:8px 0;padding:10px;background:#f7faf6;border:1px solid #e1eae0;border-radius:12px}
+.readerFullContent .section>details>summary{font-size:14px;font-weight:700;padding:4px;cursor:pointer;color:#385f49}
+.readerFullContent .dataItem{background:#fff;padding:8px 11px}
+.readerFullContent .dataItem .dataItem{margin-left:0}
+.readerMini{background:#f7faf6}
+@media(min-width:650px){.readerTabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:370px){.readerTab{min-height:112px;padding:11px}.readerTab .tabName{font-size:13px}.readerTab .tabDesc{font-size:10px}}

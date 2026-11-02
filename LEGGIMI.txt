@@ -1,21 +1,7 @@
-KING EUROPE — correzione pubblica e nuovo contatore separato
+KING LAB V7: SOLUZIONE CACHE E RITORNO MENU A SEI PULSANTI
 
-PER CORREGGERE SUBITO IL LINK DEL GESTIONALE:
-Sostituire SOLO test-alimentazione.html e test-integratori.html nella root GitHub Pages.
-I moduli PDF, registrazione e clic 3.0 restano invariati.
+Carica i 3 file HTML, JS e CSS nella radice GitHub. Sostituisci SOLO king-laboratorio-scientifico.html; i due nomi nuovi di JS e CSS sono aggiuntivi. NON cancellare i vecchi: lasciamo intatte altre funzionalita. Il file king-lab-v7-dati.js deve essere gia presente dalla V7.
 
-PER ATTIVARE IL NUOVO CONTEGGIO (NON ATTIVO PRIMA DEL DEPLOY):
-1. Creare database D1 Cloudflare: king-campaign-analytics.
-2. Applicare schema.sql.
-3. Creare un Worker separato usando cloudflare-worker.js e binding D1 ANALYTICS_DB.
-4. Impostare secret ADMIN_KEY del Worker (mai inserirla in GitHub).
-5. Copiare l'URL HTTPS del Worker in KING_analytics_config.js.
-6. Caricare KING_campaign_analytics.js e KING_analytics_config.js con i due HTML.
-7. Verificare con un test effettivo e con una richiesta amministrativa GET /stats (header X-Admin-Key) che gli eventi siano registrati.
+Prova: apri Laboratorio > Spirulina o Aceto di mele; in alto deve comparire SCHEDA CUMULATIVA V7, seguita da 6 pulsanti colorati. I dettagli lunghi devono essere sotto Informazioni complete.
 
-Il nuovo contatore traccia SOLO result_view e shop_click (anonimi). NON importa le vecchie registrazioni o i clic del Worker precedente, NON salva email o nomi e NON sostituisce il database clienti.
-Il visitatore può negare il consenso per la registrazione personale: la raccolta anonima deve comunque essere descritta nella privacy policy del sito e gestita secondo le impostazioni privacy applicabili.
-Campagne identificabili aggiungendo ?campagna=instagram_nov1 al link dei test.
-Per le statistiche Social reali servono API autorizzate, non ricavabili da questi file.
-
-NOTA: se l'ultima pagina pubblicata differisce da questo patch prelevato da KING_PATCH_NAV_REPORT_SAFE.zip, confrontare prima di sovrascrivere.
+Questo aggiornamento non modifica i dati V7, cloudflare, index o test.
