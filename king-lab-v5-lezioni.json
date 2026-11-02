@@ -1,0 +1,550 @@
+[
+  {
+    "id": "family-algae-and-cyanobacteria",
+    "name": "Alghe e cianobatteri alimentari",
+    "lesson": {
+      "overview": "Scheda-ombrello per distinguere alghe e cianobatteri, non vendibile come prodotto specifico.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "ingredient-klamath-afa",
+    "name": "Klamath (AFA)",
+    "lesson": {
+      "overview": "Esercizio su differenza tra purezza proclamata, controllo analitico e contaminazione di lotto.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "ingredient-kelp",
+    "name": "Kelp (alghe brune)",
+    "lesson": {
+      "overview": "Esercizio per convertire mg in mcg e confrontare una porzione con il fabbisogno e il limite superiore pertinenti.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "family-carotenoids",
+    "name": "Carotenoidi (famiglia)",
+    "lesson": {
+      "overview": "Distinguere caroteni provitamina A, luteina e zeaxantina, alimento e dose concentrata.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "compound-beta-carotene",
+    "name": "Beta-carotene",
+    "lesson": {
+      "overview": "Spiegare perché carotene alimentare e supplemento ad alta dose hanno profili differenti; test vista/retinolo non sono diagnosi fai-da-te.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "nutrient-vitamin-a",
+    "name": "Vitamina A (collegata, non sinonimo di beta-carotene)",
+    "lesson": {
+      "overview": "Distinguere precursor carotenoide da retinolo, deficit e sovradosaggio.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "ingredient-ginkgo-biloba",
+    "name": "Ginkgo biloba",
+    "lesson": {
+      "overview": "Spiegare l’importanza di estratto standardizzato, interazioni e outcome clinici.",
+      "questions": [
+        "Qual è la differenza tra presenza di un nutriente e dose significativa?",
+        "Quale affermazione viene dal libro e quale da fonti moderne?",
+        "Quali rischi o incertezze impediscono una raccomandazione automatica?"
+      ]
+    }
+  },
+  {
+    "id": "ingredient-spirulina",
+    "name": "Spirulina",
+    "lesson": {
+      "overview": "Distingue cianobatteri da alghe brune, ficocianina, B12 non affidabile, qualità lotti e benefici clinici ancora da valutare per indicazione.",
+      "questions": [
+        "Perché non si devono attribuire tutte le vitamine della famiglia a Spirulina?",
+        "Perché la B12 della Spirulina non sostituisce una fonte affidabile?",
+        "Quali controlli di purezza servono?"
+      ]
+    }
+  },
+  {
+    "id": "lesson-ingredient-guarana",
+    "ingredient_id": "ingredient-guarana",
+    "title": "Lezione: Guaranà",
+    "objectives": [
+      "Identificare sostanza e famiglia",
+      "Distinguere affermazioni del libro da dati moderni",
+      "Valutare benefici endpoint per endpoint",
+      "Interpretare rischi e dose"
+    ],
+    "simple_explanation": "Spiegare caffeina, adenosina e perché il contenuto mg per porzione è più utile del peso della capsula.",
+    "biology": [
+      "La caffeina antagonizza recettori dell’adenosina favorendo vigilanza e riduzione transitoria della sonnolenza.",
+      "La presenza di caffeina non dimostra prevenzione delle malattie cardiache né dimagrimento clinicamente significativo."
+    ],
+    "components": [
+      {
+        "substance": "caffeina",
+        "note": "principale alcaloide stimolante; quantificare mg per dose",
+        "nutritional_significance": "potenzialmente rilevante, dipende da estratto"
+      },
+      {
+        "substance": "tannini",
+        "note": "polifenoli presenti",
+        "nutritional_significance": "nel libro; quantità non verificata"
+      },
+      {
+        "substance": "saponine",
+        "note": "classi di metaboliti vegetali citate",
+        "nutritional_significance": "nel libro; quantità non verificata"
+      },
+      {
+        "substance": "resine, destrine, altri componenti",
+        "note": "citati nel libro",
+        "nutritional_significance": "nel libro; quantità non verificata"
+      }
+    ],
+    "evidence": [
+      {
+        "id": "gua-alert",
+        "goal": "Vigilanza a breve termine",
+        "claimed_benefit": "Vigilanza a breve termine",
+        "proposed_mechanism": "caffeina/adenosina",
+        "evidence_grade": "solido_per_caffeina_non_automaticamente_guarana",
+        "studied_context": "persone sane; effetti dipendenti dalla dose di caffeina",
+        "limitations": "quantità in mg di caffeina e somma con altre fonti necessarie",
+        "source_ids": [
+          "nih-guarana"
+        ],
+        "benefit_score_1_10": null,
+        "score_status": "non_quantificabile_senza_criteri_uniformi"
+      },
+      {
+        "id": "gua-weight",
+        "goal": "Riduzione del peso",
+        "claimed_benefit": "Riduzione del peso",
+        "proposed_mechanism": "stimolazione centrale e possibile riduzione appetito",
+        "evidence_grade": "insufficiente_per_guarana_sola",
+        "studied_context": "prodotti eterogenei",
+        "limitations": "non dimostrata perdita duratura di peso",
+        "source_ids": [
+          "nih-guarana"
+        ],
+        "benefit_score_1_10": null,
+        "score_status": "non_quantificabile_senza_criteri_uniformi"
+      }
+    ],
+    "safety": [
+      {
+        "name": "Tachicardia, palpitazioni, insonnia, ansia, nausea",
+        "details": "Rischi legati a caffeina; cautela con cardiopatie, sensibilità a stimolanti",
+        "flag": "warning",
+        "severity_score_1_10": null,
+        "probability_score_1_10": null,
+        "score_status": "unknown_not_zero"
+      },
+      {
+        "name": "Somma delle fonti di caffeina",
+        "details": "Contare caffè, energy drink e prodotti pre-workout",
+        "flag": "warning",
+        "severity_score_1_10": null,
+        "probability_score_1_10": null,
+        "score_status": "unknown_not_zero"
+      },
+      {
+        "name": "Gravidanza e allattamento",
+        "details": "Evitare assunzione non supervisionata di estratti ad alta caffeina",
+        "flag": "warning",
+        "severity_score_1_10": null,
+        "probability_score_1_10": null,
+        "score_status": "unknown_not_zero"
+      }
+    ],
+    "exercise": "Confronta funzione biologica con beneficio clinico, poi controlla peso netto e titolazione in etichetta.",
+    "quiz": [
+      {
+        "question": "Una funzione biologica dimostra automaticamente il beneficio di un integratore?",
+        "answer": "No, servono prove cliniche specifiche per forma, dose, popolazione e obiettivo."
+      },
+      {
+        "question": "Se un rischio non è misurato va assegnato zero?",
+        "answer": "No, occorre registrare dato mancante (NULL)."
+      }
+    ],
+    "source_pages": [
+      74,
+      75,
+      76,
+      77
+    ]
+  },
+  {
+    "id": "lesson-ingredient-l-carnitine",
+    "ingredient_id": "ingredient-l-carnitine",
+    "title": "Lezione: L-Carnitina",
+    "objectives": [
+      "Identificare sostanza e famiglia",
+      "Distinguere affermazioni del libro da dati moderni",
+      "Valutare benefici endpoint per endpoint",
+      "Interpretare rischi e dose"
+    ],
+    "simple_explanation": "Una funzione metabolica non implica perdita di peso. Analizzare un esempio con forma commerciale e dose.",
+    "biology": [
+      "Trasporto di gruppi acilici a lunga catena attraverso membrana mitocondriale interna nel sistema della carnitina.",
+      "La carnitina fisiologica non equivale a prova che l’integrazione aumenti combustione lipidica o prestazioni in tutti."
+    ],
+    "components": [
+      {
+        "substance": "L-carnitina",
+        "note": "composto principale, prodotto anche da organismo",
+        "nutritional_significance": "significativa solo secondo dose verificata"
+      },
+      {
+        "substance": "L-carnitina tartrato",
+        "note": "forma commerciale riportata nel titolo; distinguere massa di sale da carnitina attiva",
+        "nutritional_significance": "nel libro; quantità non verificata"
+      }
+    ],
+    "evidence": [
+      {
+        "id": "car-fatty-acids",
+        "goal": "Metabolismo degli acidi grassi",
+        "claimed_benefit": "Metabolismo degli acidi grassi",
+        "proposed_mechanism": "sistema di trasporto della carnitina",
+        "evidence_grade": "meccanismo_fisiologico_consolidato",
+        "studied_context": "tessuti umani",
+        "limitations": "Non è un beneficio clinico automaticamente trasferibile a integratori",
+        "source_ids": [
+          "nih-carnitine"
+        ],
+        "benefit_score_1_10": null,
+        "score_status": "non_quantificabile_senza_criteri_uniformi"
+      },
+      {
+        "id": "car-weight",
+        "goal": "Peso corporeo",
+        "claimed_benefit": "Peso corporeo",
+        "proposed_mechanism": "ipotesi maggiore ossidazione lipidica",
+        "evidence_grade": "moderata_limitata_effetto_piccolo",
+        "studied_context": "studi clinici eterogenei",
+        "limitations": "Beneficio medio modesto e non universale",
+        "source_ids": [
+          "nih-carnitine"
+        ],
+        "benefit_score_1_10": null,
+        "score_status": "non_quantificabile_senza_criteri_uniformi"
+      },
+      {
+        "id": "car-performance",
+        "goal": "Performance fisica",
+        "claimed_benefit": "Performance fisica",
+        "proposed_mechanism": "disponibilità metabolica",
+        "evidence_grade": "mista",
+        "studied_context": "persone e protocolli diversi",
+        "limitations": "Non è garantito aumento energia o forza",
+        "source_ids": [
+          "nih-carnitine"
+        ],
+        "benefit_score_1_10": null,
+        "score_status": "non_quantificabile_senza_criteri_uniformi"
+      }
+    ],
+    "safety": [
+      {
+        "name": "Disturbi gastrointestinali e odore corporeo",
+        "details": "Più comuni a dosi elevate circa 3 g/die",
+        "flag": "caution",
+        "severity_score_1_10": null,
+        "probability_score_1_10": null,
+        "score_status": "unknown_not_zero"
+      },
+      {
+        "name": "Convulsioni in predisposti",
+        "details": "Cautela in persone con disturbi convulsivi",
+        "flag": "warning",
+        "severity_score_1_10": null,
+        "probability_score_1_10": null,
+        "score_status": "unknown_not_zero"
+      },
+      {
+        "name": "TMAO",
+        "details": "Metabolita intestinale associato a rischi cardiometabolici; causalità e implicazioni cliniche da chiarire",
+        "flag": "caution",
+        "severity_score_1_10": null,
+        "probability_score_1_10": null,
+        "score_status": "unknown_not_zero"
+      }
+    ],
+    "exercise": "Confronta funzione biologica con beneficio clinico, poi controlla peso netto e titolazione in etichetta.",
+    "quiz": [
+      {
+        "question": "Una funzione biologica dimostra automaticamente il beneficio di un integratore?",
+        "answer": "No, servono prove cliniche specifiche per forma, dose, popolazione e obiettivo."
+      },
+      {
+        "question": "Se un rischio non è misurato va assegnato zero?",
+        "answer": "No, occorre registrare dato mancante (NULL)."
+      }
+    ],
+    "source_pages": [
+      99,
+      100,
+      101
+    ]
+  },
+  {
+    "id": "lesson-ingredient-l-glutamine",
+    "ingredient_id": "ingredient-l-glutamine",
+    "title": "Lezione: L-Glutammina",
+    "objectives": [
+      "Identificare sostanza e famiglia",
+      "Distinguere affermazioni del libro da dati moderni",
+      "Valutare benefici endpoint per endpoint",
+      "Interpretare rischi e dose"
+    ],
+    "simple_explanation": "Distinguere fisiologia, uso clinico specialistico e supplementazione sportiva.",
+    "biology": [
+      "Trasporto dell’azoto e partecipazione a metabolismo di cellule intestinali e immunitarie.",
+      "È condizionatamente essenziale in situazioni di stress fisiologico severo; persone sane in genere ne sintetizzano a sufficienza."
+    ],
+    "components": [
+      {
+        "substance": "L-glutammina",
+        "note": "aminoacido prodotto anche dal corpo",
+        "nutritional_significance": "rilevanza clinica dipende da contesto"
+      }
+    ],
+    "evidence": [
+      {
+        "id": "gln-physiology",
+        "goal": "Funzioni cellulari intestinali e immunitarie",
+        "claimed_benefit": "Funzioni cellulari intestinali e immunitarie",
+        "proposed_mechanism": "substrato metabolico cellulare",
+        "evidence_grade": "fisiologia_consolidata",
+        "studied_context": "esseri umani",
+        "limitations": "Beneficio del supplemento nei sani non deducibile",
+        "source_ids": [
+          "nih-glutamine"
+        ],
+        "benefit_score_1_10": null,
+        "score_status": "non_quantificabile_senza_criteri_uniformi"
+      },
+      {
+        "id": "gln-gut",
+        "goal": "Beneficio intestinale generale",
+        "claimed_benefit": "Beneficio intestinale generale",
+        "proposed_mechanism": "ipotetica disponibilità a enterociti",
+        "evidence_grade": "non_dimostrato_generalizzabile",
+        "studied_context": "contesti clinici diversi",
+        "limitations": "Non equiparare a cura della permeabilità intestinale",
+        "source_ids": [
+          "nih-glutamine"
+        ],
+        "benefit_score_1_10": null,
+        "score_status": "non_quantificabile_senza_criteri_uniformi"
+      },
+      {
+        "id": "gln-athletic",
+        "goal": "Massa muscolare e performance",
+        "claimed_benefit": "Massa muscolare e performance",
+        "proposed_mechanism": "metabolismo aminoacidico",
+        "evidence_grade": "insufficiente_per_popolazione_sana",
+        "studied_context": "sportivi sani",
+        "limitations": "Non è garantito aumento forza o crescita muscolare",
+        "source_ids": [
+          "nih-glutamine"
+        ],
+        "benefit_score_1_10": null,
+        "score_status": "non_quantificabile_senza_criteri_uniformi"
+      }
+    ],
+    "safety": [
+      {
+        "name": "Nausea, gonfiore, flatulenza e dolore",
+        "details": "Possibili soprattutto a dosi maggiori",
+        "flag": "caution",
+        "severity_score_1_10": null,
+        "probability_score_1_10": null,
+        "score_status": "unknown_not_zero"
+      },
+      {
+        "name": "Malattia grave e organi compromessi",
+        "details": "Uso clinico sotto supervisione, non sostituire protocolli specialistici",
+        "flag": "warning",
+        "severity_score_1_10": null,
+        "probability_score_1_10": null,
+        "score_status": "unknown_not_zero"
+      }
+    ],
+    "exercise": "Confronta funzione biologica con beneficio clinico, poi controlla peso netto e titolazione in etichetta.",
+    "quiz": [
+      {
+        "question": "Una funzione biologica dimostra automaticamente il beneficio di un integratore?",
+        "answer": "No, servono prove cliniche specifiche per forma, dose, popolazione e obiettivo."
+      },
+      {
+        "question": "Se un rischio non è misurato va assegnato zero?",
+        "answer": "No, occorre registrare dato mancante (NULL)."
+      }
+    ],
+    "source_pages": [
+      102,
+      103,
+      104,
+      105
+    ]
+  },
+  {
+    "id": "lesson-ingredient-maca",
+    "ingredient_id": "ingredient-maca",
+    "title": "Lezione: Maca",
+    "objectives": [
+      "Identificare sostanza e famiglia",
+      "Distinguere affermazioni del libro da dati moderni",
+      "Valutare benefici endpoint per endpoint",
+      "Interpretare rischi e dose"
+    ],
+    "simple_explanation": "Raccontare la pianta delle Ande e insegnare a separare tradizione e studi umani.",
+    "biology": [
+      "Potenziali effetti su percezione del desiderio sessuale ancora studiati.",
+      "Non risultano prove solide che Maca aumenti stabilmente testosterone/estrogeni o corregga malattie tiroidee."
+    ],
+    "components": [
+      {
+        "substance": "carboidrati e fibre",
+        "note": "presenti nel tubero, dipende dal processo",
+        "nutritional_significance": "nella dose da integratore spesso non significativi"
+      },
+      {
+        "substance": "proteine e aminoacidi",
+        "note": "citati per alimento, non assumere rilevanza da capsule",
+        "nutritional_significance": "nel libro; quantità non verificata"
+      },
+      {
+        "substance": "calcio, ferro, magnesio, fosforo, zinco",
+        "note": "citati nel libro, composizione variabile",
+        "nutritional_significance": "nel libro; quantità non verificata"
+      },
+      {
+        "substance": "vitamine B1, B2, B12, C, E",
+        "note": "attribuite nel libro; B12 da verificare criticamente, non dichiarare fonte",
+        "nutritional_significance": "nel libro; quantità non verificata"
+      },
+      {
+        "substance": "macamidi, macaeni, glucosinolati",
+        "note": "fitocomposti da distinguere in base a estratto e analisi",
+        "nutritional_significance": "nel libro; quantità non verificata"
+      }
+    ],
+    "evidence": [
+      {
+        "id": "maca-libido",
+        "goal": "Desiderio sessuale",
+        "claimed_benefit": "Desiderio sessuale",
+        "proposed_mechanism": "meccanismo non chiarito",
+        "evidence_grade": "preliminare_studi_piccoli",
+        "studied_context": "adulti in piccoli studi",
+        "limitations": "Risultati eterogenei e non assimilabili a trattamento di disfunzioni",
+        "source_ids": [],
+        "benefit_score_1_10": null,
+        "score_status": "non_quantificabile_senza_criteri_uniformi"
+      },
+      {
+        "id": "maca-fertility",
+        "goal": "Fertilità",
+        "claimed_benefit": "Fertilità",
+        "proposed_mechanism": "ipotesi su funzione riproduttiva",
+        "evidence_grade": "insufficiente",
+        "studied_context": "studi umani limitati",
+        "limitations": "Non dimostrata terapia per infertilità",
+        "source_ids": [],
+        "benefit_score_1_10": null,
+        "score_status": "non_quantificabile_senza_criteri_uniformi"
+      },
+      {
+        "id": "maca-energy",
+        "goal": "Energia e vitalità",
+        "claimed_benefit": "Energia e vitalità",
+        "proposed_mechanism": "meccanismo non chiarito",
+        "evidence_grade": "insufficiente",
+        "studied_context": "contesti eterogenei",
+        "limitations": "Non confondere energia percepita con prestazione misurata",
+        "source_ids": [],
+        "benefit_score_1_10": null,
+        "score_status": "non_quantificabile_senza_criteri_uniformi"
+      }
+    ],
+    "safety": [
+      {
+        "name": "Disturbi gastrointestinali",
+        "details": "Possibili in alcuni individui",
+        "flag": "caution",
+        "severity_score_1_10": null,
+        "probability_score_1_10": null,
+        "score_status": "unknown_not_zero"
+      },
+      {
+        "name": "Gravidanza, allattamento e condizioni ormono-sensibili",
+        "details": "Dati insufficienti sulla sicurezza di estratti concentrati",
+        "flag": "caution",
+        "severity_score_1_10": null,
+        "probability_score_1_10": null,
+        "score_status": "unknown_not_zero"
+      },
+      {
+        "name": "Qualità e adulterazioni",
+        "details": "Verificare identità botanica, purezza, estrazione e lotto",
+        "flag": "caution",
+        "severity_score_1_10": null,
+        "probability_score_1_10": null,
+        "score_status": "unknown_not_zero"
+      }
+    ],
+    "exercise": "Confronta funzione biologica con beneficio clinico, poi controlla peso netto e titolazione in etichetta.",
+    "quiz": [
+      {
+        "question": "Una funzione biologica dimostra automaticamente il beneficio di un integratore?",
+        "answer": "No, servono prove cliniche specifiche per forma, dose, popolazione e obiettivo."
+      },
+      {
+        "question": "Se un rischio non è misurato va assegnato zero?",
+        "answer": "No, occorre registrare dato mancante (NULL)."
+      }
+    ],
+    "source_pages": [
+      115,
+      116,
+      117,
+      118,
+      119
+    ]
+  }
+]

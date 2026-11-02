@@ -1,0 +1,26 @@
+{
+  "version": "4.0",
+  "scale": {
+    "benefit_strength": "1-10 only if quantified comparable clinical outcomes",
+    "evidence_quality": "1-10 anchored to study design, bias, consistency, applicability",
+    "risk_severity": "1-10 per specific harm",
+    "risk_likelihood": "1-10 only with incidence estimates by exposure",
+    "dose_match": "1-10 if label and studied dosage known",
+    "product_quality": "1-10 if lot testing/CoA available"
+  },
+  "unknown": "null, not zero",
+  "traffic_light": {
+    "green": "specific criterion favorable and justified",
+    "yellow": "uncertainty, monitoring or moderate warning",
+    "red": "serious contraindication or danger; never overridden by efficacy score",
+    "gray": "insufficient data"
+  },
+  "no_global_score": "do not aggregate heterogeneous endpoints or multiply risk by benefit to create an apparent clinical truth",
+  "safety_override": [
+    "high-dose beta-carotene in current/former smokers or asbestos exposure",
+    "kelp with thyroid disease, excess iodine or unknown iodine dosing",
+    "AFA/Klamath without batch microcystin testing",
+    "ginkgo with anticoagulants/antiaggregants: review interaction"
+  ],
+  "nonmedical": "algorithm educational, not diagnosis/personalized medication recommendation"
+}

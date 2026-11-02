@@ -1,0 +1,6 @@
+KING LAB V5 — AGGIORNAMENTO ADDITIVO
+Carica nella radice GitHub solo i file .html, .css, .js e i JSON allegati. Non caricare questo LEGGIMI.
+NON sostituire index.html, altri archivi, test o Cloudflare. Il link menu rimane king-laboratorio-scientifico.html.
+Le 13 schede V5 sono mantenute integralmente nel JSON originale. I 9 record preesistenti sono cumulativi, NON importare anche il V4.
+Il tasto + salva le associazioni nel browser; esportale in JSON per non perderle. NON è collegato al sistema GitHub sync perché la compatibilità del bridge richiede verifica del codice già in uso e autenticazione sicura. Non inserire PAT nel codice pubblico.
+Per le informazioni mancanti NON sono stati inventati studi, punteggi, dosi o attribuzioni del libro. Il rendering mostra tutti i campi V5, anche quelli a struttura differente.
