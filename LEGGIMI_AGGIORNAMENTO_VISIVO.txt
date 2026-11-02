@@ -1,0 +1,11 @@
+KING EUROPE LABORATORIO — REVISIONE BIO/ZEN
+Carica nella ROOT di king-europe-backup SOLO questi 3 file, sovrascrivendo quelli con lo stesso nome:
+king-laboratorio-scientifico.html
+king-laboratorio-v3.css
+king-laboratorio-v3.js
+
+NON caricare altri file e NON modificare index.html, dati scientifici, test o Worker.
+Gli ingredienti V3 e l'archivio storico restano quelli gia' installati.
+La valutazione del rischio usa 1-3 verde, 4-6 giallo, 7-10 rosso, ma non assegna automaticamente voti arbitrari.
+Le immagini degli ingredienti sono simboliche, non fotografie delle boccette; le immagini reali si aggiungeranno soltanto dopo aver identificato i prodotti corrispondenti.
+Testare su https://bananaroot.github.io/king-europe-backup/king-laboratorio-scientifico.html
