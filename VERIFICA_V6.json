@@ -1,0 +1,14 @@
+{
+  "source_v5_count": 13,
+  "v6_count": 13,
+  "same_ids": true,
+  "legacy_original_records_preserved": true,
+  "changed_existing_site_files": [
+    "king-laboratorio-scientifico.html",
+    "king-lab-v5.js"
+  ],
+  "new_files": [
+    "king-lab-v6-dati.js",
+    "king-lab-v6-archivio.json"
+  ]
+}

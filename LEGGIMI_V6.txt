@@ -1,0 +1,9 @@
+KING EUROPE LAB V6 - aggiornamento additivo.
+Carica nella ROOT di GitHub soltanto i 4 file operativi; LEGGIMI e VERIFICA sono documentazione opzionale.
+SOSTITUISCI: king-laboratorio-scientifico.html, king-lab-v5.js
+AGGIUNGI: king-lab-v6-dati.js, king-lab-v6-archivio.json
+NON TOCCARE: index.html, king-lab-v5.css, file V5 originali, altri test, Worker, commerciale.
+La pagina legge il V6 uniforme da king-lab-v6-dati.js, mentre king-lab-v6-archivio.json conserva la fonte JSON indipendente.
+La ricerca aggiorna subito i risultati in alto e nasconde hero, contatori, suggerimenti e area sensazioni soltanto quando si ricerca; svuotando il campo torna la vista completa.
+Il codice conserva legacy_full_record nel database ma non lo mostra per duplicazione. Le fonti ora leggono source_ids.
+La compatibilità riguarda il renderer V5 del Laboratorio, non sostituisce il database storico KING.
